@@ -227,9 +227,7 @@ Internet-Draft              remotestorage                  December 2012
 
       
              on the storage,
-       * 304 for a conditional GET request whose condition fails
-             (see "Versioning" below),
-       * 409 for a conditional PUT or DELETE request whose condition
+       * 412 for a conditional request whose pre-condition
              fails (see "Versioning" below),
        * 200 for all successful requests, including PUT and DELETE,
    
@@ -248,7 +246,7 @@ Internet-Draft              remotestorage                  December 2012
     case of GET, the current version, in the case of PUT, the new 
     version, and in case of DELETE, the version that was deleted. PUT 
     and DELETE requests MAY have an 'If-Match' request
-    header, and MUST fail with a 409 response code if that doesn't match 
+    header, and MUST fail with a 412 response code if that doesn't match 
     the document's current version. GET requests MAY have an
     'If-None-Match' header, and SHOULD be responded to with a 304 if
     that includes the document or folder's current version.
