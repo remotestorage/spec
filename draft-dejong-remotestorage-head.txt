@@ -242,14 +242,14 @@ Internet-Draft              remotestorage                  December 2012
     changed successfully. The current version of a folder is the highest
     version of any of the items it contains.
 
-    All successful requests MUST return an 'ETag' header with, in the 
+    All successful requests MUST return an 'ETag' header [HTTP] with, in the 
     case of GET, the current version, in the case of PUT, the new 
     version, and in case of DELETE, the version that was deleted. PUT 
-    and DELETE requests MAY have an 'If-Match' request
-    header, and MUST fail with a 412 response code if that doesn't match 
+    and DELETE requests MAY have an 'If-Match' request header [HTTP],
+    and MUST fail with a 412 response code if that doesn't match 
     the document's current version. GET requests MAY have an
-    'If-None-Match' header, and SHOULD be responded to with a 304 if
-    that includes the document or folder's current version.
+    'If-None-Match' header [HTTP], and SHOULD be responded to
+    with a 412 if that includes the document or folder's current version.
 
 7. CORS headers
 
@@ -495,6 +495,10 @@ Internet-Draft              remotestorage                  December 2012
     [HTTPS]
         Rescorla, E., "HTTP Over TLS", RFC2818, May 2000.
 
+    [HTTP]
+        Fielding et al., "Hypertext Transfer Protocol -- HTTP/1.1",
+        RFC2616, June 1999.
+    
     [CORS]
         van Kesteren, Anne (ed), "Cross-Origin Resource Sharing -- W3C
         Working Draft 3 April 2012",
