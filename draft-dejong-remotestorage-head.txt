@@ -147,7 +147,7 @@ Internet-Draft              remotestorage                  December 2012
     folder, then the URL of an item contained in it is
     <parent_folder> <document_name> for a document, or
     <parent_folder> <folder_name> '/' for a folder. Item names MAY
-    contain a-z, A-Z, 0-9, %, ., -, _.
+    contain a-z, A-Z, 0-9, %, ., -, _, and MUST NOT have zero length.
 
     A successful GET request to a folder SHOULD be responded to with a
     JSON document (content type 'application/json'), representing a map
