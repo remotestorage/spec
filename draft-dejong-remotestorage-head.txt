@@ -247,11 +247,11 @@ Internet-Draft              remotestorage                  December 2012
     All successful requests MUST return an 'ETag' header with, in the 
     case of GET, the current version, in the case of PUT, the new 
     version, and in case of DELETE, the version that was deleted. PUT 
-    and DELETE requests MAY have an 'If-Unmodified-Since' request
+    and DELETE requests MAY have an 'If-Match' request
     header, and MUST fail with a 409 response code if that doesn't match 
     the document's current version. GET requests MAY have an
-    'If-Modified-Since' header, and SHOULD be responded to with a 304 if
-    that matches the document or folder's current version.
+    'If-None-Match' header, and SHOULD be responded to with a 304 if
+    that includes the document or folder's current version.
 
 7. CORS headers
 
