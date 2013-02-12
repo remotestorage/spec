@@ -5,7 +5,7 @@ Intended Status: Proposed Standard                             SURFnet
 Expires: 10 December 2013                                  8 June 2013
 
 
-                            remotestorage
+                            remoteStorage
 
 Abstract
 
@@ -52,7 +52,7 @@ Copyright Notice
 
 de Jong                                                         [Page 1]
  
-Internet-Draft              remotestorage                  December 2012
+Internet-Draft              remoteStorage                  December 2012
 
 
 Table of Contents
@@ -109,7 +109,7 @@ Table of Contents
 
 de Jong                                                         [Page 2]
  
-Internet-Draft              remotestorage                  December 2012
+Internet-Draft              remoteStorage                  December 2012
 
 
     document are to be interpreted as described in RFC 2119 [WORDS].
@@ -166,7 +166,7 @@ Internet-Draft              remotestorage                  December 2012
 
 de Jong                                                         [Page 3]
  
-Internet-Draft              remotestorage                  December 2012
+Internet-Draft              remoteStorage                  December 2012
 
 
     empty folder MUST NOT be listed as an item in its parent folder.
@@ -223,7 +223,7 @@ Internet-Draft              remotestorage                  December 2012
 
 de Jong                                                         [Page 4]
  
-Internet-Draft              remotestorage                  December 2012
+Internet-Draft              remoteStorage                  December 2012
 
       
              on the storage,
@@ -278,7 +278,7 @@ Internet-Draft              remotestorage                  December 2012
 
 de Jong                                                         [Page 5]
  
-Internet-Draft              remotestorage                  December 2012
+Internet-Draft              remoteStorage                  December 2012
 
 
          client, as long as that client is still trusted. Example:
@@ -328,14 +328,14 @@ Internet-Draft              remotestorage                  December 2012
           
 10. Application-first bearer token issuance
 
-    To make a remotestorage server available as 'the remotestorage of
+    To make a remoteStorage server available as 'the remoteStorage of
     <user> at <host>', exactly one link of the following format SHOULD 
     be added to the webfinger record [WEBFINGER] of <user> at <host>:
 
 
 de Jong                                                         [Page 6]
  
-Internet-Draft              remotestorage                  December 2012
+Internet-Draft              remoteStorage                  December 2012
 
 
     {
@@ -392,17 +392,17 @@ Internet-Draft              remotestorage                  December 2012
 
 de Jong                                                         [Page 7]
 
-Internet-Draft              remotestorage                  December 2012
+Internet-Draft              remoteStorage                  December 2012
 
 
     as per application-first bearer token issuance.
     
-    Note that whereas a remotestorage server SHOULD offer support of the
+    Note that whereas a remoteStorage server SHOULD offer support of the
     application-first flow with webfinger and OAuth, it MAY choose not
     to support the storage-first flow, provided that users will easily 
     remember their <user> '@' <host> webfinger address at that provider.
     Applications SHOULD, however, support both flows, which means  
-    checking the URL for a 'remotestorage' parameter, but giving the
+    checking the URL for a 'remoteStorage' parameter, but giving the
     user a way to specify her webfinger address if there is none.
 
     If a server provides an application manifest dashboard, then it
@@ -419,10 +419,10 @@ Internet-Draft              remotestorage                  December 2012
     application launch dashboard. 
 
     A malicious party could link to an application, but specifying a
-    remotestorage user address that it controls, thus tricking the user
+    remoteStorage user address that it controls, thus tricking the user
     into using a trusted application to send sensitive data to the wrong
-    remotestorage server. To mitigate this, applications SHOULD clearly
-    display to which remotestorage server they are sending the user's
+    remoteStorage server. To mitigate this, applications SHOULD clearly
+    display to which remoteStorage server they are sending the user's
     data.
     
     Applications could request scopes that the user did not intend to
@@ -432,11 +432,11 @@ Internet-Draft              remotestorage                  December 2012
     An application may upload malicious html pages and then trick the
     user into visiting them, or upload malicious client-side scripts,
     that take advantage of being hosted on the user's domain name. The
-    origin on which the remotestorage server has its interface SHOULD
+    origin on which the remoteStorage server has its interface SHOULD
     therefore NOT be used for anything else, and the user SHOULD be 
     warned not to visit any web pages on that origin. In particular, the 
     OAuth dialog and launch dashboard or token revokation interface 
-    SHOULD be on a different origin than the remotestorage interface.
+    SHOULD be on a different origin than the remoteStorage interface.
       
     Where the use of bearer tokens is impractical, a user may choose to
     store documents on hard-to-guess URLs whose path after
@@ -449,7 +449,7 @@ Internet-Draft              remotestorage                  December 2012
       
 de Jong                                                         [Page 8]
 
-Internet-Draft              remotestorage                  December 2012
+Internet-Draft              remoteStorage                  December 2012
 
 
     The server SHOULD also detect and stop denial-of-service attacks
@@ -510,7 +510,7 @@ Internet-Draft              remotestorage                  December 2012
       
 de Jong                                                         [Page 9]
 
-Internet-Draft              remotestorage                  December 2012
+Internet-Draft              remoteStorage                  December 2012
 
 
         330541", https://developer.mozilla.org/en-
