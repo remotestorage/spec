@@ -345,8 +345,7 @@ Internet-Draft              remoteStorage                  December 2012
       rel: "remotestorage",
       type: <storage_api>,
       properties: {
-        'auth-method': "http://tools.ietf.org/html/rfc6749#section-4.2",
-        'auth-endpoint': <auth_endpoint>
+        "http://tools.ietf.org/html/rfc6749#section-4.2": <auth_endpoint>
       }
     }    
 
@@ -486,7 +485,7 @@ Internet-Draft              remoteStorage                  December 2012
       
     [WEBFINGER]
         Jones, Paul E., Salguerio, Gonzalo, and Smarr, Joseph,
-        "WebFinger", draft-ietf-appsawg-webfinger-07, Work in Progress
+        "WebFinger", draft-ietf-appsawg-webfinger-10, Work in Progress
     
     [OAUTH]
         "Section 4.2: Implicit Grant", in: Hardt, D. (ed), "The OAuth
