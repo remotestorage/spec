@@ -251,6 +251,10 @@ Internet-Draft              remoteStorage                  December 2012
     'If-None-Match' header [HTTP], and SHOULD be responded to
     with a 412 if that includes the document or folder's current version.
 
+    A provider MAY offer its users a way to roll back to a previous version
+    of the storage contents, but this specification does not define any
+    such rollback functionality.
+
 7. CORS headers
 
     All responses MUST carry CORS headers [CORS]. The server MUST also
