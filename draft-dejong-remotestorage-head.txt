@@ -229,6 +229,7 @@ Internet-Draft              remoteStorage                  December 2012
              on the storage,
        * 412 for a conditional request whose pre-condition
              fails (see "Versioning" below),
+       * 507 in case the user's account is over its storage quota,
        * 200 for all successful requests, including PUT and DELETE.
    
     Clients SHOULD also handle the case where a response takes too long
