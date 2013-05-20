@@ -237,12 +237,6 @@ Internet-Draft              remoteStorage                  December 2012
 
 6. Versioning
 
-    The current version of a document is the 13-digit decimal number
-    representing the number of milliseconds between 00:00 UCT, 1 January
-    1970, and the last time its content or content type were set or
-    changed successfully. The current version of a folder is the highest
-    version of any of the items it contains.
-
     All successful requests MUST return an 'ETag' header [HTTP] with, in the 
     case of GET, the current version, in the case of PUT, the new 
     version, and in case of DELETE, the version that was deleted. PUT 
@@ -251,6 +245,10 @@ Internet-Draft              remoteStorage                  December 2012
     the document's current version. GET requests MAY have an
     'If-None-Match' header [HTTP], and SHOULD be responded to
     with a 412 if that includes the document or folder's current version.
+
+    A PUT request MAY have an 'If-None-Match:*' header [HTTP], in which
+    case it MUST fail with a 412 response code if the document already
+    exists.
 
     A provider MAY offer its users a way to roll back to a previous version
     of the storage contents, but this specification does not define any
