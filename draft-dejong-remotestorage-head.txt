@@ -194,10 +194,17 @@ Internet-Draft              remoteStorage                      June 2013
     The response MUST contain an ETag header, with the document's new
     version (for instance a hash of its contents) as its value.
 
-    A successful DELETE request to a document MUST result in the
-    deletion of that document from the storage, and from its parent
-    folder. If the parent folder is left empty by this, then it MUST
-    also be removed, and so on for ancestor folders.
+    A successful DELETE request to a document MUST result in:
+
+       * the deletion of that document from the storage, and from its parent
+         folder,
+       * silent deletion of the parent folder if is left empty by this, and so
+         on for further ancestor folders,
+       * the version of its parent folder being updated, as well as that of
+         further ancestor folders.
+
+    The response MUST contain an ETag header, with the document's version that
+    was deleted as its value.
 
     A successful OPTIONS request SHOULD be responded to as described in
     the CORS section below.
