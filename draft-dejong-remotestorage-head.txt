@@ -270,7 +270,7 @@ Internet-Draft              remoteStorage                      June 2013
          [IRI]. Examples:
          * 'https://example.com' (host only)
          * 'https://example.com:8080' (host and port)
-         * 'https://example.com/some?path/to/storage' (host, port and
+         * 'https://example.com/path/to/storage' (host, port and
            path prefix; note there is no trailing slash)
        * <access_token> as per [OAUTH]. The token SHOULD be hard to 
          guess and SHOULD NOT be reused from one client to another. It  
