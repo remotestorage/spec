@@ -52,7 +52,7 @@ Copyright Notice
 
 de Jong                                                         [Page 1]
  
-Internet-Draft              remoteStorage                  December 2012
+Internet-Draft              remoteStorage                      June 2013
 
 
 Table of Contents
@@ -109,7 +109,7 @@ Table of Contents
 
 de Jong                                                         [Page 2]
  
-Internet-Draft              remoteStorage                  December 2012
+Internet-Draft              remoteStorage                      June 2013
 
 
     document are to be interpreted as described in RFC 2119 [WORDS].
@@ -166,7 +166,7 @@ Internet-Draft              remoteStorage                  December 2012
 
 de Jong                                                         [Page 3]
  
-Internet-Draft              remoteStorage                  December 2012
+Internet-Draft              remoteStorage                      June 2013
 
 
     empty folder MUST NOT be listed as an item in its parent folder.
@@ -223,7 +223,7 @@ Internet-Draft              remoteStorage                  December 2012
 
 de Jong                                                         [Page 4]
  
-Internet-Draft              remoteStorage                  December 2012
+Internet-Draft              remoteStorage                      June 2013
 
       
              on the storage,
@@ -281,7 +281,7 @@ Internet-Draft              remoteStorage                  December 2012
 
 de Jong                                                         [Page 5]
  
-Internet-Draft              remoteStorage                  December 2012
+Internet-Draft              remoteStorage                      June 2013
 
 
          client, as long as that client is still trusted. Example:
@@ -338,7 +338,7 @@ Internet-Draft              remoteStorage                  December 2012
 
 de Jong                                                         [Page 6]
  
-Internet-Draft              remoteStorage                  December 2012
+Internet-Draft              remoteStorage                      June 2013
 
 
     {
@@ -394,7 +394,7 @@ Internet-Draft              remoteStorage                  December 2012
 
 de Jong                                                         [Page 7]
 
-Internet-Draft              remoteStorage                  December 2012
+Internet-Draft              remoteStorage                      June 2013
 
 
     as per application-first bearer token issuance.
@@ -451,7 +451,7 @@ Internet-Draft              remoteStorage                  December 2012
       
 de Jong                                                         [Page 8]
 
-Internet-Draft              remoteStorage                  December 2012
+Internet-Draft              remoteStorage                      June 2013
 
 
     The server SHOULD also detect and stop denial-of-service attacks
@@ -512,7 +512,7 @@ Internet-Draft              remoteStorage                  December 2012
       
 de Jong                                                         [Page 9]
 
-Internet-Draft              remoteStorage                  December 2012
+Internet-Draft              remoteStorage                      June 2013
 
 
         330541", https://developer.mozilla.org/en-
