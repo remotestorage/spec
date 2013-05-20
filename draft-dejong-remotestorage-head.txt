@@ -484,7 +484,7 @@ Internet-Draft              remoteStorage                      June 2013
       
     [WEBFINGER]
         Jones, Paul E., Salguerio, Gonzalo, and Smarr, Joseph,
-        "WebFinger", draft-ietf-appsawg-webfinger-10, Work in Progress
+        "WebFinger", draft-ietf-appsawg-webfinger-13, Work in Progress
     
     [OAUTH]
         "Section 4.2: Implicit Grant", in: Hardt, D. (ed), "The OAuth
