@@ -189,13 +189,11 @@ Internet-Draft              remoteStorage                      June 2013
          parent,
        * the value of its Content-Type header being stored as the
          document's new content type,
-       * the current server time, in the form of milliseconds since
-         0:00 UCT, 1 January, 1970 being stored as the new version of
-         the document itself, as well as of its parent folder and
-         further ancestor folders.
+       * its version being updated, as well as that of its parent folder
+         and further ancestor folders.
       
     The response MUST contain an ETag header, with the document's new
-    version (milliseconds since the beginning of 1970) as its value.
+    version (for instance a hash of its contents) as its value.
 
     A successful DELETE request to a document MUST result in the
     deletion of that document from the storage, and from its parent
