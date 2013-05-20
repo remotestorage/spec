@@ -36,7 +36,7 @@ Status of this Memo
 
 Copyright Notice
 
-   Copyright (c) 2012 IETF Trust and the persons identified as the
+   Copyright (c) 2013 IETF Trust and the persons identified as the
    document authors. All rights reserved.
 
    This document is subject to BCP 78 and the IETF Trust's Legal
@@ -234,22 +234,22 @@ Internet-Draft              remoteStorage                      June 2013
 
 6. Versioning
 
-    All successful requests MUST return an 'ETag' header [HTTP] with, in the 
-    case of GET, the current version, in the case of PUT, the new 
-    version, and in case of DELETE, the version that was deleted. PUT 
-    and DELETE requests MAY have an 'If-Match' request header [HTTP],
-    and MUST fail with a 412 response code if that doesn't match 
+    All successful requests MUST return an 'ETag' header [HTTP] with,
+    in the case of GET, the current version, in the case of PUT, the
+    new version, and in case of DELETE, the version that was deleted.
+    PUT and DELETE requests MAY have an 'If-Match' request header
+    [HTTP], and MUST fail with a 412 response code if that doesn't match
     the document's current version. GET requests MAY have an
-    'If-None-Match' header [HTTP], and SHOULD be responded to
-    with a 412 if that includes the document or folder's current version.
+    'If-None-Match' header [HTTP], and SHOULD be responded to with a 412
+    response if that includes the document or folder's current version.
 
     A PUT request MAY have an 'If-None-Match:*' header [HTTP], in which
     case it MUST fail with a 412 response code if the document already
     exists.
 
-    A provider MAY offer its users a way to roll back to a previous version
-    of the storage contents, but this specification does not define any
-    such rollback functionality.
+    A provider MAY offer its users a way to roll back to a previous
+    version of the storage contents, but this specification does not
+    define any such rollback functionality.
 
 7. CORS headers
 
