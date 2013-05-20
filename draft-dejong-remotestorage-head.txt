@@ -162,8 +162,8 @@ Internet-Draft              remoteStorage                      June 2013
 
 
        {
-         "abc": 1234567890123,
-         "def/": 1234567890456
+         "abc": "DEADBEEFDEADBEEFDEADBEEF",
+         "def/": "1337ABCD1337ABCD1337ABCD"
        }
       
     Empty folders are treated as non-existing, and therefore GET
