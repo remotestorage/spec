@@ -101,10 +101,6 @@ Table of Contents
     The exact details of these four actions are described in this
     specification.
 
-2. Terminology
-
-    The key words "MUST", "MUST NOT", "REQUIRED", "SHALL", "SHALL NOT",
-    "SHOULD", "SHOULD NOT", "RECOMMENDED", "MAY", and "OPTIONAL" in this
 
 
 de Jong                                                         [Page 2]
@@ -112,6 +108,10 @@ de Jong                                                         [Page 2]
 Internet-Draft              remoteStorage                      June 2013
 
 
+2. Terminology
+
+    The key words "MUST", "MUST NOT", "REQUIRED", "SHALL", "SHALL NOT",
+    "SHOULD", "SHOULD NOT", "RECOMMENDED", "MAY", and "OPTIONAL" in this
     document are to be interpreted as described in RFC 2119 [WORDS].
 
     "SHOULD" and "SHOULD NOT" are appropriate when valid exceptions to a
@@ -155,6 +155,12 @@ Internet-Draft              remoteStorage                      June 2013
     <current_version>, and contained folders appear as entries
     <item_name> '/' to <current_version>, for instance:
      
+
+de Jong                                                         [Page 3]
+ 
+Internet-Draft              remoteStorage                      June 2013
+
+
        {
          "abc": 1234567890123,
          "def/": 1234567890456
@@ -162,13 +168,6 @@ Internet-Draft              remoteStorage                      June 2013
       
     Empty folders are treated as non-existing, and therefore GET
     requests to them SHOULD be responded to with a 404 response, and an
-
-
-de Jong                                                         [Page 3]
- 
-Internet-Draft              remoteStorage                      June 2013
-
-
     empty folder MUST NOT be listed as an item in its parent folder.
     Also, folders SHOULD be created silently, as necessary to contain
     newly added items. This way, PUT and DELETE requests only need to be
@@ -207,7 +206,14 @@ Internet-Draft              remoteStorage                      June 2013
 
     The following responses SHOULD be given in the indicated cases, in
     order of preference, and SHOULD be recognized by the client:
-       
+
+
+
+de Jong                                                         [Page 4]
+ 
+Internet-Draft              remoteStorage                      June 2013
+
+      
        * 500 if an internal server error occurs,
        * 420 if the client makes too frequent requests or is suspected
              of malicious activity,
@@ -217,13 +223,6 @@ Internet-Draft              remoteStorage                      June 2013
        * 401 for all requests that don't have a bearer token with
              sufficient permissions,
        * 404 for all DELETE and GET requests to nodes that do not exist
-
-
-de Jong                                                         [Page 4]
- 
-Internet-Draft              remoteStorage                      June 2013
-
-      
              on the storage,
        * 412 for a conditional request whose pre-condition
              fails (see "Versioning" below),
@@ -259,6 +258,15 @@ Internet-Draft              remoteStorage                      June 2013
     origin MAY be returned, but for PUT and DELETE requests, the
     response MUST echo back the Origin header sent by the client.
 
+
+
+
+
+de Jong                                                         [Page 5]
+ 
+Internet-Draft              remoteStorage                      June 2013
+
+
 8. Session description
 
     The information that a client needs to receive in order to be able
@@ -275,13 +283,6 @@ Internet-Draft              remoteStorage                      June 2013
        * <access_token> as per [OAUTH]. The token SHOULD be hard to 
          guess and SHOULD NOT be reused from one client to another. It  
          can however be reused in subsequent interactions with the same 
-
-
-de Jong                                                         [Page 5]
- 
-Internet-Draft              remoteStorage                      June 2013
-
-
          client, as long as that client is still trusted. Example:
          * 'ofb24f1ac3973e70j6vts19qr9v2eei'
        * <storage_api>, always 'draft-dejong-remotestorage-01' for this
@@ -313,6 +314,12 @@ Internet-Draft              remoteStorage                      June 2013
              
     'root:r') any GET request,
 
+
+de Jong                                                         [Page 6]
+ 
+Internet-Draft              remoteStorage                      June 2013
+
+
     <module> ':rw') any requests to paths that start with
                     '/' <module> '/' or '/public/' <module> '/',
 
@@ -327,17 +334,12 @@ Internet-Draft              remoteStorage                      June 2013
       
        Authorization: Bearer <access_token>
           
+
 10. Application-first bearer token issuance
 
     To make a remoteStorage server available as 'the remoteStorage of
     <user> at <host>', exactly one link of the following format SHOULD 
     be added to the webfinger record [WEBFINGER] of <user> at <host>:
-
-
-de Jong                                                         [Page 6]
- 
-Internet-Draft              remoteStorage                      June 2013
-
 
     {
       href: <storage_root>,
@@ -364,6 +366,13 @@ Internet-Draft              remoteStorage                      June 2013
 11. Storage-first bearer token issuance
 
     The provider MAY also present a dashboard to the user, where she
+
+
+de Jong                                                         [Page 7]
+
+Internet-Draft              remoteStorage                      June 2013
+
+
     has some way to add open web app manifests [MANIFEST]. Adding a 
     manifest to the dashboard is considered equivalent to clicking 
     'accept' in the dialog of the application-first flow. Removing one 
@@ -388,13 +397,6 @@ Internet-Draft              remoteStorage                      June 2013
       
     If no access_token was given, then the application SHOULD also
     extract the <auth_endpoint> information from webfinger, and continue
-
-
-de Jong                                                         [Page 7]
-
-Internet-Draft              remoteStorage                      June 2013
-
-
     as per application-first bearer token issuance.
     
     Note that whereas a remoteStorage server SHOULD offer support of the
@@ -417,6 +419,12 @@ Internet-Draft              remoteStorage                      June 2013
     http is important for both the interface itself and all end-points 
     involved in webfinger, OAuth, and (if present) the storage-first 
     application launch dashboard. 
+
+      
+de Jong                                                         [Page 8]
+
+Internet-Draft              remoteStorage                      June 2013
+
 
     A malicious party could link to an application, but specifying a
     remoteStorage user address that it controls, thus tricking the user
@@ -442,16 +450,10 @@ Internet-Draft              remoteStorage                      June 2013
     store documents on hard-to-guess URLs whose path after
     <storage_root> starts with '/public/', while sharing this URL only
     with the intended audience. That way, only parties who know the
+            
     document's hard-to-guess URL, can access it. The server SHOULD
     therefore make an effort to detect and stop brute-force attacks that
     attempt to guess the location of such documents.
-            
-      
-de Jong                                                         [Page 8]
-
-Internet-Draft              remoteStorage                      June 2013
-
-
     The server SHOULD also detect and stop denial-of-service attacks
     that aim to overwhelm its interface with too much traffic.
       
@@ -468,7 +470,14 @@ Internet-Draft              remoteStorage                      June 2013
     Borchardt, Garret Alfert, Sebastian Kippe, Max Wiehle, Melvin
     Carvalho, Martin Stadler, Geoffroy Couprie, Niklas Cathor, Marco
     Stahl, James Coglan, Ken Eucker, Daniel Brolund, elf Pavlik, Nick
-    Jennings, and Markus Sabadello, among many others.
+    Jennings, Markus Sabadello, and Steven te Brinke, among many others.
+
+
+      
+de Jong                                                         [Page 9]
+
+Internet-Draft              remoteStorage                      June 2013
+
 
 15. References
       
@@ -503,18 +512,25 @@ Internet-Draft              remoteStorage                      June 2013
         van Kesteren, Anne (ed), "Cross-Origin Resource Sharing -- W3C
         Working Draft 3 April 2012",
         http://www.w3.org/TR/2012/WD-cors-20120403/CORS, April 2012.
-
     [MANIFEST]
         Mozilla Developer Network (ed), "App manifest -- Revision
+        330541", https://developer.mozilla.org/en-
+        US/docs/Apps/Manifest$revision/330541, November 2012.
 
-      
+     
+
+
+
+
+
+
+
+
+ 
 de Jong                                                         [Page 9]
 
 Internet-Draft              remoteStorage                      June 2013
 
-
-        330541", https://developer.mozilla.org/en-
-        US/docs/Apps/Manifest$revision/330541, November 2012.
 
 16. Authors' addresses
       
@@ -535,34 +551,33 @@ Internet-Draft              remoteStorage                      June 2013
       
       
       
-      
-      
-      
-      
-      
-      
-      
-      
-      
-
-      
-      
-      
-      
-      
-      
-      
-      
-      
-      
-      
-      
-      
-      
-      
-      
-      
-      
           
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
       
 de Jong                                                        [Page 10]
