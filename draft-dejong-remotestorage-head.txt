@@ -346,12 +346,12 @@ Internet-Draft              remoteStorage                      June 2013
       rel: "remotestorage",
       type: <storage_api>,
       properties: {
-        "http://tools.ietf.org/html/rfc6749#section-4.2": <auth_endpoint>
+        "http://tools.ietf.org/html/rfc6749#section-4.2": <auth-dialog>
       }
     }    
 
     Here <storage_root> and <storage_api> are as per "Session
-    description" above, and <auth_endpoint> SHOULD be a URL where an
+    description" above, and <auth-dialog> SHOULD be a URL where an
     OAuth2 implicit-grant flow dialog [OAUTH] is be presented, so the
     user can supply her credentials (how, is out of scope), and allow or  
     reject a request by the connecting application to obtain a bearer
