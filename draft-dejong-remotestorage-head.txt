@@ -229,8 +229,6 @@ Internet-Draft              remoteStorage                  December 2012
              on the storage,
        * 412 for a conditional request whose pre-condition
              fails (see "Versioning" below),
-       * 201 for successful PUT requests to nodes that did not exist
-             on the storage,
        * 200 for all successful requests, including PUT and DELETE.
    
     Clients SHOULD also handle the case where a response takes too long
