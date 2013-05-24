@@ -519,11 +519,11 @@ Internet-Draft              remoteStorage                      June 2013
         van Kesteren, Anne (ed), "Cross-Origin Resource Sharing -- W3C
         Working Draft 3 April 2012",
         http://www.w3.org/TR/2012/WD-cors-20120403/CORS, April 2012.
+
     [MANIFEST]
         Mozilla Developer Network (ed), "App manifest -- Revision
         330541", https://developer.mozilla.org/en-
         US/docs/Apps/Manifest$revision/330541, November 2012.
-
      
 
 
