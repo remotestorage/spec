@@ -198,8 +198,8 @@ Internet-Draft              remoteStorage                      June 2013
 
        * the deletion of that document from the storage, and from its
          parent folder,
-       * silent deletion of the parent folder if is left empty by this,
-         and so on for further ancestor folders,
+       * silent deletion of the parent folder if it is left empty by
+         this, and so on for further ancestor folders,
        * the version of its parent folder being updated, as well as that
          of further ancestor folders.
 
