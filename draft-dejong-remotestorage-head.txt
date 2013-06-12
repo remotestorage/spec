@@ -102,7 +102,6 @@ Table of Contents
     specification.
 
 
-
 de Jong                                                         [Page 2]
  
 Internet-Draft              remoteStorage                      June 2013
@@ -178,6 +177,8 @@ Internet-Draft              remoteStorage                      June 2013
     in a 'Content-Type' header, and the document's current version in an
     'ETag' header.
 
+    In addition, the server MUST support HEAD requests following the rules
+    described in the http specification [HTTP].
 
     A successful PUT request to a document MUST result in:
        
