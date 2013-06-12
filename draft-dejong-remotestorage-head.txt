@@ -174,8 +174,9 @@ Internet-Draft              remoteStorage                      June 2013
 
     A successful GET request to a document SHOULD be responded to with
     the full document contents in the body, the document's content type
-    in a 'Content-Type' header, and the document's current version in an
-    'ETag' header.
+    in a 'Content-Type' header, the document's current version in an
+    'ETag' header and the length of the document in a 'Content-Length'
+    header.
 
     In addition, the server MUST support HEAD requests following the rules
     described in the http specification [HTTP].
