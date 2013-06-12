@@ -149,7 +149,7 @@ Internet-Draft              remoteStorage                      June 2013
     <parent_folder> <folder_name> '/' for a folder. Item names MAY
     contain a-z, A-Z, 0-9, %, ., -, _, and MUST NOT have zero length.
 
-    A successful GET request to a folder SHOULD be responded to with a
+    A successful GET request to a folder MUST be responded to with a
     JSON document (content type 'application/json'), representing a map
     in which contained documents appear as entries <item_name> to
     <current_version>, and contained folders appear as entries
@@ -167,13 +167,13 @@ Internet-Draft              remoteStorage                      June 2013
        }
       
     Empty folders are treated as non-existing, and therefore GET
-    requests to them SHOULD be responded to with a 404 response, and an
+    requests to them MUST be responded to with a 404 response, and an
     empty folder MUST NOT be listed as an item in its parent folder.
-    Also, folders SHOULD be created silently, as necessary to contain
-    newly added items. This way, PUT and DELETE requests only need to be
-    made to documents, and folder management becomes an implicit result.
+    Also, folders MUST be created silently, as necessary to contain newly
+    added items. This way, PUT and DELETE requests only need to be made
+    to documents, and folder management becomes an implicit result.
 
-    A successful GET request to a document SHOULD be responded to with
+    A successful GET request to a document MUST be responded to with
     the full document contents in the body, the document's content type
     in a 'Content-Type' header, and the document's current version in an
     'ETag' header.
@@ -211,8 +211,8 @@ Internet-Draft              remoteStorage                      June 2013
 
 5. Response codes
 
-    The following responses SHOULD be given in the indicated cases, in
-    order of preference, and SHOULD be recognized by the client:
+    The following responses MUST be given in the indicated cases, in
+    order of preference, and MUST be recognized by the client:
 
 
 
