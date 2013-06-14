@@ -212,7 +212,7 @@ Internet-Draft              remoteStorage                      June 2013
 5. Response codes
 
     The following responses MUST be given in the indicated cases, in
-    order of preference, and MUST be recognized by the client:
+    order of preference, and SHOULD be recognized by the client:
 
 
 
