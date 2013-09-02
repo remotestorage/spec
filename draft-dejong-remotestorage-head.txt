@@ -516,9 +516,9 @@ Internet-Draft              remoteStorage                      June 2013
         RFC2616, June 1999.
     
     [CORS]
-        van Kesteren, Anne (ed), "Cross-Origin Resource Sharing -- W3C
-        Working Draft 3 April 2012",
-        http://www.w3.org/TR/2012/WD-cors-20120403/CORS, April 2012.
+        van Kesteren, Anne (ed), "Cross-Origin Resource Sharing -- 
+        W3C Candidate Recommendation 29 January 2013",
+        http://www.w3.org/TR/cors/, January 2013.
 
     [MANIFEST]
         Mozilla Developer Network (ed), "App manifest -- Revision
