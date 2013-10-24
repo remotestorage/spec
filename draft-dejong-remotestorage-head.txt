@@ -150,10 +150,10 @@ Internet-Draft              remoteStorage                  December 2013
     contain a-z, A-Z, 0-9, %, ., -, _, and MUST NOT have zero length.
 
     A successful GET request to a folder SHOULD be responded to with a
-    JSON document (content type 'application/json'), representing a map
-    in which contained documents appear as entries <item_name> to
-    <current_version>, and contained folders appear as entries
-    <item_name> '/' to <current_version>, for instance:
+    JSON [JSON] document (content type 'application/json'),
+    representing a map in which contained documents appear as entries
+    <item_name> to <current_version>, and contained folders appear as
+    entries <item_name> '/' to <current_version>, for instance:
      
 
 de Jong                                                         [Page 3]
@@ -504,6 +504,10 @@ Internet-Draft              remoteStorage                  December 2013
     [WORDS]
         Bradner, S., "Key words for use in RFCs to Indicate Requirement
         Levels", BCP 14, RFC 2119, March 1997.
+      
+    [JSON]
+        Crockford, D., "The application/json Media Type for JavaScript
+        Object Notation (JSON)", RFC 4627, July 2006.
       
     [IRI]
         Duerst, M., "Internationalized Resource Identifiers (IRIs)",
