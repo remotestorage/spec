@@ -224,6 +224,7 @@ Internet-Draft              remoteStorage                  December 2013
        * 500 if an internal server error occurs,
        * 429 if the client makes too frequent requests or is suspected
              of malicious activity,
+       * 414 if the request URI is too long,
        * 400 for all malformed requests (e.g. foreign characters in the
              path or unrecognized http verb, etcetera), as well as for
              all PUT and DELETE requests to folders,
