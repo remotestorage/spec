@@ -6,7 +6,7 @@ o Description: For a link that points to the storage root of a user's
     account on a remoteStorage server, the version of the remoteStorage
     spec which the server implements.
 
-o Reference: https://github.com/remotestorage/spec
+o Reference: https://github.com/remotestorage/spec/blob/648c5868faf260092ea2f1dfbd6e9ce2ebf553bd/draft-dejong-remotestorage-head.txt#L378
 
 o Notes: Example values are "draft-dejong-remotestorage-02",
     "draft-dejong-remotestorage-03", etcetera, refering to the Internet
