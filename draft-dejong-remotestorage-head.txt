@@ -236,7 +236,9 @@ Internet-Draft              remoteStorage                  December 2013
        * 412 for a conditional PUT or DELETE request whose pre-condition
              fails (see "Versioning" below),
        * 507 in case the user's account is over its storage quota,
-       * 200 for all successful requests, including PUT and DELETE.
+       * either 200 or 201 for all successful PUT requests that result
+             in the creation of a previously non-existing resource.
+       * 200 for all other successful requests.
    
     Clients SHOULD also handle the case where a response takes too long
     to arrive, or where no response is received at all.
