@@ -1,8 +1,8 @@
 INTERNET DRAFT                                      Michiel B. de Jong
-Document: draft-dejong-remotestorage-01                  (independent)
+Document: draft-dejong-remotestorage-02                  (independent)
                                                              F. Kooman
 Intended Status: Proposed Standard                             SURFnet  
-Expires: 10 December 2013                                  8 June 2013
+Expires: 13 June 2014                                 10 December 2013
 
 
                             remoteStorage
@@ -32,7 +32,7 @@ Status of this Memo
    time.  It is inappropriate to use Internet-Drafts as reference
    material or to cite them other than as "work in progress."
 
-   This Internet-Draft will expire on 10 December 2013.
+   This Internet-Draft will expire on 13 June 2014.
 
 Copyright Notice
 
@@ -52,7 +52,7 @@ Copyright Notice
 
 de Jong                                                         [Page 1]
  
-Internet-Draft              remoteStorage                      June 2013
+Internet-Draft              remoteStorage                  December 2013
 
 
 Table of Contents
@@ -105,7 +105,7 @@ Table of Contents
 
 de Jong                                                         [Page 2]
  
-Internet-Draft              remoteStorage                      June 2013
+Internet-Draft              remoteStorage                  December 2013
 
 
 2. Terminology
@@ -158,7 +158,7 @@ Internet-Draft              remoteStorage                      June 2013
 
 de Jong                                                         [Page 3]
  
-Internet-Draft              remoteStorage                      June 2013
+Internet-Draft              remoteStorage                  December 2013
 
 
        {
@@ -218,7 +218,7 @@ Internet-Draft              remoteStorage                      June 2013
 
 de Jong                                                         [Page 4]
  
-Internet-Draft              remoteStorage                      June 2013
+Internet-Draft              remoteStorage                  December 2013
 
       
        * 500 if an internal server error occurs,
@@ -271,7 +271,7 @@ Internet-Draft              remoteStorage                      June 2013
 
 de Jong                                                         [Page 5]
  
-Internet-Draft              remoteStorage                      June 2013
+Internet-Draft              remoteStorage                  December 2013
 
 
 8. Session description
@@ -292,7 +292,7 @@ Internet-Draft              remoteStorage                      June 2013
          can however be reused in subsequent interactions with the same 
          client, as long as that client is still trusted. Example:
          * 'ofb24f1ac3973e70j6vts19qr9v2eei'
-       * <storage_api>, always 'draft-dejong-remotestorage-01' for this
+       * <storage_api>, always 'draft-dejong-remotestorage-02' for this
          version of the specification.
 
     The client can make its requests using https with CORS and bearer
@@ -324,7 +324,7 @@ Internet-Draft              remoteStorage                      June 2013
 
 de Jong                                                         [Page 6]
  
-Internet-Draft              remoteStorage                      June 2013
+Internet-Draft              remoteStorage                  December 2013
 
 
     <module> ':rw') any requests to paths that start with
@@ -377,7 +377,7 @@ Internet-Draft              remoteStorage                      June 2013
 
 de Jong                                                         [Page 7]
 
-Internet-Draft              remoteStorage                      June 2013
+Internet-Draft              remoteStorage                  December 2013
 
 
     has some way to add open web app manifests [MANIFEST]. Adding a 
@@ -430,7 +430,7 @@ Internet-Draft              remoteStorage                      June 2013
       
 de Jong                                                         [Page 8]
 
-Internet-Draft              remoteStorage                      June 2013
+Internet-Draft              remoteStorage                  December 2013
 
 
     A malicious party could link to an application, but specifying a
@@ -483,7 +483,7 @@ Internet-Draft              remoteStorage                      June 2013
       
 de Jong                                                         [Page 9]
 
-Internet-Draft              remoteStorage                      June 2013
+Internet-Draft              remoteStorage                  December 2013
 
 
 15. References
@@ -536,7 +536,7 @@ Internet-Draft              remoteStorage                      June 2013
  
 de Jong                                                         [Page 9]
 
-Internet-Draft              remoteStorage                      June 2013
+Internet-Draft              remoteStorage                  December 2013
 
 
 16. Authors' addresses
