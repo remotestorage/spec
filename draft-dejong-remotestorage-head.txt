@@ -176,8 +176,10 @@ Internet-Draft              remoteStorage                  December 2013
        }
       
     Empty folders are treated as non-existing, and therefore GET
-    requests to them SHOULD be responded to with a 404 response, and an
+    requests to them SHOULD be responded to with either a 404 response OR
+    the JSON document representing an empty map ("{}"). However, an
     empty folder MUST NOT be listed as an item in its parent folder.
+    
     Also, folders SHOULD be created silently, as necessary to contain
     newly added items. This way, PUT and DELETE requests only need to be
     made to documents, and folder management becomes an implicit result.
