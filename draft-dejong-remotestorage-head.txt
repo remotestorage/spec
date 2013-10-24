@@ -222,7 +222,7 @@ Internet-Draft              remoteStorage                  December 2013
 
       
        * 500 if an internal server error occurs,
-       * 420 if the client makes too frequent requests or is suspected
+       * 429 if the client makes too frequent requests or is suspected
              of malicious activity,
        * 400 for all malformed requests (e.g. foreign characters in the
              path or unrecognized http verb, etcetera), as well as for
