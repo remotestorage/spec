@@ -142,12 +142,21 @@ Internet-Draft              remoteStorage                  December 2013
 4. Requests
 
     Client-to-server requests SHOULD be made over https [HTTPS]. The 
-    root folder of the storage tree is represented by the URL
-    <storage_root> '/'. Subsequently, if <parent_folder> is the URL of a
-    folder, then the URL of an item contained in it is
-    <parent_folder> <document_name> for a document, or
-    <parent_folder> <folder_name> '/' for a folder. Item names MAY
-    contain a-z, A-Z, 0-9, %, ., -, _, and MUST NOT have zero length.
+    root folder of the storage tree is represented by the following URL:
+
+        URI_ENCODE( <storage_root> '/' )
+
+    Subsequently, if <parent_folder> is the URL of a folder, then the
+    URL of an item contained in it is:
+
+        URI_ENCODE( <parent_folder> <document_name> )
+
+    for a document, or:
+
+        URI_ENCODE( <parent_folder> <folder_name> '/' )
+
+    for a folder. Item names MAY contain all characters except '/' and
+    the null character, and MUST NOT have zero length.
 
     A successful GET request to a folder SHOULD be responded to with a
     JSON [JSON] document (content type 'application/json'),
