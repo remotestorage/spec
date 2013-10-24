@@ -372,13 +372,13 @@ Internet-Draft              remoteStorage                  December 2013
     be added to the webfinger record [WEBFINGER] of <user> at <host>:
 
     {
-      href: <storage_root>,
-      rel: "remotestorage",
-      type: <storage_api>,
-      properties: {
+      "href": <storage_root>,
+      "rel": "remotestorage",
+      "properties": {
+        "http://remotestorage.io/spec/version": <storage_api>,
         "http://tools.ietf.org/html/rfc6749#section-4.2": <auth-dialog>
       }
-    }    
+    }
 
     Here <storage_root> and <storage_api> are as per "Session
     description" above, and <auth-dialog> SHOULD be a URL where an

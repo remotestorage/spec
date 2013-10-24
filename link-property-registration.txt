@@ -1,0 +1,13 @@
+o Property Identifier: http://remotestorage.io/spec/version
+
+o Link Type: N/A
+
+o Description: For a link that points to the storage root of a user's
+    account on a remoteStorage server, the version of the remoteStorage
+    spec which the server implements.
+
+o Reference: https://github.com/remotestorage/spec
+
+o Notes: Example values are "draft-dejong-remotestorage-02",
+    "draft-dejong-remotestorage-03", etcetera, refering to the Internet
+    Draft versions describing the server's behavior.
