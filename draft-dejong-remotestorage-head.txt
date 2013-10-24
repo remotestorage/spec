@@ -231,7 +231,9 @@ Internet-Draft              remoteStorage                  December 2013
              sufficient permissions,
        * 404 for all DELETE and GET requests to nodes that do not exist
              on the storage,
-       * 412 for a conditional request whose pre-condition
+       * 304 for a conditional GET request whose pre-condition
+             fails (see "Versioning" below),
+       * 412 for a conditional PUT or DELETE request whose pre-condition
              fails (see "Versioning" below),
        * 507 in case the user's account is over its storage quota,
        * 200 for all successful requests, including PUT and DELETE.
