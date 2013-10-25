@@ -68,13 +68,21 @@ Table of Contents
    9. Bearer tokens and access control...............................6
   10. Application-first bearer token issuance........................6
   11. Storage-first bearer token issuance............................7
-  12. Security Considerations........................................8
-  13. IANA Considerations............................................9
-  14. Acknowledgments................................................9
-  15. References.....................................................9
-     15.1. Normative References......................................9
-     15.2. Informative References....................................9
-  16. Authors' addresses............................................10
+  12. Wire transcripts...............................................7
+     12.1. Webfinger.................................................7
+     12.2. OPTIONS preflight.........................................7
+     12.3. Initial PUT...............................................7
+     12.4. Subsequent PUT............................................7
+     12.5. GET.......................................................7
+     12.6. DELETE....................................................7
+  13. Distributed versioning.........................................7
+  14. Security Considerations........................................8
+  15. IANA Considerations............................................9
+  16. Acknowledgments................................................9
+  17. References.....................................................9
+     17.1. Normative References......................................9
+     17.2. Informative References....................................9
+  18. Authors' addresses............................................10
 
 
 1.  Introduction
@@ -443,7 +451,23 @@ Internet-Draft              remoteStorage                  December 2013
     the interface for revoking an access token as specified by OAuth  
     SHOULD coincide with removing an application from the dashboard.
 
-12. Security Considerations
+12. Wire transcripts
+
+12.1. Webfinger
+
+12.2. OPTIONS preflight
+
+12.3. Initial PUT
+
+12.4. Subsequent PUT
+
+12.5. GET
+
+12.6. DELETE
+
+13. Distributed versioning
+
+14. Security Considerations
       
     To prevent man-in-the-middle attacks, the use of https instead of 
     http is important for both the interface itself and all end-points 
@@ -487,11 +511,11 @@ Internet-Draft              remoteStorage                  December 2013
     The server SHOULD also detect and stop denial-of-service attacks
     that aim to overwhelm its interface with too much traffic.
       
-13. IANA Considerations
+15. IANA Considerations
       
     This document registers the 'remotestorage' link relation.
       
-14. Acknowledgements
+16. Acknowledgements
 
     The authors would like to thank everybody who contributed to the
     development of this protocol, including Kenny Bentley, Javier Diaz,
@@ -509,9 +533,9 @@ de Jong                                                         [Page 9]
 Internet-Draft              remoteStorage                  December 2013
 
 
-15. References
+17. References
       
-15.1. Normative References
+17.1. Normative References
       
     [WORDS]
         Bradner, S., "Key words for use in RFCs to Indicate Requirement
@@ -533,7 +557,7 @@ Internet-Draft              remoteStorage                  December 2013
         "Section 4.2: Implicit Grant", in: Hardt, D. (ed), "The OAuth
         2.0 Authorization Framework", RFC6749, October 2012.
          
-15.2. Informative References      
+17.2. Informative References      
 
     [HTTPS]
         Rescorla, E., "HTTP Over TLS", RFC2818, May 2000.
@@ -566,7 +590,7 @@ de Jong                                                         [Page 9]
 Internet-Draft              remoteStorage                  December 2013
 
 
-16. Authors' addresses
+18. Authors' addresses
       
     Michiel B. de Jong
     (independent)
