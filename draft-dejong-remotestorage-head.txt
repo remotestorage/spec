@@ -68,23 +68,23 @@ Table of Contents
    9. Bearer tokens and access control...............................6
   10. Application-first bearer token issuance........................6
   11. Storage-first bearer token issuance............................7
-  12. Example wire transcripts.......................................7
-     12.1. Webfinger.................................................7
-     12.2. OAuth dialog form.........................................7
-     12.3. OAuth dialog form submission..............................7
-     12.4. OPTIONS preflight.........................................7
-     12.5. Initial PUT...............................................7
-     12.6. Subsequent PUT............................................7
-     12.7. GET.......................................................7
-     12.8. DELETE....................................................7
-  13. Distributed versioning.........................................7
-  14. Security Considerations........................................8
-  15. IANA Considerations............................................9
-  16. Acknowledgments................................................9
-  17. References.....................................................9
-     17.1. Normative References......................................9
-     17.2. Informative References....................................9
-  18. Authors' addresses............................................10
+  12. Example wire transcripts.......................................8
+     12.1. Webfinger.................................................8
+     12.2. OAuth dialog form.........................................9
+     12.3. OAuth dialog form submission..............................9
+     12.4. OPTIONS preflight.........................................9
+     12.5. Initial PUT..............................................10
+     12.6. Subsequent PUT...........................................11
+     12.7. GET......................................................12
+     12.8. DELETE...................................................13
+  13. Distributed versioning........................................14
+  14. Security Considerations.......................................15
+  15. IANA Considerations...........................................16
+  16. Acknowledgments...............................................16
+  17. References....................................................17
+     17.1. Normative References.....................................17
+     17.2. Informative References...................................17
+  18. Authors' addresses............................................18
 
 
 1.  Introduction
@@ -454,7 +454,7 @@ Internet-Draft              remoteStorage                  December 2013
     SHOULD coincide with removing an application from the dashboard.
 
       
-de Jong                                                         [Page 8]
+de Jong                                                         [Page 9]
 
 Internet-Draft              remoteStorage                  December 2013
 
@@ -502,7 +502,7 @@ s://3pp.io:4439/oauth/michiel"
          }
 
       
-de Jong                                                         [Page 8]
+de Jong                                                        [Page 10]
 
 Internet-Draft              remoteStorage                  December 2013
 
@@ -549,7 +549,7 @@ myfavoritedrinks%3Arw&state=&username=michiel&password=something&allow\
 =Allow
 
       
-de Jong                                                         [Page 8]
+de Jong                                                        [Page 11]
 
 Internet-Draft              remoteStorage                  December 2013
 
@@ -599,7 +599,7 @@ ontent-Type, Origin, X-Requested-With, If-Match, If-None-Match
 s/myfavoritedrinks/drink"}
 
       
-de Jong                                                         [Page 8]
+de Jong                                                        [Page 12]
 
 Internet-Draft              remoteStorage                  December 2013
 
@@ -650,7 +650,7 @@ ge.io/spec/modules/myfavoritedrinks/drink"}
 ge.io/spec/modules/myfavoritedrinks/drink"}
 
       
-de Jong                                                         [Page 8]
+de Jong                                                        [Page 13]
 
 Internet-Draft              remoteStorage                  December 2013
 
@@ -699,7 +699,7 @@ Internet-Draft              remoteStorage                  December 2013
     If-Match header (1).
 
       
-de Jong                                                         [Page 8]
+de Jong                                                        [Page 14]
 
 Internet-Draft              remoteStorage                  December 2013
 
@@ -750,7 +750,7 @@ Internet-Draft              remoteStorage                  December 2013
     application launch dashboard. 
 
       
-de Jong                                                         [Page 8]
+de Jong                                                        [Page 15]
 
 Internet-Draft              remoteStorage                  December 2013
 
@@ -804,7 +804,7 @@ Internet-Draft              remoteStorage                  December 2013
 
 
       
-de Jong                                                         [Page 9]
+de Jong                                                        [Page 16]
 
 Internet-Draft              remoteStorage                  December 2013
 
@@ -861,7 +861,7 @@ Internet-Draft              remoteStorage                  December 2013
 
 
  
-de Jong                                                         [Page 9]
+de Jong                                                        [Page 17]
 
 Internet-Draft              remoteStorage                  December 2013
 
@@ -914,4 +914,4 @@ Internet-Draft              remoteStorage                  December 2013
 
 
       
-de Jong                                                        [Page 10]
+de Jong                                                        [Page 18]
