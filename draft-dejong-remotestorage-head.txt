@@ -652,6 +652,60 @@ ge.io/spec/modules/myfavoritedrinks/drink"}
 
 13. Distributed versioning
 
+    This section is non-normative, and is intended to explain some of
+    the design choices concerning ETags and folder listings. At the
+    same time it will hopefully help readers who intend to develop an
+    application that uses remoteStorage as its per-user data storage.
+
+    When multiple clients have read/write access to the same document,
+    versioning conflicts may occur. For instance, client A may make
+    a PUT request that changes the document from version 1 to version
+    2, after which client B may make a PUT request attempting to change
+    the same document from version 1 to version 3.
+
+    In this case, client B can add an 'If-Match: 1' header, which would
+    trigger a 412 Conflict response code, since the current version (2)
+    does not match the version required as a condition by the header
+    If-Match header (1).
+
+    Client B is now aware of the conflict, and may consult the user,
+    saying the update to version 3 failed. The user may then choose,
+    through the user interface of client B, whether version 2 or
+    version 3 should be kept, or maybe the document should be reverted
+    on the server to version 1. Client B may then make a request that
+    puts the document to the version the user wishes; this time setting
+    an 'If-Match: 2' header instead.
+
+    Both client A and client B would periodically poll the root
+    directory of each scope they have access to, to see if the version
+    if the root directory changed. If it did, then one of the versions
+    listed in there will necessarily have changed, and the client can
+    make a GET request to that child directory or document, to obtain
+    its latest version.
+
+    Because an update in a document will result in a version change of
+    its containing folder, and that change will propagate all the way
+    to the root folder, it is not necessary to poll each document for
+    changes individually.
+
+    As an example, the root folder contains 10 directories,
+    each of which contain 10 directories, which each contain 10
+    documents, so their paths would be for instance '/0/0/1', '/0/0/2',
+    etcetera. Then one GET request to the root folder '/' will be
+    enough to know if any of the 1000 documents has changed.
+
+    Say document '/7/9/2' has changed; then the GET request to '/' will
+    come back with a different ETag, and entry '7/' will have a
+    different value' in its JSON content. The client could then request
+    '/7/', '/7/9/', and '/7/9/2' to narrow down the one document that
+    caused the root directory's ETag to change.
+
+    Note that the remoteStorage server does not get involved in the
+    conflict resolution. It keeps the canonical current version at all
+    times, and allows clients to make conditional GET and PUT requests,
+    but it is up to whichever client discovers a given version
+    conflict, to resolve it.
+
 14. Security Considerations
       
     To prevent man-in-the-middle attacks, the use of https instead of 
