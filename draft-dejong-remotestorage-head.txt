@@ -102,6 +102,12 @@ Table of Contents
        *  GET a document: retrieve its content type, current version,
           and contents
 
+
+de Jong                                                         [Page 2]
+ 
+Internet-Draft              remoteStorage                  December 2013
+
+
        *  PUT a document: store a new version, its content type, and
           contents, conditional on the current version
 
@@ -110,13 +116,6 @@ Table of Contents
 
     The exact details of these four actions are described in this
     specification.
-
-
-
-de Jong                                                         [Page 2]
- 
-Internet-Draft              remoteStorage                  December 2013
-
 
 2. Terminology
 
@@ -148,6 +147,12 @@ Internet-Draft              remoteStorage                  December 2013
        * content type
        * content
        * current version
+     
+
+de Jong                                                         [Page 3]
+ 
+Internet-Draft              remoteStorage                  December 2013
+
 
 4. Requests
 
@@ -158,7 +163,7 @@ Internet-Draft              remoteStorage                  December 2013
 
     Subsequently, if <parent_folder> is the URL of a folder, then the
     URL of an item contained in it is:
-
+ 
         URI_ENCODE( <parent_folder> <document_name> )
 
     for a document, or:
@@ -173,13 +178,6 @@ Internet-Draft              remoteStorage                  December 2013
     representing a map in which contained documents appear as entries
     <item_name> to <current_version>, and contained folders appear as
     entries <item_name> '/' to <current_version>, for instance:
-     
-
-de Jong                                                         [Page 3]
- 
-Internet-Draft              remoteStorage                  December 2013
-
-
        {
          "abc": "DEADBEEFDEADBEEFDEADBEEF",
          "def/": "1337ABCD1337ABCD1337ABCD"
