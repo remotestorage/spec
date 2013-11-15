@@ -276,29 +276,28 @@ Internet-Draft              remoteStorage                  December 2013
     in the case of GET, the current version, in the case of PUT, the
     new version, and in case of DELETE, the version that was deleted.
     PUT and DELETE requests MAY have an 'If-Match' request header
-    [HTTP], and MUST fail with a 412 response code if that doesn't match
-    the document's current version. GET requests MAY have an a comma-
-    separated list of revisions in an 'If-None-Match' header [HTTP], and
-    SHOULD be responded to with a 412 response if that list includes the
-    document or folder's current version.
+    [HTTP], and MUST fail with a 412 response code if that doesn't
+    match the document's current version.
 
-    A PUT request MAY have an 'If-None-Match: *' header [HTTP], in
-    which case it MUST fail with a 412 response code if the document
+    GET requests MAY have an a comma-separated list of revisions in an
+    'If-None-Match' header [HTTP], and SHOULD be responded to with a 412
+    response if that list includes the document or folder's current
+    version. A PUT request MAY have an 'If-None-Match: *' header [HTTP],
+    in which case it MUST fail with a 412 response code if the document
     already exists.
+
+    In all 'ETag', 'If-Match' and 'If-None-Match' headers, revision
+    strings should appear inside double quotes (").
 
     Whether or not a document and a directory with mathing names can
     exist side-by-side in the same directory, is left undefined. This
     means a server MAY fail with a 412 response code if a PUT request
     would result in such a document-with-directory name clash. Clients
-    are encouraged to choose directory names that avoid clashing with
-    document names.
+    are therefore encouraged to choose directory names that avoid
+    clashing with document names and vice versa.
 
-    A provider MAY offer its users a way to roll back to a previous
-    version of the storage contents, but this specification does not
-    define any such rollback functionality.
-
-
-
+    A provider MAY offer version rollback functionality to its users,
+    but this specification does not define the user interface for that.
 
 
 de Jong                                                         [Page 6]
