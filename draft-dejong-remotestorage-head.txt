@@ -277,13 +277,14 @@ Internet-Draft              remoteStorage                  December 2013
     new version, and in case of DELETE, the version that was deleted.
     PUT and DELETE requests MAY have an 'If-Match' request header
     [HTTP], and MUST fail with a 412 response code if that doesn't match
-    the document's current version. GET requests MAY have an
-    'If-None-Match' header [HTTP], and SHOULD be responded to with a 412
-    response if that includes the document or folder's current version.
+    the document's current version. GET requests MAY have an a comma-
+    separated list of revisions in an 'If-None-Match' header [HTTP], and
+    SHOULD be responded to with a 412 response if that list includes the
+    document or folder's current version.
 
-    A PUT request MAY have an 'If-None-Match:*' header [HTTP], in which
-    case it MUST fail with a 412 response code if the document already
-    exists.
+    A PUT request MAY have an 'If-None-Match: *' header [HTTP], in
+    which case it MUST fail with a 412 response code if the document
+    already exists.
 
     Whether or not a document and a directory with mathing names can
     exist side-by-side in the same directory, is left undefined. This
