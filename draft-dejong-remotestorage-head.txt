@@ -78,7 +78,7 @@ Table of Contents
      12.7. GET......................................................13
      12.8. DELETE...................................................14
   13. Distributed versioning........................................14
-  14. Security Considerations.......................................15
+  14. Security Considerations.......................................16
   15. IANA Considerations...........................................17
   16. Acknowledgments...............................................17
   17. References....................................................17
@@ -416,6 +416,7 @@ Internet-Draft              remoteStorage                  December 2013
     before first use; if no client registration is required, then the
     server MAY ignore the client_id parameter in favour of relying on
     the redirect_uri parameter for client identification.
+
 11. Storage-first bearer token issuance
 
     The provider MAY also present a dashboard to the user, where she
@@ -447,7 +448,6 @@ Internet-Draft              remoteStorage                  December 2013
     extract the <auth_endpoint> information from webfinger, and continue
     as per application-first bearer token issuance.
     
-    Note that whereas a remoteStorage server SHOULD offer support of the
 
       
 de Jong                                                         [Page 9]
@@ -455,6 +455,7 @@ de Jong                                                         [Page 9]
 Internet-Draft              remoteStorage                  December 2013
 
 
+    Note that whereas a remoteStorage server SHOULD offer support of the
     application-first flow with webfinger and OAuth, it MAY choose not
     to support the storage-first flow, provided that users will easily 
     remember their <user> '@' <host> webfinger address at that provider.
