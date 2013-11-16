@@ -1,7 +1,7 @@
 INTERNET DRAFT                                      Michiel B. de Jong
 Document: draft-dejong-remotestorage-02                  (independent)
                                                              F. Kooman
-Intended Status: Proposed Standard                             SURFnet  
+Intended Status: Proposed Standard                             SURFnet 
 Expires: 13 June 2014                                 10 December 2013
 
 
@@ -185,8 +185,8 @@ Internet-Draft              remoteStorage                  December 2013
        }
       
     Empty folders are treated as non-existing, and therefore GET
-    requests to them SHOULD be responded to with either a 404 response OR
-    the JSON document representing an empty map ("{}"). However, an
+    requests to them SHOULD be responded to with either a 404 response
+    OR the JSON document representing an empty map ("{}"). However, an
     empty folder MUST NOT be listed as an item in its parent folder.
     
     Also, folders SHOULD be created silently, as necessary to contain
