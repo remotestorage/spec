@@ -869,7 +869,7 @@ Internet-Draft              remoteStorage                  December 2013
     [MANIFEST]
         Mozilla Developer Network (ed), "App manifest -- Revision
         330541", https://developer.mozilla.org/en-
-        US/docs/Apps/Manifest$revision/330541, November 2012.
+        US/Apps/Developing/Manifest$revision/482369, October 2013.
      
 18. Authors' addresses
       
