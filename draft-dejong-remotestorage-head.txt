@@ -430,7 +430,7 @@ Internet-Draft              remoteStorage                  December 2013
     document, as a JSON array of strings, each string being one access
     scope of the form <module> <level>.
     
-    When the user gestures she wants to use a certain application whose
+    When the user gestures they want to use a certain application whose
     manifest is present on the dashboard, the dashboard SHOULD redirect
     to the application or open it in a new window. To mimic coming back 
     from the OAuth dialog, it MAY add 'access_token' and 'scope' 
@@ -446,6 +446,8 @@ Internet-Draft              remoteStorage                  December 2013
     extract the <auth_endpoint> information from webfinger, and continue
     as per application-first bearer token issuance.
     
+    Note that whereas a remoteStorage server SHOULD offer support of the
+    application-first flow with webfinger and OAuth, it MAY choose not
 
       
 de Jong                                                         [Page 9]
@@ -453,13 +455,11 @@ de Jong                                                         [Page 9]
 Internet-Draft              remoteStorage                  December 2013
 
 
-    Note that whereas a remoteStorage server SHOULD offer support of the
-    application-first flow with webfinger and OAuth, it MAY choose not
     to support the storage-first flow, provided that users will easily 
     remember their <user> '@' <host> webfinger address at that provider.
     Applications SHOULD, however, support both flows, which means  
-    checking the URL for a 'remoteStorage' parameter, but giving the
-    user a way to specify her webfinger address if there is none.
+    checking the URL for a 'remotestorage' parameter, but giving the
+    user a way to specify their webfinger address if there is none.
 
     If a server provides an application manifest dashboard, then it
     SHOULD merge the list of applications there with the list of
@@ -474,11 +474,11 @@ Internet-Draft              remoteStorage                  December 2013
 
 12.1. Webfinger
 
-    An in-browser application might issues the following request, using
-    XMLHttpRequest and CORS:
+    In application-first, an in-browser application might issue the
+    following request, using XMLHttpRequest and CORS:
 
-         GET /.well-known/webfinger?resource=acct:michiel@michielbdejo\
-ng.com HTTP/1.1
+         GET /.well-known/webfinger?resource=acct:michiel@michielbdejon\
+g.com HTTP/1.1
          Host: michielbdejong.com
 
     and the server's response might look like this:
@@ -487,8 +487,8 @@ ng.com HTTP/1.1
          Access-Control-Allow-Origin: *
          Access-Control-Allow-Methods: GET
          Access-Control-Allow-Headers: If-Match, If-None-Match
-         Access-Control-Expose-Headers: ETag, Content-Type, Content-Le\
-ngth
+         Access-Control-Expose-Headers: ETag, Content-Type, Content-Len\
+gth
 
          {
            "links":[{
@@ -497,6 +497,7 @@ ngth
            }, {
              "href": "https://michielbdejong.com/me.jpg",
              "rel": "avatar"
+           }, {
 
       
 de Jong                                                        [Page 10]
@@ -504,14 +505,13 @@ de Jong                                                        [Page 10]
 Internet-Draft              remoteStorage                  December 2013
 
 
-           }, {
              "href": "https://3pp.io:4439/storage/michiel",
              "rel": "remotestorage",
              "properties": {
-               "http://remotestorage.io/spec/version": "draft-dejong-r\
-emotestorage-02",
-               "http://tools.ietf.org/html/rfc6749#section-4.2": "http\
-s://3pp.io:4439/oauth/michiel"
+               "http://remotestorage.io/spec/version": "draft-dejong-re\
+motestorage-02",
+               "http://tools.ietf.org/html/rfc6750#section-4.2": "https\
+://3pp.io:4439/oauth/michiel"
              }
            }]
          }
@@ -524,9 +524,9 @@ s://3pp.io:4439/oauth/michiel"
     https://drinks-unhosted.5apps.com/ and wants read-write access to
     the user's "myfavoritedrinks" scope:
 
-        GET /oauth/michiel?redirect_uri=https%3A%2F%2Fdrinks-unhosted.\
-5apps.com%2F&scope=myfavoritedrinks%3Arw&client_id=https%3A%2F%2Fdrink\
-s-unhosted.5apps.com&response_type=token HTTP/1.1
+        GET /oauth/michiel?redirect_uri=https%3A%2F%2Fdrinks-unhosted.5\
+apps.com%2F&scope=myfavoritedrinks%3Arw&client_id=https%3A%2F%2Fdrinks-\
+unhosted.5apps.com&response_type=token HTTP/1.1
         Host: 3pp.io
 
     The server's response might look like this (truncated for brevity):
@@ -555,21 +555,21 @@ de Jong                                                        [Page 11]
 Internet-Draft              remoteStorage                  December 2013
 
 
-        Referer: https://3pp.io:4439/oauth/michiel?redirect_uri=https%\
-3A%2F%2Fdrinks-unhosted.5apps.com%2F&scope=myfavoritedrinks%3Arw&clien\
-t_id=https%3A%2F%2Fdrinks-unhosted.5apps.com&response_type=token
+        Referer: https://3pp.io:4439/oauth/michiel?redirect_uri=https%3\
+A%2F%2Fdrinks-unhosted.5apps.com%2F&scope=myfavoritedrinks%3Arw&client_\
+id=https%3A%2F%2Fdrinks-unhosted.5apps.com&response_type=token
 
-        client_id=https%3A%2F%2Fdrinks-unhosted.5apps.com&redirect_uri\
-=https%3A%2F%2Fdrinks-unhosted.5apps.com%2F&response_type=token&scope=\
-myfavoritedrinks%3Arw&state=&username=michiel&password=something&allow\
-=Allow
+        client_id=https%3A%2F%2Fdrinks-unhosted.5apps.com&redirect_uri=\
+https%3A%2F%2Fdrinks-unhosted.5apps.com%2F&response_type=token&scope=my\
+favoritedrinks%3Arw&state=&username=michiel&password=something&allow=Al\
+low
 
     To which the server could respond with a 302 redirect, back to the
     origin of the requesting application:
 
-         HTTP/1.1 200 OK
-        Location:https://drinks-unhosted.5apps.com/#access_token=j2YnG\
-tXjzzzHNjkd1CJxoQubA1o%3D&token_type=bearer&state=
+        HTTP/1.1 200 OK
+        Location:https://drinks-unhosted.5apps.com/#access_token=j2YnGt\
+XjzzzHNjkd1CJxoQubA1o%3D&token_type=bearer&state=
 
 12.4. OPTIONS preflight
 
@@ -589,8 +589,8 @@ tXjzzzHNjkd1CJxoQubA1o%3D&token_type=bearer&state=
         HTTP/1.1 200 OK
         Access-Control-Allow-Origin: https://drinks-unhosted.5apps.com
         Access-Control-Allow-Methods: GET, PUT, DELETE
-        Access-Control-Allow-Headers: Authorization, Content-Length, C\
-ontent-Type, Origin, X-Requested-With, If-Match, If-None-Match
+        Access-Control-Allow-Headers: Authorization, Content-Length, Co\
+ntent-Type, Origin, X-Requested-With, If-Match, If-None-Match
 
 12.5. Initial PUT
 
@@ -612,15 +612,15 @@ Internet-Draft              remoteStorage                  December 2013
         Referer: https://drinks-unhosted.5apps.com/?
         If-None-Match: *
 
-        {"name":"test","@context":"http://remotestorage.io/spec/module\
-s/myfavoritedrinks/drink"}
+        {"name":"test","@context":"http://remotestorage.io/spec/modules\
+/myfavoritedrinks/drink"}
 
     And the server may respond with either a 201 Created or a 200 OK
     status:
 
         HTTP/1.1 201 Created
         Access-Control-Allow-Origin: https://drinks-unhosted.5apps.com
-        ETag: 1382694045000
+        ETag: "1382694045000"
 
 12.6. Subsequent PUT
 
@@ -634,16 +634,16 @@ s/myfavoritedrinks/drink"}
         Authorization: Bearer j2YnGtXjzzzHNjkd1CJxoQubA1o=
         Content-Type: application/json; charset=UTF-8
         Referer: https://drinks-unhosted.5apps.com/?
-        If-Match: 1382694045000
+        If-Match: "1382694045000"
 
-        {"name":"test", "updated":true, "@context":"http://remotestora\
-ge.io/spec/modules/myfavoritedrinks/drink"}
+        {"name":"test", "updated":true, "@context":"http://remotestorag\
+e.io/spec/modules/myfavoritedrinks/drink"}
 
     And the server may respond with a 412 Conflict or a 200 OK status:
 
         HTTP/1.1 200 OK
         Access-Control-Allow-Origin: https://drinks-unhosted.5apps.com
-        ETag: 1382694048000
+        ETag: "1382694048000"
 
 12.7. GET
 
@@ -662,7 +662,7 @@ Internet-Draft              remoteStorage                  December 2013
         Origin: https://drinks-unhosted.5apps.com
         Authorization: Bearer j2YnGtXjzzzHNjkd1CJxoQubA1o=
         Referer: https://drinks-unhosted.5apps.com/?
-        If-None-Match: 1382694045000,1382694048000
+        If-None-Match: "1382694045000", "1382694048000"
 
         {"name":"test", "updated":true, "@context":"http://remotestora\
 ge.io/spec/modules/myfavoritedrinks/drink"}
@@ -672,7 +672,7 @@ ge.io/spec/modules/myfavoritedrinks/drink"}
 
         HTTP/1.1 304 Not Modified
         Access-Control-Allow-Origin: https://drinks-unhosted.5apps.com
-        ETag: 1382694048000
+        ETag: "1382694048000"
 
 12.8. DELETE
 
@@ -684,13 +684,13 @@ ge.io/spec/modules/myfavoritedrinks/drink"}
         Authorization: Bearer j2YnGtXjzzzHNjkd1CJxoQubA1o=
         Content-Type: application/json; charset=UTF-8
         Referer: https://drinks-unhosted.5apps.com/?
-        If-Match: 1382694045000
+        If-Match: "1382694045000"
 
     And the server may respond with a 412 Conflict or a 200 OK status:
 
         HTTP/1.1 412 Conflict
         Access-Control-Allow-Origin: https://drinks-unhosted.5apps.com
-        ETag: 1382694048000
+        ETag: "1382694048000"
 
 13. Distributed versioning
 
@@ -711,18 +711,18 @@ Internet-Draft              remoteStorage                  December 2013
     2, after which client B may make a PUT request attempting to change
     the same document from version 1 to version 3.
 
-    In this case, client B can add an 'If-Match: 1' header, which would
-    trigger a 412 Conflict response code, since the current version (2)
-    does not match the version required as a condition by the header
-    If-Match header (1).
+    In this case, client B can add an 'If-Match: "1"' header, which
+    would trigger a 412 Conflict response code, since the current
+    version ("2") does not match the version required as a condition by
+    the header If-Match header ("1").
 
     Client B is now aware of the conflict, and may consult the user,
     saying the update to version 3 failed. The user may then choose,
     through the user interface of client B, whether version 2 or
     version 3 should be kept, or maybe the document should be reverted
-    on the server to version 1. Client B may then make a request that
-    puts the document to the version the user wishes; this time setting
-    an 'If-Match: 2' header instead.
+    on the server to version 1, or a merged version 4 is needed. Client
+    B may then make a request that puts the document to the version the
+    user wishes; this time setting an 'If-Match: "2"' header instead.
 
     Both client A and client B would periodically poll the root
     directory of each scope they have access to, to see if the version
@@ -736,15 +736,15 @@ Internet-Draft              remoteStorage                  December 2013
     to the root folder, it is not necessary to poll each document for
     changes individually.
 
-    As an example, the root folder contains 10 directories,
+    As an example, the root folder may contain 10 directories,
     each of which contain 10 directories, which each contain 10
     documents, so their paths would be for instance '/0/0/1', '/0/0/2',
     etcetera. Then one GET request to the root folder '/' will be
-    enough to know if any of the 1000 documents has changed.
+    enough to know if any of these 1000 documents has changed.
 
     Say document '/7/9/2' has changed; then the GET request to '/' will
     come back with a different ETag, and entry '7/' will have a
-    different value' in its JSON content. The client could then request
+    different value in its JSON content. The client could then request
     '/7/', '/7/9/', and '/7/9/2' to narrow down the one document that
     caused the root directory's ETag to change.
 
