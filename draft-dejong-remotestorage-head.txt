@@ -83,7 +83,7 @@ Table of Contents
   16. Acknowledgments...............................................17
   17. References....................................................17
      17.1. Normative References.....................................17
-     17.2. Informative References...................................17
+     17.2. Informative References...................................18
   18. Authors' addresses............................................18
 
 
@@ -792,10 +792,10 @@ Internet-Draft              remoteStorage                  December 2013
     store documents on hard-to-guess URLs whose path after
     <storage_root> starts with '/public/', while sharing this URL only
     with the intended audience. That way, only parties who know the
-            
     document's hard-to-guess URL, can access it. The server SHOULD
     therefore make an effort to detect and stop brute-force attacks that
     attempt to guess the location of such documents.
+            
     The server SHOULD also detect and stop denial-of-service attacks
     that aim to overwhelm its interface with too much traffic.
       
@@ -807,7 +807,10 @@ Internet-Draft              remoteStorage                  December 2013
 
 15. IANA Considerations
       
-    This document registers the 'remotestorage' link relation.
+    This document registers the 'remotestorage' link relation, as well
+    as the "http://remotestorage.io/spec/version" and
+    "http://tools.ietf.org/html/rfc6750#section-4.2" webfinger
+    properties.
       
 16. Acknowledgements
 
@@ -845,9 +848,6 @@ Internet-Draft              remoteStorage                  December 2013
         "Section 4.2: Implicit Grant", in: Hardt, D. (ed), "The OAuth
         2.0 Authorization Framework", RFC6749, October 2012.
          
-17.2. Informative References      
-
-    [HTTPS]
 
  
 de Jong                                                        [Page 17]
@@ -855,6 +855,9 @@ de Jong                                                        [Page 17]
 Internet-Draft              remoteStorage                  December 2013
 
 
+17.2. Informative References      
+
+    [HTTPS]
         Rescorla, E., "HTTP Over TLS", RFC2818, May 2000.
 
     [HTTP]
@@ -897,7 +900,4 @@ Internet-Draft              remoteStorage                  December 2013
 
 
 
-
-
-      
 de Jong                                                        [Page 18]
