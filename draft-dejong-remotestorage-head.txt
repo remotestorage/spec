@@ -406,23 +406,21 @@ Internet-Draft              remoteStorage                  December 2013
 
 
     description" above, and <auth-dialog> SHOULD be a URL where an
-    OAuth2 implicit-grant flow dialog [OAUTH] is be presented, so the
-    user can supply her credentials (how, is out of scope), and allow or  
+    OAuth2 implicit-grant flow dialog [OAUTH] is presented, so the user
+    can supply their credentials (how, is out of scope), and allow or  
     reject a request by the connecting application to obtain a bearer
     token for a certain list of access scopes.
       
     The server SHOULD NOT expire bearer tokens unless they are revoked,
     and MAY require the user to register applications as OAuth clients
     before first use; if no client registration is required, then the
-    server MAY ignore the client_id parameter in favour of relying on
+    server MAY ignore the client_id parameter in favor of relying on
     the redirect_uri parameter for client identification.
 
 11. Storage-first bearer token issuance
 
-    The provider MAY also present a dashboard to the user, where she
-
-
-    has some way to add open web app manifests [MANIFEST]. Adding a 
+    The provider MAY also present a dashboard to the user, where they
+    have some way to add open web app manifests [MANIFEST]. Adding a 
     manifest to the dashboard is considered equivalent to clicking 
     'accept' in the dialog of the application-first flow. Removing one 
     is considered equivalent to revoking its access token.
