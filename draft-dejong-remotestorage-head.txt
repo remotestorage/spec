@@ -83,7 +83,7 @@ Table of Contents
   16. Acknowledgments...............................................17
   17. References....................................................17
      17.1. Normative References.....................................17
-     17.2. Informative References...................................18
+     17.2. Informative References...................................17
   18. Authors' addresses............................................18
 
 
@@ -832,10 +832,6 @@ Internet-Draft              remoteStorage                  December 2013
         Bradner, S., "Key words for use in RFCs to Indicate Requirement
         Levels", BCP 14, RFC 2119, March 1997.
       
-    [JSON]
-        Crockford, D., "The application/json Media Type for JavaScript
-        Object Notation (JSON)", RFC 4627, July 2006.
-      
     [IRI]
         Duerst, M., "Internationalized Resource Identifiers (IRIs)",
         RFC 3987, January 2005.
@@ -848,6 +844,10 @@ Internet-Draft              remoteStorage                  December 2013
         "Section 4.2: Implicit Grant", in: Hardt, D. (ed), "The OAuth
         2.0 Authorization Framework", RFC6749, October 2012.
          
+17.2. Informative References      
+
+    [HTTPS]
+        Rescorla, E., "HTTP Over TLS", RFC2818, May 2000.
 
  
 de Jong                                                        [Page 17]
@@ -855,15 +855,14 @@ de Jong                                                        [Page 17]
 Internet-Draft              remoteStorage                  December 2013
 
 
-17.2. Informative References      
-
-    [HTTPS]
-        Rescorla, E., "HTTP Over TLS", RFC2818, May 2000.
-
     [HTTP]
         Fielding et al., "Hypertext Transfer Protocol -- HTTP/1.1",
         RFC2616, June 1999.
     
+    [JSON]
+        Crockford, D., "The application/json Media Type for JavaScript
+        Object Notation (JSON)", RFC 4627, July 2006.
+      
     [CORS]
         van Kesteren, Anne (ed), "Cross-Origin Resource Sharing -- 
         W3C Candidate Recommendation 29 January 2013",
@@ -894,6 +893,7 @@ Internet-Draft              remoteStorage                  December 2013
       
       
           
+
 
 
 
