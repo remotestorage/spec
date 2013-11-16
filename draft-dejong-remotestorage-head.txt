@@ -378,7 +378,7 @@ Internet-Draft              remoteStorage                  December 2013
     folder) whose path starts with '/public/' are always allowed. They,
     as well as OPTIONS requests, can be made without a bearer token. All
     other requests should present a bearer token with sufficient access
-    scope, using a header of the following form:
+    scope, using a header of the following form (no double quotes here):
       
        Authorization: Bearer <access_token>
 
