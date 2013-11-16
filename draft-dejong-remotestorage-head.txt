@@ -837,8 +837,8 @@ Internet-Draft              remoteStorage                  December 2013
         RFC 3987, January 2005.
       
     [WEBFINGER]
-        Jones, Paul E., Salguerio, Gonzalo, and Smarr, Joseph,
-        "WebFinger", draft-ietf-appsawg-webfinger-14, Work in Progress
+        Jones, P., Salguerio, G., Jones, M, and Smarr, J.,
+        "WebFinger", RFC7033, September 2013.
     
     [OAUTH]
         "Section 4.2: Implicit Grant", in: Hardt, D. (ed), "The OAuth
