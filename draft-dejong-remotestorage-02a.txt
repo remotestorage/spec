@@ -1,5 +1,5 @@
-INTERNET DRAFT                                      Michiel B. de Jong
-Document: draft-dejong-remotestorage-02                  (independent)
+INTERNET DRAFT (alternative version)  a             Michiel B. de Jong
+Document: draft-dejong-remotestorage-02a                 (independent)
                                                              F. Kooman
 Intended Status: Proposed Standard                             SURFnet 
 Expires: 13 June 2014                                 10 December 2013
@@ -114,6 +114,9 @@ Internet-Draft              remoteStorage                  December 2013
        *  DELETE a document: remove it from the storage, conditional on
           the current version
 
+       *  HEAD a folder or document: like GET, but omitting the response
+          body
+
     The exact details of these four actions are described in this
     specification.
 
@@ -174,14 +177,34 @@ Internet-Draft              remoteStorage                  December 2013
     for a folder. Item names MAY contain all characters except '/' and
     the null character, and MUST NOT have zero length.
 
+    An item description is a map containing one string-valued 'ETag'
+    field, one string-valued 'Content-Type' and one integer-valued
+    'Content-Length' field. They represent the item's current version,
+    its content type, and its content length respectively. Note that
+    content length is measured in octets (bytes), not in characters.
+ 
     A successful GET request to a folder SHOULD be responded to with a
-    JSON [JSON] document (content type 'application/json'),
-    representing a map in which contained documents appear as entries
-    <item_name> to <current_version>, and contained folders appear as
-    entries <item_name> '/' to <current_version>, for instance:
+    JSON-LD [JSON-LD] document (content type 'application/json'),
+    containing as its 'items' field a map in which contained documents
+    appear as entries <item_name> to an item description, and contained
+    folders appear as entries <item_name> '/' to an item description.
+    It SHOULD furthermore contain an '@context' field with the value
+    'http://remotestorage.io/spec/folder-description'. For instance:
+
        {
-         "abc": "DEADBEEFDEADBEEFDEADBEEF",
-         "def/": "1337ABCD1337ABCD1337ABCD"
+         "@context": "http://remotestorage.io/spec/folder-description",
+         "items": {
+           "abc": {
+             "ETag": "DEADBEEFDEADBEEFDEADBEEF",
+             "Content-Type": "image/jpeg",
+             "Content-Length": 82352
+           }
+           "def/": {
+             "ETag": "1337ABCD1337ABCD1337ABCD",
+             "Content-Type": "application/json",
+             "Content-Length": 392
+           }
+         }
        }
       
     Empty folders are treated as non-existing, and therefore GET
@@ -195,8 +218,9 @@ Internet-Draft              remoteStorage                  December 2013
 
     A successful GET request to a document SHOULD be responded to with
     the full document contents in the body, the document's content type
-    in a 'Content-Type' header, and the document's current version in an
-    'ETag' header.
+    in a 'Content-Type' header, its content length in octets (not in 
+    characters) in a 'Content-Length' header, and the document's current
+    version in an 'ETag' header.
 
 
 
@@ -234,6 +258,9 @@ Internet-Draft              remoteStorage                  December 2013
 
     A successful OPTIONS request SHOULD be responded to as described in
     the CORS section below.
+
+    A successful HEAD request SHOULD be responsed to like to the
+    equivalent GET request, but omitting the response body.
 
 5. Response codes
 
@@ -330,8 +357,8 @@ Internet-Draft              remoteStorage                  December 2013
          can however be reused in subsequent interactions with the same 
          client, as long as that client is still trusted. Example:
          * 'ofb24f1ac3973e70j6vts19qr9v2eei'
-       * <storage_api>, always 'draft-dejong-remotestorage-02' for this
-         version of the specification.
+       * <storage_api>, always 'draft-dejong-remotestorage-02a' for this
+         alternative version of the specification.
 
     The client can make its requests using https with CORS and bearer
     tokens, to the URL that is the concatenation of <storage_root> with
@@ -859,9 +886,9 @@ Internet-Draft              remoteStorage                  December 2013
         Fielding et al., "Hypertext Transfer Protocol -- HTTP/1.1",
         RFC2616, June 1999.
     
-    [JSON]
-        Crockford, D., "The application/json Media Type for JavaScript
-        Object Notation (JSON)", RFC 4627, July 2006.
+    [JSON-LD]
+        Sporny, Longley, Kellogg, Lanthaner, Lindstroem, "JSON-LD 1.0",
+        http://www.w3.org/TR/2013/PR-json-ld-20131105/, November 2013.
       
     [CORS]
         van Kesteren, Anne (ed), "Cross-Origin Resource Sharing -- 
