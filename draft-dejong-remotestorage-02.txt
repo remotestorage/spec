@@ -1,5 +1,5 @@
-INTERNET DRAFT (alternative version)  a             Michiel B. de Jong
-Document: draft-dejong-remotestorage-02a                 (independent)
+INTERNET DRAFT                                      Michiel B. de Jong
+Document: draft-dejong-remotestorage-02                  (independent)
                                                              F. Kooman
 Intended Status: Proposed Standard                             SURFnet 
 Expires: 13 June 2014                                 10 December 2013
@@ -357,7 +357,7 @@ Internet-Draft              remoteStorage                  December 2013
          can however be reused in subsequent interactions with the same 
          client, as long as that client is still trusted. Example:
          * 'ofb24f1ac3973e70j6vts19qr9v2eei'
-       * <storage_api>, always 'draft-dejong-remotestorage-02a' for this
+       * <storage_api>, always 'draft-dejong-remotestorage-02' for this
          alternative version of the specification.
 
     The client can make its requests using https with CORS and bearer
