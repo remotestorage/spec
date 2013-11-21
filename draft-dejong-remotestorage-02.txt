@@ -320,7 +320,7 @@ Internet-Draft              remoteStorage                  December 2013
     [HTTP], and MUST fail with a 412 response code if that doesn't
     match the document's current version.
 
-    GET requests MAY have an a comma-separated list of revisions in an
+    GET requests MAY have a comma-separated list of revisions in an
     'If-None-Match' header [HTTP], and SHOULD be responded to with a 412
     response if that list includes the document or folder's current
     version. A PUT request MAY have an 'If-None-Match: *' header [HTTP],
@@ -330,7 +330,7 @@ Internet-Draft              remoteStorage                  December 2013
     In all 'ETag', 'If-Match' and 'If-None-Match' headers, revision
     strings should appear inside double quotes (").
 
-    Whether or not a document and a directory with mathing names can
+    Whether or not a document and a directory with matching names can
     exist side-by-side in the same directory, is left undefined. This
     means a server MAY fail with a 412 response code if a PUT request
     would result in such a document-with-directory name clash. Clients
@@ -763,7 +763,7 @@ Internet-Draft              remoteStorage                  December 2013
 
     Both client A and client B would periodically poll the root
     directory of each scope they have access to, to see if the version
-    if the root directory changed. If it did, then one of the versions
+    of the root directory changed. If it did, then one of the versions
     listed in there will necessarily have changed, and the client can
     make a GET request to that child directory or document, to obtain
     its latest version.
