@@ -164,8 +164,8 @@ Internet-Draft              remoteStorage                  December 2013
 
 4. Requests
 
-    Client-to-server requests SHOULD be made over https [HTTPS], although
-    the server MAY offer an optional switch from https to SPDY [SPDY]. The
+    Client-to-server requests SHOULD be made over https [HTTPS], but the
+    server MAY offer an optional switch from https to SPDY [SPDY]. The
     root folder of the storage tree is represented by the following URL:
 
         URI_ENCODE( <storage_root> '/' )
@@ -821,7 +821,7 @@ Internet-Draft              remoteStorage                  December 2013
     that take advantage of being hosted on the user's domain name. The
     origin on which the remoteStorage server has its interface SHOULD
     therefore NOT be used for anything else, and the user SHOULD be 
-    warned not to visit any web pages on that origin. In particular, the 
+    warned not to visit any web pages on that origin. In particular, the
     OAuth dialog and launch dashboard or token revokation interface 
     SHOULD be on a different origin than the remoteStorage interface.
       
@@ -891,8 +891,8 @@ Internet-Draft              remoteStorage                  December 2013
         RFC2616, June 1999.
     
     [SPDY]
-        Mark Belshe, Roberto Peon, "SPDY Protocol - Draft 3.1",
-        http://www.chromium.org/spdy/spdy-protocol/spdy-protocol-draft3-1
+        Mark Belshe, Roberto Peon, "SPDY Protocol - Draft 3.1", http://
+        www.chromium.org/spdy/spdy-protocol/spdy-protocol-draft3-1
 
     [JSON-LD]
         Sporny, Longley, Kellogg, Lanthaner, Lindstroem, "JSON-LD 1.0",
