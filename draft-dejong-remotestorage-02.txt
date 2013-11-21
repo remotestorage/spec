@@ -1,7 +1,7 @@
 INTERNET DRAFT                                      Michiel B. de Jong
 Document: draft-dejong-remotestorage-02                  (independent)
                                                              F. Kooman
-Intended Status: Proposed Standard                             SURFnet 
+Intended Status: Proposed Standard                             SURFnet
 Expires: 13 June 2014                                 10 December 2013
 
 
@@ -11,8 +11,8 @@ Abstract
 
     This draft describes a protocol by which client-side applications,
     running inside a web browser, can communicate with a data storage
-    server that is hosted on a different domain name. This way, the 
-    provider of a web application need not also play the role of data 
+    server that is hosted on a different domain name. This way, the
+    provider of a web application need not also play the role of data
     storage provider. The protocol supports storing, retrieving, and
     removing individual documents, as well as listing the contents of an
     individual directory, and access control is based on bearer tokens.
@@ -51,7 +51,7 @@ Copyright Notice
 
 
 de Jong                                                         [Page 1]
- 
+
 Internet-Draft              remoteStorage                  December 2013
 
 
@@ -101,7 +101,7 @@ Table of Contents
 
 
 de Jong                                                         [Page 2]
- 
+
 Internet-Draft              remoteStorage                  December 2013
 
 
@@ -147,11 +147,11 @@ Internet-Draft              remoteStorage                  December 2013
        * content type
        * content length
 
-     
+
 
 
 de Jong                                                         [Page 3]
- 
+
 Internet-Draft              remoteStorage                  December 2013
 
 
@@ -172,7 +172,7 @@ Internet-Draft              remoteStorage                  December 2013
 
     Subsequently, if <parent_folder> is the URL of a folder, then the
     URL of an item contained in it is:
- 
+
         URI_ENCODE( <parent_folder> <document_name> )
 
     for a document, or:
@@ -187,7 +187,7 @@ Internet-Draft              remoteStorage                  December 2013
     'Content-Length' field. They represent the item's current version,
     its content type, and its content length respectively. Note that
     content length is measured in octets (bytes), not in characters.
- 
+
     A successful GET request to a folder SHOULD be responded to with a
     JSON-LD [JSON-LD] document (content type 'application/json'),
     containing as its 'items' field a map in which contained documents
@@ -201,10 +201,10 @@ Internet-Draft              remoteStorage                  December 2013
 
 
 de Jong                                                         [Page 4]
- 
+
 Internet-Draft              remoteStorage                  December 2013
 
-      
+
        {
          "@context": "http://remotestorage.io/spec/folder-description",
          "items": {
@@ -220,24 +220,24 @@ Internet-Draft              remoteStorage                  December 2013
            }
          }
        }
-      
+
     Empty folders are treated as non-existing, and therefore GET
     requests to them SHOULD be responded to with either a 404 response
     OR the JSON document representing an empty map ("{}"). However, an
     empty folder MUST NOT be listed as an item in its parent folder.
-    
+
     Also, folders SHOULD be created silently, as necessary to contain
     newly added items. This way, PUT and DELETE requests only need to be
     made to documents, and folder management becomes an implicit result.
 
     A successful GET request to a document SHOULD be responded to with
     the full document contents in the body, the document's content type
-    in a 'Content-Type' header, its content length in octets (not in 
+    in a 'Content-Type' header, its content length in octets (not in
     characters) in a 'Content-Length' header, and the document's current
     version in an 'ETag' header.
 
     A successful PUT request to a document MUST result in:
-       
+
        * the request body being stored as the document's new content,
        * parent and further ancestor folders being silently created as
          necessary, with the document (name and version) being added to
@@ -247,11 +247,11 @@ Internet-Draft              remoteStorage                  December 2013
          document's new content type,
        * its version being updated, as well as that of its parent folder
          and further ancestor folders.
-      
+
 
 
 de Jong                                                         [Page 5]
- 
+
 Internet-Draft              remoteStorage                  December 2013
 
 
@@ -301,13 +301,13 @@ Internet-Draft              remoteStorage                  December 2013
 
 
 de Jong                                                         [Page 6]
- 
+
 Internet-Draft              remoteStorage                  December 2013
 
 
              in the creation of a previously non-existing resource.
        * 200 for all other successful requests.
-   
+
     Clients SHOULD also handle the case where a response takes too long
     to arrive, or where no response is received at all.
 
@@ -348,7 +348,7 @@ Internet-Draft              remoteStorage                  December 2013
     response MUST echo back the Origin header sent by the client.
 
 
-      
+
 
 de Jong                                                         [Page 7]
 
@@ -358,9 +358,9 @@ Internet-Draft              remoteStorage                  December 2013
 8. Session description
 
     The information that a client needs to receive in order to be able
-    to connect to a server SHOULD reach the client as described in the 
+    to connect to a server SHOULD reach the client as described in the
     'bearer token issuance' sections below. It consists of:
-    
+
        * <storage_root>, consisting of 'https://' followed by a server
          host, and optionally a server port and a path prefix as per
          [IRI]. Examples:
@@ -368,9 +368,9 @@ Internet-Draft              remoteStorage                  December 2013
          * 'https://example.com:8080' (host and port)
          * 'https://example.com/path/to/storage' (host, port and
            path prefix; note there is no trailing slash)
-       * <access_token> as per [OAUTH]. The token SHOULD be hard to 
-         guess and SHOULD NOT be reused from one client to another. It  
-         can however be reused in subsequent interactions with the same 
+       * <access_token> as per [OAUTH]. The token SHOULD be hard to
+         guess and SHOULD NOT be reused from one client to another. It
+         can however be reused in subsequent interactions with the same
          client, as long as that client is still trusted. Example:
          * 'ofb24f1ac3973e70j6vts19qr9v2eei'
        * <storage_api>, always 'draft-dejong-remotestorage-02' for this
@@ -383,9 +383,9 @@ Internet-Draft              remoteStorage                  December 2013
     a document. For example, if <storage_root> is
     "https://storage.example.com/bob", then to retrieve the folder
     contents of the /public/documents/ folder, or to retrieve a
-    'draft.txt' document from that folder, the client would make 
+    'draft.txt' document from that folder, the client would make
     requests to, respectively:
-      
+
     * https://storage.example.com/bob/public/documents/
     * https://storage.example.com/bob/public/documents/draft.txt
 
@@ -399,14 +399,14 @@ Internet-Draft              remoteStorage                  December 2013
     with each access scope representing the following permissions:
 
 
-      
+
 de Jong                                                         [Page 8]
 
 Internet-Draft              remoteStorage                  December 2013
 
 
     'root:rw') any request,
-             
+
     'root:r') any GET request,
 
     <module> ':rw') any requests to paths that start with
@@ -414,19 +414,19 @@ Internet-Draft              remoteStorage                  December 2013
 
     <module> ':r') any GET requests to paths that start with
                    '/' <module> '/' or '/public/' <module> '/',
-      
+
     As a special exceptions, GET requests to a document (but not a
     folder) whose path starts with '/public/' are always allowed. They,
     as well as OPTIONS requests, can be made without a bearer token. All
     other requests should present a bearer token with sufficient access
     scope, using a header of the following form (no double quotes here):
-      
+
        Authorization: Bearer <access_token>
 
 10. Application-first bearer token issuance
 
     To make a remoteStorage server available as 'the remoteStorage of
-    <user> at <host>', exactly one link of the following format SHOULD 
+    <user> at <host>', exactly one link of the following format SHOULD
     be added to the webfinger record [WEBFINGER] of <user> at <host>:
 
     {
@@ -441,15 +441,15 @@ Internet-Draft              remoteStorage                  December 2013
     Here <storage_root> and <storage_api> are as per "Session
     description" above, and <auth-dialog> SHOULD be a URL where an
     OAuth2 implicit-grant flow dialog [OAUTH] is presented, so the user
-    can supply their credentials (how, is out of scope), and allow or  
+    can supply their credentials (how, is out of scope), and allow or
     reject a request by the connecting application to obtain a bearer
     token for a certain list of access scopes.
-      
+
     The server SHOULD NOT expire bearer tokens unless they are revoked,
     and MAY require the user to register applications as OAuth clients
     before first use; if no client registration is required, then the
 
-      
+
 de Jong                                                         [Page 9]
 
 Internet-Draft              remoteStorage                  December 2013
@@ -461,51 +461,51 @@ Internet-Draft              remoteStorage                  December 2013
 11. Storage-first bearer token issuance
 
     The provider MAY also present a dashboard to the user, where they
-    have some way to add open web app manifests [MANIFEST]. Adding a 
-    manifest to the dashboard is considered equivalent to clicking 
-    'accept' in the dialog of the application-first flow. Removing one 
+    have some way to add open web app manifests [MANIFEST]. Adding a
+    manifest to the dashboard is considered equivalent to clicking
+    'accept' in the dialog of the application-first flow. Removing one
     is considered equivalent to revoking its access token.
 
     As an equivalent to OAuth's 'scope' parameter, a 'remotestorage'
     field SHOULD be present in the root of such an application manifest
     document, as a JSON array of strings, each string being one access
     scope of the form <module> <level>.
-    
+
     When the user gestures they want to use a certain application whose
     manifest is present on the dashboard, the dashboard SHOULD redirect
-    to the application or open it in a new window. To mimic coming back 
-    from the OAuth dialog, it MAY add 'access_token' and 'scope' 
+    to the application or open it in a new window. To mimic coming back
+    from the OAuth dialog, it MAY add 'access_token' and 'scope'
     parameters to the URL fragment.
 
     Regardless of whether 'access_token' and 'scope' are specified, it
     SHOULD add a 'remotestorage' parameter to the URL fragment, with a
-    value of the form <user> '@' <host>. When the application detects 
+    value of the form <user> '@' <host>. When the application detects
     this parameter, it SHOULD resolve the webfinger record for <user> at
     <host> and extract the <storage_root> and <storage_api> information.
-      
+
     If no access_token was given, then the application SHOULD also
     extract the <auth_endpoint> information from webfinger, and continue
     as per application-first bearer token issuance.
-    
+
     Note that whereas a remoteStorage server SHOULD offer support of the
     application-first flow with webfinger and OAuth, it MAY choose not
-    to support the storage-first flow, provided that users will easily 
+    to support the storage-first flow, provided that users will easily
     remember their <user> '@' <host> webfinger address at that provider.
-    Applications SHOULD, however, support both flows, which means  
+    Applications SHOULD, however, support both flows, which means
     checking the URL for a 'remotestorage' parameter, but giving the
     user a way to specify their webfinger address if there is none.
 
     If a server provides an application manifest dashboard, then it
     SHOULD merge the list of applications there with the list of
-    issued access tokens as specified by OAuth into one list. Also, 
+    issued access tokens as specified by OAuth into one list. Also,
 
-      
+
 de Jong                                                        [Page 10]
 
 Internet-Draft              remoteStorage                  December 2013
 
 
-    the interface for revoking an access token as specified by OAuth  
+    the interface for revoking an access token as specified by OAuth
     SHOULD coincide with removing an application from the dashboard.
 
 12. Example wire transcripts
@@ -599,7 +599,7 @@ low
     To which the server could respond with a 302 redirect, back to the
     origin of the requesting application:
 
-      
+
 de Jong                                                        [Page 12]
 
 Internet-Draft              remoteStorage                  December 2013
@@ -699,7 +699,7 @@ ge.io/spec/modules/myfavoritedrinks/drink"}
 
     And the server may respond with a 304 Not Modified or a 200 OK
 
-      
+
 de Jong                                                        [Page 14]
 
 Internet-Draft              remoteStorage                  December 2013
@@ -748,8 +748,8 @@ Internet-Draft              remoteStorage                  December 2013
 
     Client B is now aware of the conflict, and may consult the user,
     saying the update to version 3 failed. The user may then choose,
-    
-  
+
+
 de Jong                                                        [Page 15]
 
 Internet-Draft              remoteStorage                  December 2013
@@ -792,11 +792,11 @@ Internet-Draft              remoteStorage                  December 2013
     conflict, to resolve it.
 
 14. Security Considerations
-      
-    To prevent man-in-the-middle attacks, the use of https instead of 
-    http is important for both the interface itself and all end-points 
-    involved in webfinger, OAuth, and (if present) the storage-first 
-    application launch dashboard. 
+
+    To prevent man-in-the-middle attacks, the use of https instead of
+    http is important for both the interface itself and all end-points
+    involved in webfinger, OAuth, and (if present) the storage-first
+    application launch dashboard.
 
 
 
@@ -811,20 +811,20 @@ Internet-Draft              remoteStorage                  December 2013
     remoteStorage server. To mitigate this, applications SHOULD clearly
     display to which remoteStorage server they are sending the user's
     data.
-    
+
     Applications could request scopes that the user did not intend to
     give access to. The user SHOULD always be prompted to carefully
     review which scopes an application is requesting.
-    
+
     An application may upload malicious html pages and then trick the
     user into visiting them, or upload malicious client-side scripts,
     that take advantage of being hosted on the user's domain name. The
     origin on which the remoteStorage server has its interface SHOULD
-    therefore NOT be used for anything else, and the user SHOULD be 
+    therefore NOT be used for anything else, and the user SHOULD be
     warned not to visit any web pages on that origin. In particular, the
-    OAuth dialog and launch dashboard or token revokation interface 
+    OAuth dialog and launch dashboard or token revokation interface
     SHOULD be on a different origin than the remoteStorage interface.
-      
+
     Where the use of bearer tokens is impractical, a user may choose to
     store documents on hard-to-guess URLs whose path after
     <storage_root> starts with '/public/', while sharing this URL only
@@ -832,24 +832,24 @@ Internet-Draft              remoteStorage                  December 2013
     document's hard-to-guess URL, can access it. The server SHOULD
     therefore make an effort to detect and stop brute-force attacks that
     attempt to guess the location of such documents.
-            
+
     The server SHOULD also detect and stop denial-of-service attacks
     that aim to overwhelm its interface with too much traffic.
 
 15. IANA Considerations
-      
+
     This document registers the 'remotestorage' link relation, as well
     as the "http://remotestorage.io/spec/version" and
     "http://tools.ietf.org/html/rfc6750#section-4.2" webfinger
     properties.
-      
+
 16. Acknowledgements
 
     The authors would like to thank everybody who contributed to the
     development of this protocol, including Kenny Bentley, Javier Diaz,
     Daniel Groeber, Bjarni Runar, Jan Wildeboer, Charles Schultz, Peter
 
- 
+
 de Jong                                                        [Page 17]
 
 Internet-Draft              remoteStorage                  December 2013
@@ -863,33 +863,33 @@ Internet-Draft              remoteStorage                  December 2013
     Rick van Rein, and Mark Nottingham, among many others.
 
 17. References
-      
+
 17.1. Normative References
-      
+
     [WORDS]
         Bradner, S., "Key words for use in RFCs to Indicate Requirement
         Levels", BCP 14, RFC 2119, March 1997.
-      
+
     [IRI]
         Duerst, M., "Internationalized Resource Identifiers (IRIs)",
         RFC 3987, January 2005.
-      
+
     [WEBFINGER]
         Jones, P., Salguerio, G., Jones, M, and Smarr, J.,
         "WebFinger", RFC7033, September 2013.
-    
+
     [OAUTH]
         "Section 4.2: Implicit Grant", in: Hardt, D. (ed), "The OAuth
         2.0 Authorization Framework", RFC6749, October 2012.
-         
-17.2. Informative References      
+
+17.2. Informative References
 
     [HTTPS]
         Rescorla, E., "HTTP Over TLS", RFC2818, May 2000.
     [HTTP]
         Fielding et al., "Hypertext Transfer Protocol -- HTTP/1.1",
         RFC2616, June 1999.
-    
+
     [SPDY]
         Mark Belshe, Roberto Peon, "SPDY Protocol - Draft 3.1", http://
         www.chromium.org/spdy/spdy-protocol/spdy-protocol-draft3-1,
@@ -898,7 +898,7 @@ Internet-Draft              remoteStorage                  December 2013
     [JSON-LD]
         Sporny, Longley, Kellogg, Lanthaner, Lindstroem, "JSON-LD 1.0",
         http://www.w3.org/TR/2013/PR-json-ld-20131105/, November 2013.
-      
+
 
 de Jong                                                        [Page 18]
 
@@ -906,7 +906,7 @@ Internet-Draft              remoteStorage                  December 2013
 
 
     [CORS]
-        van Kesteren, Anne (ed), "Cross-Origin Resource Sharing -- 
+        van Kesteren, Anne (ed), "Cross-Origin Resource Sharing --
         W3C Candidate Recommendation 29 January 2013",
         http://www.w3.org/TR/cors/, January 2013.
 
@@ -914,9 +914,9 @@ Internet-Draft              remoteStorage                  December 2013
         Mozilla Developer Network (ed), "App manifest -- Revision
         330541", https://developer.mozilla.org/en-
         US/Apps/Developing/Manifest$revision/482369, October 2013.
-     
+
 18. Authors' addresses
-      
+
     Michiel B. de Jong
     (independent)
 
@@ -927,14 +927,14 @@ Internet-Draft              remoteStorage                  December 2013
     SURFnet bv
     Postbus 19035
     3501 DA Utrecht
-    The Netherlands  
-          
+    The Netherlands
+
     Email: Francois.Kooman@surfnet.nl
-      
-      
-      
-      
-          
+
+
+
+
+
 
 
 
