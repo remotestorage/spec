@@ -859,7 +859,7 @@ Internet-Draft              remoteStorage                  December 2013
     Borchardt, Garret Alfert, Sebastian Kippe, Max Wiehle, Melvin
     Carvalho, Martin Stadler, Geoffroy Couprie, Niklas Cathor, Marco
     Stahl, James Coglan, Ken Eucker, Daniel Brolund, elf Pavlik, Nick
-    Jennings, Markus Sabadello, Steven te Brinke, Waldheinz,
+    Jennings, Markus Sabadello, Steven te Brinke, Matthias Treydte,
     Rick van Rein, and Mark Nottingham, among many others.
 
 17. References
