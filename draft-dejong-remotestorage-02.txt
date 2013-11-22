@@ -1,7 +1,7 @@
 INTERNET DRAFT                                      Michiel B. de Jong
 Document: draft-dejong-remotestorage-02                  (independent)
                                                              F. Kooman
-Intended Status: Proposed Standard                             SURFnet
+Intended Status: Proposed Standard                       (independent)
 Expires: 13 June 2014                                 10 December 2013
 
 
@@ -407,12 +407,12 @@ Internet-Draft              remoteStorage                  December 2013
 
     'root:rw') any request,
 
-    'root:r') any GET request,
+    'root:r') any GET or HEAD request,
 
     <module> ':rw') any requests to paths that start with
                     '/' <module> '/' or '/public/' <module> '/',
 
-    <module> ':r') any GET requests to paths that start with
+    <module> ':r') any GET or HEAD requests to paths that start with
                    '/' <module> '/' or '/public/' <module> '/',
 
     As a special exceptions, GET requests to a document (but not a
@@ -440,7 +440,7 @@ Internet-Draft              remoteStorage                  December 2013
 
     Here <storage_root> and <storage_api> are as per "Session
     description" above, and <auth-dialog> SHOULD be a URL where an
-    OAuth2 implicit-grant flow dialog [OAUTH] is presented, so the user
+    OAuth 2.0 implicit-grant flow dialog [OAUTH] is presented, so the user
     can supply their credentials (how, is out of scope), and allow or
     reject a request by the connecting application to obtain a bearer
     token for a certain list of access scopes.
@@ -619,7 +619,7 @@ XjzzzHNjkd1CJxoQubA1o%3D&token_type=bearer&state=
         Host: 3pp.io:4439
         Access-Control-Request-Method: GET
         Origin: https://drinks-unhosted.5apps.com
-        Access-Control-Request-Headers: authorization
+        Access-Control-Request-Headers: Authorization
         Referer: https://drinks-unhosted.5apps.com/
 
     To which the server can for instance respond:
@@ -924,12 +924,9 @@ Internet-Draft              remoteStorage                  December 2013
 
 
     F. Kooman
-    SURFnet bv
-    Postbus 19035
-    3501 DA Utrecht
-    The Netherlands
+    (independent)
 
-    Email: Francois.Kooman@surfnet.nl
+    Email: fkooman@tuxed.net
 
 
 
