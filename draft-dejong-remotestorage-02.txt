@@ -69,7 +69,7 @@ Table of Contents
   10. Application-first bearer token issuance........................9
   11. Storage-first bearer token issuance...........................10
   12. Example wire transcripts......................................11
-     12.1. Webfinger................................................11
+     12.1. WebFinger................................................11
      12.2. OAuth dialog form........................................12
      12.3. OAuth dialog form submission.............................12
      12.4. OPTIONS preflight........................................13
@@ -441,7 +441,9 @@ Internet-Draft              remoteStorage                  December 2013
       "rel": "remotestorage",
       "properties": {
         "http://remotestorage.io/spec/version": <storage_api>,
-        "http://tools.ietf.org/html/rfc6749#section-4.2": <auth-dialog>
+        "http://tools.ietf.org/html/rfc6749#section-4.2": <auth-dialog>,
+        "http://tools.ietf.org/html/rfc6750#section-2.3": <query-param>,
+        "https://tools.ietf.org/html/rfc2616#section-14.16": <ranges>
       }
     }
 
@@ -451,6 +453,15 @@ Internet-Draft              remoteStorage                  December 2013
     can supply their credentials (how, is out of scope), and allow or
     reject a request by the connecting application to obtain a bearer
     token for a certain list of access scopes.
+
+    The <query-param> variable SHOULD have the boolean value true if
+    the server supports passing the bearer token in the URI query
+    parameter as per [RFC6750-sec2.3], and false otherwise.
+
+    The <ranges> variable SHOULD have a string value of "GET", "PUT", or
+    "GET, PUT", if Content-Range headers are supported for GET requests
+    and/or for PUT requests, as per [RFC2616-sec14.16], and the boolean
+    value false if not.
 
     The server SHOULD NOT expire bearer tokens unless they are revoked,
     and MAY require the user to register applications as OAuth clients
@@ -520,7 +531,7 @@ Internet-Draft              remoteStorage                  December 2013
     The following examples are not normative ("\" indicates a line was
     wrapped).
 
-12.1. Webfinger
+12.1. WebFinger
 
     In application-first, an in-browser application might issue the
     following request, using XMLHttpRequest and CORS:
@@ -552,7 +563,10 @@ gth
                "http://remotestorage.io/spec/version": "draft-dejong-re\
 motestorage-02",
                "http://tools.ietf.org/html/rfc6750#section-4.2": "https\
-://3pp.io:4439/oauth/michiel"
+://3pp.io:4439/oauth/michiel",
+               "http://tools.ietf.org/html/rfc6750#section-2.3": false,
+               "https://tools.ietf.org/html/rfc2616#section-14.16": fal\
+se
              }
            }]
          }
@@ -921,6 +935,16 @@ Internet-Draft              remoteStorage                  December 2013
         Mozilla Developer Network (ed), "App manifest -- Revision
         330541", https://developer.mozilla.org/en-
         US/Apps/Developing/Manifest$revision/482369, October 2013.
+
+    [RFC6750-sec2.3]
+        M. Jones, D. Hardt, "The OAuth 2.0 Authorization Framework:
+        Bearer Token Usage", RFC6750; section 2.3,
+        http://tools.ietf.org/html/rfc6750#section-2.3, October 2012.
+
+    [RFC2616-sec14.16]
+        R. Fielding et al., "Hypertext Transfer Protocol -- HTTP/1.1",
+        RFC2616; section 14.16,
+        https://tools.ietf.org/html/rfc2616#section-14.16, June 1999.
 
 18. Authors' addresses
 
