@@ -234,7 +234,8 @@ Internet-Draft              remoteStorage                  December 2013
     the full document contents in the body, the document's content type
     in a 'Content-Type' header, its content length in octets (not in
     characters) in a 'Content-Length' header, and the document's current
-    version in an 'ETag' header.
+    version in an 'ETag' header. Range Requests MAY be supported by the
+    the server [HTTP].
 
     A successful PUT request to a document MUST result in:
 
@@ -285,6 +286,8 @@ Internet-Draft              remoteStorage                  December 2013
        * 429 if the client makes too frequent requests or is suspected
              of malicious activity,
        * 414 if the request URI is too long,
+       * 416 if Range requests are supported by the server and the Range 
+             request can not be satisfied,
        * 400 for all malformed requests (e.g. foreign characters in the
              path or unrecognized http verb, etcetera), as well as for
              all PUT and DELETE requests to folders,
@@ -422,6 +425,10 @@ Internet-Draft              remoteStorage                  December 2013
     scope, using a header of the following form (no double quotes here):
 
        Authorization: Bearer <access_token>
+
+    In addition, providing the access token via a HTTP query parameter 
+    for GET requests MAY be supported by the server, but MUST be 
+    supported if HTTP Range requests are supported by the server.
 
 10. Application-first bearer token issuance
 
