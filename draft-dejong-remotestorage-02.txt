@@ -234,8 +234,20 @@ Internet-Draft              remoteStorage                  December 2013
     the full document contents in the body, the document's content type
     in a 'Content-Type' header, its content length in octets (not in
     characters) in a 'Content-Length' header, and the document's current
-    version in an 'ETag' header. Range Requests MAY be supported by the
-    the server [HTTP].
+    version in an 'ETag' header.
+
+    Servers MAY support Content-Range headers [HTTP] for GET and/or PUT
+    requests. Clients SHOULD NOT send Content-Range headers:
+
+       * if the server has not announced support for them in its
+         WebFinger record, for the relevant verb (GET or PUT),
+       * for a GET request, where the specified range does not fall
+         withing the document's Content-Length,
+       * for a PUT request that creates a new document, where the
+         specified range does not start at zero,
+       * for a PUT request that modifies an existing document, where
+         the specified range does not start within the existing
+         document's Content-Length.
 
     A successful PUT request to a document MUST result in:
 
