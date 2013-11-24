@@ -240,7 +240,7 @@ Internet-Draft              remoteStorage                  December 2013
     requests. Clients SHOULD NOT send Content-Range headers:
 
        * if the server has not announced support for them in its
-         WebFinger record, for the relevant verb (GET or PUT),
+         WebFinger record, for the relevant verb (GET, PUT, or both),
        * for a GET request, where the specified range does not fall
          withing the document's Content-Length,
        * for a PUT request that creates a new document, where the
