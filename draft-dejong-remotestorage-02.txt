@@ -295,9 +295,9 @@ Internet-Draft              remoteStorage                  December 2013
        * 304 for a conditional GET request whose pre-condition
              fails (see "Versioning" below),
        * 409 for a PUT request where any folder name in the path
-             clashes with a document's name at the same level, or where
-             the document name coincides with an existing folder's name
-             at the same level.
+             clashes with an existing document's name at the same
+             level, or where the document name coincides with an
+             existing folder's name at the same level.
        * 412 for a conditional PUT or DELETE request whose pre-condition
              fails (see "Versioning" below),
        * 507 in case the user's account is over its storage quota,
