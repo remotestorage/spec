@@ -1,0 +1,81 @@
+see https://raw.github.com/unhosted/website/cbb0b4ffbbbdf9ca3aa44e1e36e049235772660f/protocol.html
+<H2>UJ/0.1</H2>
+
+UJ/0.1, or UJ/0.1-over-PubSign, is a protocol in which an unhosted web app that is running in a browser, makes an AJAX call to a storage node, to which the storage nodes responds. The call is made to the root of the domain, with the HTTP POST method.
+<br><br><br><br>
+<H3>PubSign-compatible command POST content:</H3>
+Although at some point we will probably change to the MagicEnvelope that Salmon uses, version 0.1 uses &quot;PubSign&quot; to <strong>sign</strong> things you <strong>publish</strong>. There are four commands, two of which follow the PubSign convention, which is as follows:
+<ul>
+<li> "protocol": &lt;name of the specific PubSign-compatible protocol>
+<li> "cmd": &lt;whatever it is you want to publish - should adhere to protocol chosen above>
+<li> "PubSign": &lt;raw hex RSA-signature signing the content of "cmd" above>
+<li> &lt;other field/value pairs allowed by specific protocol...>
+</ul>
+<br/>
+The content of the POST must be exactly one of the following four possible commands (valid responses are below each one):
+<br><br><br><br>
+<H3>SET command POST content:</H3>
+<ul>
+<li> "protocol": "UJ/0.1"
+<li> "cmd": &lt;a JSON string, which decodes to:>
+<ul>
+<li> "method": "SET"
+<li> "chan": &lt;the channel, so for 'test@example.com', chan='test'>
+<li> "keyPath": &lt;an ascii name for the key in the key-value store>
+<li> "value": &lt;the value you want to store, can be any JSON object>
+</ul>
+<li> "WriteCaps": &lt;password for writing/receiving this chan on this storage node>
+<li> "PubSign": &lt;raw hex RSA-signature signing the content of "cmd" above>
+</ul>
+Response: "OK" or "ERROR:" followed by some error message in English
+<br><br><br><br>
+<H3>GET command POST content:</H3>
+<ul>
+<li> "protocol": "UJ/0.1"
+<li> "cmd": &lt;a JSON string, which decodes to:>
+<ul>
+<li> "method": "GET"
+<li> "chan": &lt;the channel, so for 'test@example.com', chan='test'>
+<li> "keyPath": &lt;an ascii name for the key in the key-value store>
+</ul>
+</ul>
+Response: the JSON that was in the "value" field of the last SET command for that chan and keyPath, or "ERROR:" followed by some error message in English
+<br><br><br><br>
+<H3>SEND command POST content:</H3>
+<ul>
+<li> "protocol": "UJ/0.1"
+<li> "cmd": &lt;a JSON string, which decodes to:>
+<ul>
+<li> "method": "SEND"
+<li> "chan": &lt;the channel, so for 'test@example.com', chan='test'>
+<li> "keyPath": &lt;an ascii name for a mailfolder within the chan's message store>
+<li> "value": &lt;the body of the message, encrypted to the chan's public key>
+</ul>
+<li> "PubSign": &lt;raw hex RSA-signature signing the content of "cmd" above>
+</ul>
+Response: "OK" or "ERROR:" followed by some error message in English
+<br><br><br><br>
+<H3>RECEIVE command POST content:</H3>
+<ul>
+<li> "protocol": "UJ/0.1"
+<li> "cmd": &lt;a JSON string, which decodes to:>
+<ul>
+<li> "method": "RECEIVE"
+<li> "chan": &lt;the channel, so for 'test@example.com', chan='test'>
+<li> "keyPath": &lt;an ascii name for the key in the key-value store>
+<li> "delete": &lt;boolean indicating whether to delete or leave on server>
+</ul>
+<li> "WriteCaps": &lt;password for writing/receiving this chan on this storage node>
+</ul>
+Response: an array of messages, or an empty array, or "ERROR:" followed by some error message in English
+<br><br><br><br>
+<H3>Additionally, the storage node should:</H3>
+<ul>
+<li> respond with correct CORS headers, in response to both HTTP POST and HTTP OPTIONS.
+<li> check the HTTP referer that the browser sent, and make sure it keeps all data of one referer completely separate from the data of another.
+</ul>
+If any of this is unclear or ambiguous, then check the reference implementation at:
+<a href="https://github.com/michiel-unhosted/unhosted/tree/v0.1" target="_blank">https://github.com/michiel-unhosted/unhosted/tree/v0.1</a>
+<br/>
+This protocol is part of the alpha-release of the <a href="http://www.unhosted.org/">Unhosted project</a>. It is likely to be changed to the next version before Unhosted reaches beta. For instance, the storage node could easily take advantage of the presence of PubSign signatures, and then we could get rid of the WriteCaps. Also, it has been suggested we should do at least the GET command with an HTTP GET method and not an HTTP POST.
+<br><br>
