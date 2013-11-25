@@ -184,9 +184,10 @@ Internet-Draft              remoteStorage                  December 2013
 
     A document description is a map containing one string-valued 'ETag'
     field, one string-valued 'Content-Type' and one integer-valued
-    'Content-Length' field. They represent the item's current version,
-    its content type, and its content length respectively. Note that
-    content length is measured in octets (bytes), not in characters.
+    'Content-Length' field. They represent the document's current
+    version, its content type, and its content length respectively. Note
+    that content length is measured in octets (bytes), not in
+    characters.
 
     A folder description is a map containing a string-valued 'ETag'
     field, representing the folder's current version.
@@ -194,10 +195,11 @@ Internet-Draft              remoteStorage                  December 2013
     A successful GET request to a folder SHOULD be responded to with a
     JSON-LD [JSON-LD] document (content type 'application/json'),
     containing as its 'items' field a map in which contained documents
-    appear as entries <item_name> to an item description, and contained
-    folders appear as entries <item_name> '/' to a folder description.
-    It SHOULD furthermore contain an '@context' field with the value
-    'http://remotestorage.io/spec/folder-description'. For instance:
+    appear as entries <item_name> to a document description, and
+    contained folders appear as entries <item_name> '/' to a folder
+    description. It SHOULD furthermore contain an '@context' field with
+    the value 'http://remotestorage.io/spec/folder-description'. For
+    instance:
 
 
 de Jong                                                         [Page 4]
