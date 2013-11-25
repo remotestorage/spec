@@ -1,0 +1,131 @@
+see http://www.w3.org/community/unhosted/wiki/index.php?title=RemoteStorage-2012.04
+[[File:RemoteStorage.png]]
+= remoteStorage specification =
+
+== Introduction ==
+
+Adding WebFinger, OAuth and Cross-Origin Resource Sharing (CORS) to an online storage makes it usable as per-user storage for web apps. This specification describes a common interface for such a per-user online data storage.
+
+To make use of a remoteStorage-compatible online storage account, the user visits an HTML application that runs in her browser, or user-agent:
+
+    1. Cross-Origin WebFinger lets the user-agent discover the user's remoteStorage.
+    2. The user is redirected to an OAuth dialogue, to establish authorization.
+    3. The web app uses AJAX with CORS to access the data on the user's remoteStorage account.
+
+This spec is for engineers who provide online storage to users of the web. See [http://unhosted.org/ unhosted.org] for more generic resources.
+
+Keyword "MUST" used as in rcf2119. We use the word "web address" to mean "URL".
+
+== WebFinger ==
+
+The remoteStorage provider MUST provide [http://tools.ietf.org/html/draft-ietf-appsawg-webfinger-00 WebFinger] - at least the JRD format on host-meta, over https, as follows:
+
+    GET /.well-known/host-meta?resource=acct:bob@example.com
+    
+    HTTP/1.1 200 OK
+    access-control-allow-origin: *
+    content-type: application/json
+    
+    {
+      links:[{
+        href: 'https://example.com/storage/bob',
+        rel: "remoteStorage",
+        type: "https://www.w3.org/community/rww/wiki/read-write-web-00#simple",
+        properties: {
+          'auth-method': "https://tools.ietf.org/html/draft-ietf-oauth-v2-26#section-4.2",
+          'auth-endpoint': 'https://example.com/auth/bob
+        }
+      }]
+    }
+
+Here, the following are example values, the rest is literal:
+
+    bob@example.com - user@host
+    https://example.com/storage/bob - root of the storage for bob@example.com, {storageRoot} in the rest of this text
+    https://example.com/auth/bob - OAuth authorization end-point
+
+== OAuth ==
+
+The remoteStorage provider MUST make [http://tools.ietf.org/html/draft-ietf-oauth-v2-13#section-4.2 OAuth2's implicit grant flow] available on the announced OAuth end-point. The storage is understood as a directory tree, with files and directories contained in other directories, where directories are represented by paths that end in a forward slash. Any resource that does not end in forward slash is said to be a file. A resource is contained in any directory whose path forms a prefix of its path, and directly contained in the containing directory with the longest path. For instance,
+
+    {storageRoot}/path/to/file
+
+is contained in all of the following directories:
+
+    {storageRoot}/
+    {storageRoot}/path/
+    {storageRoot}/path/to/
+
+But only directly contained in {storageRoot}/path/to/. Likewise, {storageRoot}/path/to/ is directly contained in {storageRoot}/path/. A certain type of access (read or read-write) to a directory implies access to all resources contained in it. Valid scopes are of the format 
+    
+    directory:r
+
+for read-only access to both {storageRoot}/directory/ and {storageRoot}/public/directory/, or
+
+    directory:rw
+
+for read-write access to both {storageRoot}/directory/ and {storageRoot}/public/directory/, where the string 'directory'
+is an example. For read and read-write
+access to the entire storage (every resource contained in {storageRoot}/) you would need the following special scopes, respectively:
+
+    :r
+    :rw
+
+== Storage ==
+
+Whenever a user grants an app read or read-write access to a certain directory path, the remoteStorage provider MUST give out a bearer token that gives access to the directory path on the web address obtained by taking the storage root that was announced and appending a forward slash followed by the directory path in question, implementing the GET, PUT and DELETE verbs, over https and with [http://www.w3.org/TR/cors/ CORS headers] that allow any origin (echoing back the Origin for PUT, DELETE and OPTIONS).
+
+== GET ==
+
+In response to a GET request whose path does not end in a forward slash, and with a valid read or read-write token for the resource or one of its parent directories, the content from the last PUT, with the Content-Type header from the last PUT and a Last-Modified header indicating the time of the last PUT.
+
+If there never was a PUT to this resource, or there was a DELETE to the resource or one of its parent directories since the last PUT, then a 404 status should be returned.
+
+If the path ends in a forward slash, then the direct contents of the directory should be displayed in a filename -> timestamp map, displaying direct sub-directories with a trailing slash on the file name. For instance if the storage currently contains:
+
+    foo/bar/baz/boo:  {
+      content: 'some content',
+      contentType: 'text/plain',
+      timestamp: 1234588888
+    },
+    foo/bla:   {
+      content: '{"more": "content"}',
+      contentType: 'application/json',
+      timestamp: 1234544444
+    }
+
+then a GET to {storageRoot}/foo/ should return:
+    Access-Control-Allow-Origin: *
+    Content-Type: application/json
+    Last-Modified: Sat Feb 14 2009 06:21:28 GMT+0100 (CET)
+    
+    {
+      "bla": 1234544444,
+      "bar/": 12345888888
+    }
+
+So for a directory it will return the highest timestamp of any item in the whole subtree under that directory. A GET to an empty/absent directory should return a 200 status with a "{}" in the body, rather than a 404 status.
+
+== PUT ==
+
+A PUT with a valid read-write token for the resource should result in storing the data sent in the body, the timestamp when it happens, and the content-type header sent. It should respond with CORS headers and a Last-Modified header indicating the timestamp that was recorded. No two PUTs should be accepted during the same clock second, so that the timestamp can be used to uniquely refer to document versions. PUT requests to paths that end in a forward slash have no effect, because each directory "exists" automatically when a resource is put inside it.
+
+== DELETE ==
+
+A DELETE with a valid read-write token for the resource should delete the resource from the storage. DELETEs whose path end in a trailing slash are meaningless and have no effect. Once the last resource from a directory has been deleted, the directory is empty which is functionally equivalent to that directory not existing.
+
+== OPTIONS ==
+
+Don't forget to implement the OPTIONS verb as prescribed by CORS.
+
+== Special 'public' directory ==
+
+While for all access to any of the other resources, the corresponding access token is required, storage providers should serve resources that fall under the 'public/' directory, and are not themselves directories, even if the Authorization header is missing or incorrect. So for GET of a resource whose path starts with {storageRoot}/public/ and does not end in a forward slash, the server should never give a 401 response status.
+
+== Response codes ==
+If a bearer token is presented that would have given access to the requested action, but is unknown, expired or has been revoked, or if the bearer token (if present) does not give access to the document, then the response status should be a 401 or a 403, respectively. Otherwise, if the resource does not exist and is not a directory, the response status for retrieval and deletion should be a 404. Otherwise the response status should be one of 200 for OK, 500 for Internal Server Errors, and 400 for all errors which the server categorizes as caused by the client's behaviour. The server may also close the connection without responding, or not respond and leave it to the client to close the connection.
+
+== Conclusion ==
+
+This text may be changed for clarity - its history is tracked by this wiki. However, the standard it describes was frozen on 6 August 2012 (a bit delayed from the 30 April originally planned). The standard will not change until at least 31 October 2012. Even then, if at any point after that improvements to this standard are deemed desirable, every attempt will be made to make those changes non-breaking.
+

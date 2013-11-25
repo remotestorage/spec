@@ -1,0 +1,84 @@
+see http://www.w3.org/community/unhosted/wiki/index.php?title=RemoteStorage-2011.10
+[[File:RemoteStorage.png]]
+= remoteStorage specification =
+
+== Introduction ==
+
+Adding WebFinger, OAuth and Cross-Origin Resource Sharing (CORS) to an online storage makes it usable as per-user storage for web apps. This specification describes a common interface for such a per-user online data storage.
+
+To make use of a remoteStorage-compatible online storage account, the user visits an HTML application that runs in her browser, or user-agent:
+
+    1. Cross-Origin WebFinger lets the user-agent discover the user's remoteStorage.
+    2. The user is redirected to an OAuth dialogue, to establish authorization.
+    3. The web app uses AJAX with CORS to access the data on the user's remoteStorage account.
+
+This spec is for engineers who provide online storage to users of the web. See [http://unhosted.org/ unhosted.org] for more generic resources.
+
+Keyword "MUST" used as in rcf2119. We use the word "web address" to mean "URL". Some variables we will use:
+
+    $TEMPLATE -  a template for the web address (URL) of the storage, containing the string '{category}' (see [[#Storage|the section on Storage]]),
+    $API - which exact HTTP API is exposed (see [[#API|the section on APIs]]),
+    $AUTH - the OAuth end-point for obtaining $TOKEN (see [[#OAuth|the section on OAuth]]),
+    $CATEGORY - a string that corresponds to one independent key-value store, e.g. 'contacts'.
+        The 'public' category should be world-readable, but all others fully private.
+    $TOKEN - the bearer token given out by the OAuth dialog.
+
+
+== WebFinger ==
+
+The remoteStorage provider MUST provide [https://tools.ietf.org/html/draft-jones-appsawg-webfinger-01 WebFinger], and include a link of the following format (all $VARIABLES as described above):
+
+    <Link rel="remoteStorage" template="$TEMPLATE" api="$API" auth="$AUTH" ></Link>
+
+As discussed in the new WebFinger spec, all webfinger resources MUST be served with CORS headers that allow their retrieval from any origin.
+
+Example values in the WebFinger record for JohnDoe123@yourremotestorage.com could be:
+
+    $TEMPLATE: "http://storage.yourremotestorage.com/JohnDoe123/{category}/"
+    $API: "CouchDB"
+    $AUTH: "http://auth.yourremotestorage.com/JohnDoe123/"
+
+== OAuth ==
+
+The remoteStorage provider MUST make [http://tools.ietf.org/html/draft-ietf-oauth-v2-13#section-4.2 OAuth2's implicit grant flow] available on $AUTH. From now on, the resource scope the client requests will be called $CATEGORY, and the bearer token given in response will be called $TOKEN.
+The user should be informed that they are giving the app in question read/write access to $CATEGORY. If the user chooses to allow this, then $TOKEN should subsequently be accepted as sufficient credentials reading and writing to key-value store $CATEGORY (but see below about the special 'public' category).
+
+NOTE: since we got this wrong, all our client implementations wrongly send comma-separated scope lists instead of space-separated as OAuth prescribes, and since they were developed in tandem, all our server implementations accept that format. This will be corrected in the next version of this spec, but we did not find it necessary to update all deployed clients and servers with this correction. We therefore advise to (also) accept comma-separated scope lists when implementing a server, and to knowingly send comma-separated scope lists when talking to a server that announces it adheres to this version of the spec.
+
+== Storage ==
+
+Whenever a user grants an app access to a $CATEGORY, the remoteStorage provider MUST give out a bearer token and make the key-value store corresponding to $CATEGORY available on the web address obtained by taking the template $TEMPLATE and replacing the string '{category}' with the actual $CATEGORY, implementing the API specified by $API, with [http://www.w3.org/TR/cors/ CORS headers] that allow any origin.
+
+Continuing the earlier example, say JohnDoe123@yourremotestorage.com allows a social app access to his 'contacts' category. Then (resolving $TEMPLATE "http://storage.yourremotestorage.com/JohnDoe123/{category}/" with $CATEGORY 'contacts') the web address for the his 'contacts' key-value store will be http://storage.yourremotestorage.com/JohnDoe123/contacts/
+
+
+== API ==
+
+The following are the valid values for $API. Please be aware that the second part of this list is entirely experimental and is very likely to change in future versions of this specification:
+
+Stable:
+
+    [http://www.webdav.org/specs/rfc4918.html 'WebDAV']
+    'simple' (recommended): WebDAV, but restricted to the GET, PUT, and DELETE verbs.
+    [http://wiki.apache.org/couchdb/Complete_HTTP_API_Reference 'CouchDB']
+
+Experimental:
+
+    'git' ([http://schacon.github.com/git/git-http-backend.html git smart http] is an implementation)
+    [http://tahoe-lafs.org/trac/tahoe-lafs/browser/docs/frontends/webapi.rst 'tahoe-lafs']
+    [http://camlistore.org/code/?p=camlistore.git;f=doc/protocol;hb=master 'camlistore']
+    [http://docs.amazonwebservices.com/AmazonS3/latest/API/ 'AmazonS3']
+    [http://code.google.com/apis/documents/docs/3.0/developers_guide_protocol.html#UploadingDocs 'GoogleDocs']
+    [http://www.dropbox.com/developers/reference/api 'Dropbox']
+
+Note that implementing these APIs as described in their respective implementations is not enough. You need to add CORS headers to them, accept OAuth bearer tokens as credentials, and announce the remoteStorage through WebFinger. If you aim to run a proxy for a proprietary service, then keep in mind that these proxies often need to register as API-using apps.
+
+
+== Special 'public' category ==
+
+While for all access to any of the other categories, the corresponding $TOKEN is required, storage providers should implement the 'public' category slightly different. Read access, but NOT enumerate-access, should be allowed without $TOKEN. Here, read-access means access to retrieve a value /given/ its exact key. So a client should only have access to the values if it already knows the (possibly secret) keys. As an example, PROPFIND on WebDAV collections should not be allowed without credentials. Also, access to '/{category}/_changes' or to '/_all_dbs' on a CouchDB instance should only be offered if $TOKEN is presented in an HTTP header.
+
+
+== Conclusion ==
+
+It is up to the application, and beyond the scope of this specification, to implement end-to-end encryption on top of this, possibly using the Stanford Javascript Crypto Library, possibly in a WebWorker process. This text may be changed for clarity - its history is tracked by this wiki. However, the standard it describes was frozen on 31 October 2011. The standard will not change for at least 6 months (until at least 31 April 2012). Even then, if at any point after that improvements to this standard are deemed desirable, every attempt will be made to make those changes non-breaking.
