@@ -562,8 +562,7 @@ motestorage-02",
                "http://tools.ietf.org/html/rfc6750#section-4.2": "https\
 ://3pp.io:4439/oauth/michiel",
                "http://tools.ietf.org/html/rfc6750#section-2.3": false,
-               "https://tools.ietf.org/html/rfc2616#section-14.16": fal\
-se
+               "http://tools.ietf.org/html/rfc2616#section-14.16": false
              }
            }]
          }
