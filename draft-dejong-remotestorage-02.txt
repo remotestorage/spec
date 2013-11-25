@@ -424,8 +424,9 @@ Internet-Draft              remoteStorage                  December 2013
        Authorization: Bearer <access_token>
 
     In addition, providing the access token via a HTTP query parameter 
-    for GET requests MAY be supported by the server, but MUST be 
-    supported if HTTP Range requests are supported by the server.
+    for GET requests MAY be supported by the server, although its use
+    is not recommended, due to its security deficiencies; see [BEARER,
+    section 2.3]. 
 
 10. Application-first bearer token issuance
 
