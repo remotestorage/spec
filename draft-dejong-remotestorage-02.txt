@@ -182,22 +182,22 @@ Internet-Draft              remoteStorage                  December 2013
     for a folder. Item names MAY contain all characters except '/' and
     the null character, and MUST NOT have zero length.
 
-    An item description is a map containing one string-valued 'ETag'
+    A document description is a map containing one string-valued 'ETag'
     field, one string-valued 'Content-Type' and one integer-valued
     'Content-Length' field. They represent the item's current version,
     its content type, and its content length respectively. Note that
     content length is measured in octets (bytes), not in characters.
 
+    A folder description is a map containing a string-valued 'ETag'
+    field, representing the folder's current version.
+
     A successful GET request to a folder SHOULD be responded to with a
     JSON-LD [JSON-LD] document (content type 'application/json'),
     containing as its 'items' field a map in which contained documents
     appear as entries <item_name> to an item description, and contained
-    folders appear as entries <item_name> '/' to an item description.
+    folders appear as entries <item_name> '/' to a folder description.
     It SHOULD furthermore contain an '@context' field with the value
     'http://remotestorage.io/spec/folder-description'. For instance:
-
-
-
 
 
 de Jong                                                         [Page 4]
@@ -214,9 +214,7 @@ Internet-Draft              remoteStorage                  December 2013
              "Content-Length": 82352
            }
            "def/": {
-             "ETag": "1337ABCD1337ABCD1337ABCD",
-             "Content-Type": "application/json",
-             "Content-Length": 392
+             "ETag": "1337ABCD1337ABCD1337ABCD"
            }
          }
        }
@@ -248,6 +246,7 @@ Internet-Draft              remoteStorage                  December 2013
          document's new content type,
        * its version being updated, as well as that of its parent folder
          and further ancestor folders.
+
 
 
 
