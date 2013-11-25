@@ -234,45 +234,21 @@ Internet-Draft              remoteStorage                  December 2013
     the full document contents in the body, the document's content type
     in a 'Content-Type' header, its content length in octets (not in
     characters) in a 'Content-Length' header, and the document's current
-    version in an 'ETag' header.
+    version in an 'ETag' header. Range Requests MAY be supported by the
+    the server [HTTP].
 
-    Servers MAY support Content-Range headers [HTTP] for GET, PUT,
-    and/or DELETE requests. Clients SHOULD NOT send Content-Range
-    headers:
+    A successful PUT request to a document MUST result in:
 
-       * if the server has not announced support for them in its
-         WebFinger record, for the relevant verb (GET, PUT, DELETE),
-       * for a GET request, where the specified range does not fall
-         within the document's Content-Length,
-       * for a PUT request that creates a new document,
-       * for a PUT request that modifies an existing document, where
-         the specified range does not start within the existing
-         document's Content-Length.
-       * for a DELETE request, where the specified range does not end
-         exactly at the document's Content-Length.
- 
-    A successful PUT request to a document, with no Content-Range
-    specified, MUST result in the request body being stored as the
-    document's new content, as well as parent and further ancestor
-    folders being silently created as necessary, with the document
-    being added as an entry in its parent folder, and each folder
-    being added to its subsequent parent.
+       * the request body being stored as the document's new content,
+       * parent and further ancestor folders being silently created as
+         necessary, with the document (name and version) being added to
+         its parent folder, and each folder added to its subsequent
+         parent,
+       * the value of its Content-Type header being stored as the
+         document's new content type,
+       * its version being updated, as well as that of its parent folder
+         and further ancestor folders.
 
-    A successful PUT request to a document, with a Content-Range
-    header, MUST result in the request body being stored as the new
-    content at the range specified.
-
-    And a successful DELETE request that has a Content-Range header
-    whose range does not start at zero, MUST result in the document
-    being shortened as specified.
-
-    Furthermore, all these three types of request MUST result in:
-
-      * the value of its Content-Type header being stored as the
-        document's new content type,
-      * its version being updated, as well as that of its parent
-        folder and further ancestor folders,
-      * its new version being returned in an ETag header.
 
 
 de Jong                                                         [Page 5]
@@ -283,8 +259,7 @@ Internet-Draft              remoteStorage                  December 2013
     The response MUST contain an ETag header, with the document's new
     version (for instance a hash of its contents) as its value.
 
-    A successful DELETE request to an entire document (not a partial
-    Content-Range) MUST result in:
+    A successful DELETE request to a document MUST result in:
 
        * the deletion of that document from the storage, and from its
          parent folder,
@@ -292,6 +267,9 @@ Internet-Draft              remoteStorage                  December 2013
          this, and so on for further ancestor folders,
        * the version of its parent folder being updated, as well as that
          of further ancestor folders.
+
+    The response MUST contain an ETag header, with the document's
+    version that was deleted as its value.
 
     A successful OPTIONS request SHOULD be responded to as described in
     the CORS section below.
@@ -480,12 +458,10 @@ Internet-Draft              remoteStorage                  December 2013
     the server supports passing the bearer token in the URI query
     parameter as per [RFC6750-sec2.3], and false otherwise.
 
-    The <ranges> variable SHOULD have a string value of a comma-
-    separated list of a subset of the verbs GET, PUT, and DELETE. For
-    instance "GET,PUT" to indicate Content-Range headers are supported
-    as per [RFC2616-sec14.16] for GET and PUT requests, but not for
-    DELETE request. It SHOULD have the boolean value false if
-    Content-Range headers are not suppored for any verbs.
+    The <ranges> variable SHOULD have a string value of "GET", "PUT", or
+    "GET, PUT", if Content-Range headers are supported for GET requests
+    and/or for PUT requests, as per [RFC2616-sec14.16], and the boolean
+    value false if not.
 
     The server SHOULD NOT expire bearer tokens unless they are revoked,
     and MAY require the user to register applications as OAuth clients
