@@ -294,6 +294,10 @@ Internet-Draft              remoteStorage                  December 2013
              on the storage,
        * 304 for a conditional GET request whose pre-condition
              fails (see "Versioning" below),
+       * 409 for a PUT request where any folder name in the path
+             clashes with a document's name at the same level, or where
+             the document name coincides with an existing folder's name
+             at the same level.
        * 412 for a conditional PUT or DELETE request whose pre-condition
              fails (see "Versioning" below),
        * 507 in case the user's account is over its storage quota,
@@ -329,13 +333,6 @@ Internet-Draft              remoteStorage                  December 2013
 
     In all 'ETag', 'If-Match' and 'If-None-Match' headers, revision
     strings should appear inside double quotes (").
-
-    Whether or not a document and a directory with matching names can
-    exist side-by-side in the same directory, is left undefined. This
-    means a server MAY fail with a 412 response code if a PUT request
-    would result in such a document-with-directory name clash. Clients
-    are therefore encouraged to choose directory names that avoid
-    clashing with document names and vice versa.
 
     A provider MAY offer version rollback functionality to its users,
     but this specification does not define the user interface for that.
