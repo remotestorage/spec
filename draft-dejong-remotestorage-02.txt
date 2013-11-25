@@ -233,7 +233,7 @@ Internet-Draft              remoteStorage                  December 2013
     in a 'Content-Type' header, its content length in octets (not in
     characters) in a 'Content-Length' header, and the document's current
     version in an 'ETag' header. Content-Range headers on GET requests
-    MAY be supported by the the server [HTTP].
+    MAY be supported by the server [HTTP].
 
     A successful PUT request to a document MUST result in:
 
@@ -270,7 +270,7 @@ Internet-Draft              remoteStorage                  December 2013
     A successful OPTIONS request SHOULD be responded to as described in
     the CORS section below.
 
-    A successful HEAD request SHOULD be responsed to like to the
+    A successful HEAD request SHOULD be responded to like to the
     equivalent GET request, but omitting the response body.
 
 5. Response codes
@@ -282,7 +282,7 @@ Internet-Draft              remoteStorage                  December 2013
        * 429 if the client makes too frequent requests or is suspected
              of malicious activity,
        * 414 if the request URI is too long,
-       * 416 if Range requests are supported by the server and the Range 
+       * 416 if Range requests are supported by the server and the Range
              request can not be satisfied,
        * 400 for all malformed requests (e.g. foreign characters in the
              path or unrecognized http verb, etcetera), as well as for
@@ -419,10 +419,10 @@ Internet-Draft              remoteStorage                  December 2013
 
        Authorization: Bearer <access_token>
 
-    In addition, providing the access token via a HTTP query parameter 
+    In addition, providing the access token via a HTTP query parameter
     for GET requests MAY be supported by the server, although its use
     is not recommended, due to its security deficiencies; see [BEARER,
-    section 2.3]. 
+    section 2.3].
 
 10. Application-first bearer token issuance
 
