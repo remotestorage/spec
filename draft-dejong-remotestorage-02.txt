@@ -913,7 +913,8 @@ Internet-Draft              remoteStorage                  December 2013
         September 2013.
 
     [JSON-LD]
-        Sporny, Longley, Kellogg, Lanthaner, Lindstroem, "JSON-LD 1.0",
+        M. Sporny, G. Kellogg, M. Lanthaler, Lindstroem, "JSON-LD 1.0",
+        W3C Proposed Recommendation,
         http://www.w3.org/TR/2013/PR-json-ld-20131105/, November 2013.
 
 
