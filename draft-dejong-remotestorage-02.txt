@@ -282,8 +282,8 @@ Internet-Draft              remoteStorage                  December 2013
 5. Response codes
 
     Response codes SHOULD be given as defined by [HTTP, section 10] and
-    [BEARER, section 3.1]. The following is a non-normative list of
-    status codes that SHOULD be recognized by the client:
+    [BEARER, section 3.1]. The following is a non-normative checklist
+    of status codes that are likely to occur in practice:
 
        * 500 if an internal server error occurs,
        * 429 if the client makes too frequent requests or is suspected
