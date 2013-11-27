@@ -164,17 +164,10 @@ Internet-Draft              remoteStorage                  December 2013
 
 4. Requests
 
-    Client-to-server requests SHOULD be made over https [HTTPS], but the
-    server MAY offer an optional switch from https to SPDY [SPDY]. This
-    Internet Draft intentionally deviates from [HTTP] in two places:
-    
-        * Unlike general-purpose HTTP/1.1 servers [HTTP, section 3.6.1],
-          remoteStorage servers MAY (not "MUST") support chunked
-          transfer coding on PUTs.
-        * Whereas [HTTP, section 10] allows many different status codes,
-          remoteStorage servers SHOULD send the status codes mentioned
-          in section 5 of this Internet Draft, and clients MAY treat any
-          deviation from this as a server malfunction.
+    Client-to-server requests SHOULD be made over https [HTTPS], and 
+    servers SHOULD comply with HTTP/1.1 [HTTP]. Specifically, they
+    SHOULD support chunked transfer coding on PUT requests. Servers MAY
+    also offer an optional switch from https to SPDY [SPDY].
 
     The root folder of the storage tree is represented by the following
     URL:
@@ -288,8 +281,9 @@ Internet-Draft              remoteStorage                  December 2013
 
 5. Response codes
 
-    The following responses SHOULD be given in the indicated cases, in
-    order of preference, and SHOULD be recognized by the client:
+    Response codes SHOULD be given as defined by [HTTP, section 10] and
+    [BEARER, section 3.1]. The following is a non-normative list of
+    status codes that SHOULD be recognized by the client:
 
        * 500 if an internal server error occurs,
        * 429 if the client makes too frequent requests or is suspected
@@ -297,9 +291,6 @@ Internet-Draft              remoteStorage                  December 2013
        * 414 if the request URI is too long,
        * 416 if Range requests are supported by the server and the Range
              request can not be satisfied,
-       * 400 for all malformed requests (e.g. foreign characters in the
-             path or unrecognized http verb, etcetera), as well as for
-             all PUT and DELETE requests to folders,
        * 401 for all requests that don't have a bearer token with
              sufficient permissions,
        * 404 for all DELETE and GET requests to nodes that do not exist
@@ -313,16 +304,16 @@ Internet-Draft              remoteStorage                  December 2013
        * 412 for a conditional PUT or DELETE request whose pre-condition
              fails (see "Versioning" below),
        * 507 in case the user's account is over its storage quota,
-       * either 200 or 201 for all successful PUT requests that result
+       * 4** for all malformed requests (e.g. foreign characters in the
+             path), as well as for all PUT and DELETE requests to
+             folders,
+       * 2** for all successful requests.
 
 
 de Jong                                                         [Page 6]
 
 Internet-Draft              remoteStorage                  December 2013
 
-
-             in the creation of a previously non-existing resource.
-       * 200 for all other successful requests.
 
     Clients SHOULD also handle the case where a response takes too long
     to arrive, or where no response is received at all.
@@ -888,7 +879,8 @@ Internet-Draft              remoteStorage                  December 2013
     Carvalho, Martin Stadler, Geoffroy Couprie, Niklas Cathor, Marco
     Stahl, James Coglan, Ken Eucker, Daniel Brolund, elf Pavlik, Nick
     Jennings, Markus Sabadello, Steven te Brinke, Matthias Treydte,
-    Rick van Rein, and Mark Nottingham, among many others.
+    Rick van Rein, Mark Nottingham, Julian Reschke, and Markus
+    Lanthaler, among many others.
 
 17. References
 
