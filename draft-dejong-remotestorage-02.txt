@@ -165,8 +165,19 @@ Internet-Draft              remoteStorage                  December 2013
 4. Requests
 
     Client-to-server requests SHOULD be made over https [HTTPS], but the
-    server MAY offer an optional switch from https to SPDY [SPDY]. The
-    root folder of the storage tree is represented by the following URL:
+    server MAY offer an optional switch from https to SPDY [SPDY]. This
+    Internet Draft intentionally deviates from [HTTP] in two places:
+    
+        * Unlike general-purpose HTTP/1.1 servers [HTTP, section 3.6.1],
+          remoteStorage servers MAY (not "MUST") support chunked
+          transfer coding on PUTs.
+        * Whereas [HTTP, section 10] allows many different status codes,
+          remoteStorage servers SHOULD send the status codes mentioned
+          in section 5 of this Internet Draft, and clients MAY treat any
+          deviation from this as a server malfunction.
+
+    The root folder of the storage tree is represented by the following
+    URL:
 
         URI_ENCODE( <storage_root> '/' )
 
