@@ -304,10 +304,10 @@ Internet-Draft              remoteStorage                  December 2013
        * 412 for a conditional PUT or DELETE request whose pre-condition
              fails (see "Versioning" below),
        * 507 in case the user's account is over its storage quota,
-       * 4** for all malformed requests (e.g. foreign characters in the
+       * 4xx for all malformed requests (e.g. foreign characters in the
              path), as well as for all PUT and DELETE requests to
              folders,
-       * 2** for all successful requests.
+       * 2xx for all successful requests.
 
 
 de Jong                                                         [Page 6]
