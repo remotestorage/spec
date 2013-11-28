@@ -322,12 +322,12 @@ Internet-Draft              remoteStorage                  December 2013
 
 6. Versioning
 
-    All successful requests MUST return an 'ETag' header [HTTP] with,
-    in the case of GET, the current version, in the case of PUT, the
-    new version, and in case of DELETE, the version that was deleted.
-    PUT and DELETE requests MAY have an 'If-Match' request header
-    [HTTP], and MUST fail with a 412 response code if that doesn't
-    match the document's current version.
+    All successful requests MUST return no-cache headers, and an 'ETag'
+    header [HTTP] with, in the case of GET, the current version, in the
+    case of PUT, the new version, and in case of DELETE, the version
+    that was deleted. PUT and DELETE requests MAY have an 'If-Match'
+    request header [HTTP], and MUST fail with a 412 response code if
+    that doesn't match the document's current version.
 
     GET requests MAY have a comma-separated list of revisions in an
     'If-None-Match' header [HTTP], and SHOULD be responded to with a 412
