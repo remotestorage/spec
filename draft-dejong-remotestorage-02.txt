@@ -405,9 +405,9 @@ de Jong                                                         [Page 8]
 Internet-Draft              remoteStorage                  December 2013
 
 
-    'root:rw') any request,
+    '*:rw') any request,
 
-    'root:r') any GET or HEAD request,
+    '*:r') any GET or HEAD request,
 
     <module> ':rw') any requests to paths that start with
                     '/' <module> '/' or '/public/' <module> '/',
