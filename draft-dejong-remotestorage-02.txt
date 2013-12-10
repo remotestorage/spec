@@ -447,7 +447,7 @@ Internet-Draft              remoteStorage                  December 2013
 
     Here <storage_root> and <storage_api> are as per "Session
     description" above, and <auth-dialog> SHOULD be a URL where an
-    OAuth 2.0 implicit-grant flow dialog [OAUTH] is presented, so the user
+    OAuth 2.0 implicit-grant flow dialog [OAUTH] is presented, so the
 
 
 de Jong                                                         [Page 9]
@@ -455,13 +455,13 @@ de Jong                                                         [Page 9]
 Internet-Draft              remoteStorage                  December 2013
 
 
-    can supply their credentials (how, is out of scope), and allow or
-    reject a request by the connecting application to obtain a bearer
+    user can supply their credentials (how, is out of scope), and allow
+    or reject a request by the connecting application to obtain a bearer
     token for a certain list of access scopes.
 
     The <query-param> variable SHOULD have the boolean value true if
     the server supports passing the bearer token in the URI query
-    parameter as per [BEARER, section 2.3], and false otherwise.
+    parameter as per section 2.3 of [BEARER], and false otherwise.
 
     The <ranges> variable SHOULD have a string value of "GET" if
     Content-Range headers are supported for GET requests as per
