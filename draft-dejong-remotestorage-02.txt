@@ -219,7 +219,7 @@ Internet-Draft              remoteStorage                  December 2013
              "ETag": "DEADBEEFDEADBEEFDEADBEEF",
              "Content-Type": "image/jpeg",
              "Content-Length": 82352
-           }
+           },
            "def/": {
              "ETag": "1337ABCD1337ABCD1337ABCD"
            }
