@@ -549,7 +549,7 @@ low
     To which the server could respond with a 302 redirect, back to the
     origin of the requesting application:
 
-        HTTP/1.1 200 OK
+        HTTP/1.1 302 Found
         Location:https://drinks-unhosted.5apps.com/#access_token=j2YnGt\
 XjzzzHNjkd1CJxoQubA1o%3D&token_type=bearer&state=
 
