@@ -461,6 +461,12 @@ Table of Contents
     the interface for revoking an access token as specified by OAuth
     SHOULD coincide with removing an application from the dashboard.
 
+    Servers MAY also provide a way to create access tokens directly from
+    their user interface. Such functionality would be aimed mainly at
+    developers, to manually copy and paste a token into a script or
+    debug tools, thus bypassing the need for an OAuth dance. Clients
+    SHOULD NOT rely on this in production.
+
 12. Example wire transcripts
 
     The following examples are not normative ("\" indicates a line was
