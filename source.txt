@@ -144,8 +144,8 @@ Table of Contents
 4. Requests
 
     Client-to-server requests SHOULD be made over https [HTTPS], and 
-    servers SHOULD comply with HTTP/1.1 [HTTP]. Specifically, they
-    SHOULD support chunked transfer coding on PUT requests. Servers MAY
+    servers MUST comply with HTTP/1.1 [HTTP]. Specifically, they
+    MUST support chunked transfer coding on PUT requests. Servers MAY
     also offer an optional switch from https to SPDY [SPDY].
 
     The root folder of the storage tree is represented by the following
