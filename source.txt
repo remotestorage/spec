@@ -1,5 +1,5 @@
 INTERNET DRAFT                                      Michiel B. de Jong
-Document: draft-dejong-remotestorage-02                  (independent)
+Document: draft-dejong-remotestorage-03                  (independent)
                                                              F. Kooman
 Intended Status: Proposed Standard                       (independent)
 Expires: 13 June 2014                                 10 December 2013
@@ -324,7 +324,7 @@ Table of Contents
          can however be reused in subsequent interactions with the same
          client, as long as that client is still trusted. Example:
          * 'ofb24f1ac3973e70j6vts19qr9v2eei'
-       * <storage_api>, always 'draft-dejong-remotestorage-02' for this
+       * <storage_api>, always 'draft-dejong-remotestorage-03' for this
          alternative version of the specification.
 
     The client can make its requests using https with CORS and bearer
@@ -488,7 +488,7 @@ gth
              "rel": "remotestorage",
              "properties": {
                "http://remotestorage.io/spec/version": "draft-dejong-re\
-motestorage-02",
+motestorage-03",
                "http://tools.ietf.org/html/rfc6750#section-4.2": "https\
 ://3pp.io:4439/oauth/michiel",
                "http://tools.ietf.org/html/rfc6750#section-2.3": false,
