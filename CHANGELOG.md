@@ -10,6 +10,7 @@
 
 ## Breaking for clients:
 * Servers MAY now expire access tokens, in line with the OAuth spec.
+* Servers MAY now use Kerberos instead of OAuth.
 
 ## non-breaking:
 * The option to offer a manual way to create access tokens is now mentioned

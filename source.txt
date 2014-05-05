@@ -369,9 +369,10 @@ Table of Contents
 
     As a special exceptions, GET requests to a document (but not a
     folder) whose path starts with '/public/' are always allowed. They,
-    as well as OPTIONS requests, can be made without a bearer token. All
-    other requests should present a bearer token with sufficient access
-    scope, using a header of the following form (no double quotes here):
+    as well as OPTIONS requests, can be made without a bearer token.
+    Unless [KERBEROS] is used (see section 10 below), all other requests
+    SHOULD present a bearer token with sufficient access scope, using a
+    header of the following form (no double quotes here):
 
        Authorization: Bearer <access_token>
 
@@ -398,11 +399,21 @@ Table of Contents
     }
 
     Here <storage_root> and <storage_api> are as per "Session
-    description" above, and <auth-dialog> SHOULD be a URL where an
-    OAuth 2.0 implicit-grant flow dialog [OAUTH] is presented, so the
-    user can supply their credentials (how, is out of scope), and allow
-    or reject a request by the connecting application to obtain a bearer
-    token for a certain list of access scopes.
+    description" above, and <auth-dialog> SHOULD be eihter the boolean
+    value false or a URL where an OAuth 2.0 implicit-grant flow dialog
+    [OAUTH] is presented.
+
+    If <auth-dialog> is a URL, the user can supply their credentials
+    there (how, is out of scope), and allow or reject a request by the
+    connecting application to obtain a bearer token for a certain list
+    of access scopes.
+
+    If <auth-dialog> is false, the client will not have a way to obtain
+    an access token, and SHOULD send all requests without Authorization
+    header, and rely on Kerberos [KERBEROS] instead for requests that
+    would normally be sent with a bearer token, but servers SHOULD NOT
+    impose any such access barriers for resources that would normally
+    not require an access token.
 
     The <query-param> variable SHOULD have the boolean value true if
     the server supports passing the bearer token in the URI query
@@ -834,7 +845,10 @@ ge.io/spec/modules/myfavoritedrinks/drink"}
         Bearer Token Usage", RFC6750,
         http://tools.ietf.org/html/rfc6750#section-2.3, October 2012.
 
-
+    [KERBEROS]
+        C. Neuman et al., "The Kerberos Network Authentication Service
+        (V5)", RFC4120,
+        https://tools.ietf.org/html/rfc4120
 
 18. Authors' addresses
 
