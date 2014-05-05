@@ -15,7 +15,7 @@ Abstract
     provider of a web application need not also play the role of data
     storage provider. The protocol supports storing, retrieving, and
     removing individual documents, as well as listing the contents of an
-    individual directory, and access control is based on bearer tokens.
+    individual folder, and access control is based on bearer tokens.
 
 Status of this Memo
 
@@ -679,10 +679,10 @@ ge.io/spec/modules/myfavoritedrinks/drink"}
     user wishes; this time setting an 'If-Match: "2"' header instead.
 
     Both client A and client B would periodically poll the root
-    directory of each scope they have access to, to see if the version
-    of the root directory changed. If it did, then one of the versions
+    folder of each scope they have access to, to see if the version
+    of the root folder changed. If it did, then one of the versions
     listed in there will necessarily have changed, and the client can
-    make a GET request to that child directory or document, to obtain
+    make a GET request to that child folder or document, to obtain
     its latest version.
 
     Because an update in a document will result in a version change of
@@ -700,7 +700,7 @@ ge.io/spec/modules/myfavoritedrinks/drink"}
     come back with a different ETag, and entry '7/' will have a
     different value in its JSON content. The client could then request
     '/7/', '/7/9/', and '/7/9/2' to narrow down the one document that
-    caused the root directory's ETag to change.
+    caused the root folder's ETag to change.
 
     Note that the remoteStorage server does not get involved in the
     conflict resolution. It keeps the canonical current version at all
