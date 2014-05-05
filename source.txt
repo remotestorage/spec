@@ -2,7 +2,7 @@ INTERNET DRAFT                                      Michiel B. de Jong
 Document: draft-dejong-remotestorage-03                  (independent)
                                                              F. Kooman
 Intended Status: Proposed Standard                       (independent)
-Expires: 13 June 2014                                 10 December 2013
+Expires: 15 December 2014                                 13 June 2014
 
 
                             remoteStorage
@@ -32,7 +32,7 @@ Status of this Memo
    time.  It is inappropriate to use Internet-Drafts as reference
    material or to cite them other than as "work in progress."
 
-   This Internet-Draft will expire on 13 June 2014.
+   This Internet-Draft will expire on 15 December 2014.
 
 Copyright Notice
 
