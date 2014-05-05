@@ -435,10 +435,10 @@ Table of Contents
     manifest is present on the dashboard, the dashboard SHOULD redirect
     to the application or open it in a new window. To mimic coming back
     from the OAuth dialog, it MAY add 'access_token' and 'scope'
-    parameters to the URL fragment.
+    fields to the URL fragment.
 
     Regardless of whether 'access_token' and 'scope' are specified, it
-    SHOULD add a 'remotestorage' parameter to the URL fragment, with a
+    SHOULD add a 'remotestorage' field to the URL fragment, with a
     value of the form <user> '@' <host>. When the application detects
     this parameter, it SHOULD resolve the webfinger record for <user> at
     <host> and extract the <storage_root> and <storage_api> information.
