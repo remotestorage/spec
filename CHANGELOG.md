@@ -3,6 +3,7 @@
 ## Breaking for servers as well as clients:
 * The content-type for folder listings was corrected to application/ld+json
 * The version string in the webfinger announcement was updated from -02 to -03
+* Switch to the datastores-access syntax in open web app manifest format
 
 ## Breaking for servers:
 * Serving folder listings with zero items is no longer allowed; serve a 404 instead.

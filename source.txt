@@ -437,10 +437,11 @@ Table of Contents
     'accept' in the dialog of the application-first flow. Removing one
     is considered equivalent to revoking its access token.
 
-    As an equivalent to OAuth's 'scope' parameter, a 'remotestorage'
+    As an equivalent to OAuth's 'scope' parameter, a 'datastores-access'
     field SHOULD be present in the root of such an application manifest
-    document, as a JSON array of strings, each string being one access
-    scope of the form <module> <level>.
+    document, with entries <module> -> '{"access": "readonly"}' for
+    <level> 'r' or '{"access": "readwrite"}' for <level> 'rw', as
+    prescribed in [DATASTORE].
 
     When the user gestures they want to use a certain application whose
     manifest is present on the dashboard, the dashboard SHOULD redirect
@@ -828,7 +829,7 @@ ge.io/spec/modules/myfavoritedrinks/drink"}
     [JSON-LD]
         M. Sporny, G. Kellogg, M. Lanthaler, "JSON-LD 1.0", W3C
         Proposed Recommendation,
-        http://www.w3.org/TR/2013/PR-json-ld-20131105/, November 2013.
+        http://www.w3.org/TR/2014/REC-json-ld-20140116/, January 2014.
 
     [CORS]
         van Kesteren, Anne (ed), "Cross-Origin Resource Sharing --
@@ -838,17 +839,21 @@ ge.io/spec/modules/myfavoritedrinks/drink"}
     [MANIFEST]
         Mozilla Developer Network (ed), "App manifest -- Revision
         330541", https://developer.mozilla.org/en-
-        US/Apps/Developing/Manifest$revision/482369, October 2013.
+        US/Apps/Build/Manifest$revision/566677, April 2014.
 
-    [BEARER]
-        M. Jones, D. Hardt, "The OAuth 2.0 Authorization Framework:
-        Bearer Token Usage", RFC6750,
-        http://tools.ietf.org/html/rfc6750#section-2.3, October 2012.
+    [DATASTORE]
+        "WebAPI/DataStore", MozillaWiki, retrieved May 2014.
+        https://wiki.mozilla.org/WebAPI/DataStore#Manifest
 
     [KERBEROS]
         C. Neuman et al., "The Kerberos Network Authentication Service
         (V5)", RFC4120,
         https://tools.ietf.org/html/rfc4120
+
+    [BEARER]
+        M. Jones, D. Hardt, "The OAuth 2.0 Authorization Framework:
+        Bearer Token Usage", RFC6750,
+        http://tools.ietf.org/html/rfc6750#section-2.3, October 2012.
 
 18. Authors' addresses
 
