@@ -200,8 +200,15 @@ Table of Contents
 
     Empty folders are treated as non-existing, and therefore GET
     requests to them SHOULD be responded to with either a 404 response
-    OR the JSON-LD document representing an empty folder ('{ "@context": "http://remotestorage.io/spec/folder-description", "items": {} }'). However, an
-    empty folder MUST NOT be listed as an item in its parent folder.
+    OR the JSON-LD document representing an empty folder:
+
+      {
+        "@context": "http://remotestorage.io/spec/folder-description",
+        "items": {}
+      }
+
+    However, an empty folder MUST NOT be listed as an item in its parent
+    folder.
 
     Also, folders SHOULD be created silently, as necessary to contain
     newly added items. This way, PUT and DELETE requests only need to be
@@ -834,33 +841,3 @@ ge.io/spec/modules/myfavoritedrinks/drink"}
     (independent)
 
     Email: fkooman@tuxed.net
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
