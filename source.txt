@@ -412,11 +412,11 @@ Table of Contents
     Content-Range headers are supported for GET requests as per
     [HTTP, section 14.16], and the boolean value false if not.
 
-    The server SHOULD NOT expire bearer tokens unless they are revoked,
-    and MAY require the user to register applications as OAuth clients
-    before first use; if no client registration is required, then the
-    server MAY ignore the client_id parameter in favor of relying on
-    the redirect_uri parameter for client identification.
+    The server MAY expire bearer tokens, and MAY require the user to
+    register applications as OAuth clients before first use; if no
+    client registration is required, then the server MAY ignore the
+    client_id parameter in favor of relying on the redirect_uri
+    parameter for client identification.
 
 11. Storage-first bearer token issuance
 
