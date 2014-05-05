@@ -210,8 +210,16 @@ Table of Contents
     the full document contents in the body, the document's content type
     in a 'Content-Type' header, its content length in octets (not in
     characters) in a 'Content-Length' header, and the document's current
-    version in an 'ETag' header. Content-Range headers on GET requests
-    MAY be supported by the server [HTTP].
+    version as a strong ETag in an 'ETag' header.
+
+    Note that the use of strong ETags prohibits changing the response
+    body based on request headers; in particular, the server will not be
+    able to serve the same document uncompressed to some clients and
+    gzipped when requested by the client, since the two bodies would not
+    be identical byte-for-byte.
+
+    Content-Range headers on GET requests MAY be supported by the server
+    [HTTP].
 
     A successful PUT request to a document MUST result in:
 
