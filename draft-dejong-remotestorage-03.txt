@@ -63,26 +63,26 @@ Table of Contents
    4. Requests.......................................................4
    5. Response codes.................................................6
    6. Versioning.....................................................7
-   7. CORS headers...................................................7
+   7. CORS headers...................................................8
    8. Session description............................................8
-   9. Bearer tokens and access control...............................8
+   9. Bearer tokens and access control...............................9
   10. Application-first bearer token issuance........................9
-  11. Storage-first bearer token issuance...........................10
-  12. Example wire transcripts......................................11
-     12.1. WebFinger................................................11
-     12.2. OAuth dialog form........................................12
+  11. Storage-first bearer token issuance...........................11
+  12. Example wire transcripts......................................12
+     12.1. WebFinger................................................12
+     12.2. OAuth dialog form........................................13
      12.3. OAuth dialog form submission.............................13
-     12.4. OPTIONS preflight........................................13
+     12.4. OPTIONS preflight........................................14
      12.5. Initial PUT..............................................14
-     12.6. Subsequent PUT...........................................14
+     12.6. Subsequent PUT...........................................15
      12.7. GET......................................................15
-     12.8. DELETE...................................................15
+     12.8. DELETE...................................................16
   13. Distributed versioning........................................16
-  14. Security Considerations.......................................16
-  15. IANA Considerations...........................................18
-  16. Acknowledgments...............................................18
-  17. References....................................................18
-     17.1. Normative References.....................................18
+  14. Security Considerations.......................................18
+  15. IANA Considerations...........................................19
+  16. Acknowledgments...............................................19
+  17. References....................................................19
+     17.1. Normative References.....................................19
      17.2. Informative References...................................19
   18. Authors' addresses............................................20
 
@@ -207,8 +207,8 @@ Internet-Draft              remoteStorage                      June 2014
 
     containing as its 'items' field a map in which contained documents
     appear as entries <item_name> to a document description, and
-    contained folders appear as entries <item_name> '/' to a folder
-    description. It SHOULD furthermore contain an '@context' field with
+    contained non-empty folders appear as entries <item_name> '/' to a
+    folder description. It SHOULD also contain an '@context' field with
     the value 'http://remotestorage.io/spec/folder-description'. For
     instance:
 
@@ -226,13 +226,18 @@ Internet-Draft              remoteStorage                      June 2014
          }
        }
 
-    Empty folders are treated as non-existing, and therefore GET
-    requests to them SHOULD be responded to with a 404 response. An
-    empty folder MUST NOT be listed as an item in its parent folder.
+    All folders are treated as existing, and therefore GET requests to
+    untouched folders SHOULD be responded to with a folder description
+    with no items (the items field set to '{}'). However, an empty
+    folder MUST NOT be listed as an item in its parent folder.
 
-    Also, folders SHOULD be created silently, as necessary to contain
-    newly added items. This way, PUT and DELETE requests only need to be
-    made to documents, and folder management becomes an implicit result.
+    Also, since folders exist automatically, PUT and DELETE requests
+    only need to be made to documents, and never to folders. A document
+    PUT will make all ancestor folders along its path become non-empty;
+    deleting the last document from a subtree will make that whole
+    subtree become empty. Folders will therefore show up in their parent
+    folder descriptions if and only if their subtree contains at least
+    one document.
 
     A successful GET request to a document SHOULD be responded to with
     the full document contents in the body, the document's content type
@@ -243,11 +248,6 @@ Internet-Draft              remoteStorage                      June 2014
     Note that the use of strong ETags prohibits changing the response
     body based on request headers; in particular, the server will not be
     able to serve the same document uncompressed to some clients and
-    gzipped when requested by the client, since the two bodies would not
-    be identical byte-for-byte.
-
-    Servers MAY support Content-Range headers [HTTP] on GET requests,
-    but whether or not they do SHOULD be announced through the <ranges>
 
 
 de Jong                                                         [Page 5]
@@ -255,6 +255,11 @@ de Jong                                                         [Page 5]
 Internet-Draft              remoteStorage                      June 2014
 
 
+    gzipped when requested by the client, since the two bodies would not
+    be identical byte-for-byte.
+
+    Servers MAY support Content-Range headers [HTTP] on GET requests,
+    but whether or not they do SHOULD be announced through the <ranges>
     variable mentioned below in section 10.
 
     A successful PUT request to a document MUST result in:
@@ -294,17 +299,17 @@ Internet-Draft              remoteStorage                      June 2014
     [BEARER, section 3.1]. The following is a non-normative checklist
     of status codes that are likely to occur in practice:
 
-       * 500 if an internal server error occurs,
-       * 429 if the client makes too frequent requests or is suspected
-             of malicious activity,
-       * 414 if the request URI is too long,
-
 
 de Jong                                                         [Page 6]
 
 Internet-Draft              remoteStorage                      June 2014
 
 
+
+       * 500 if an internal server error occurs,
+       * 429 if the client makes too frequent requests or is suspected
+             of malicious activity,
+       * 414 if the request URI is too long,
        * 416 if Range requests are supported by the server and the Range
              request can not be satisfied,
        * 401 for all requests that don't have a bearer token with
@@ -344,17 +349,17 @@ Internet-Draft              remoteStorage                      June 2014
     in which case it MUST fail with a 412 response code if the document
     already exists.
 
-    In all 'ETag', 'If-Match' and 'If-None-Match' headers, revision
-    strings should appear inside double quotes (").
-
-    A provider MAY offer version rollback functionality to its users,
-
 
 de Jong                                                         [Page 7]
 
 Internet-Draft              remoteStorage                      June 2014
 
 
+
+    In all 'ETag', 'If-Match' and 'If-None-Match' headers, revision
+    strings should appear inside double quotes (").
+
+    A provider MAY offer version rollback functionality to its users,
     but this specification does not define the user interface for that.
 
 7. CORS headers
@@ -363,6 +368,7 @@ Internet-Draft              remoteStorage                      June 2014
     reply to OPTIONS requests as per CORS. For GET requests, a wildcard
     origin MAY be returned, but for PUT and DELETE requests, the
     response MUST echo back the Origin header sent by the client.
+
 8. Session description
 
     The information that a client needs to receive in order to be able
@@ -392,12 +398,6 @@ Internet-Draft              remoteStorage                      June 2014
     "https://storage.example.com/bob", then to retrieve the folder
     contents of the /public/documents/ folder, or to retrieve a
     'draft.txt' document from that folder, the client would make
-    requests to, respectively:
-
-    * https://storage.example.com/bob/public/documents/
-    * https://storage.example.com/bob/public/documents/draft.txt
-
-9. Bearer tokens and access control
 
 
 de Jong                                                         [Page 8]
@@ -405,6 +405,12 @@ de Jong                                                         [Page 8]
 Internet-Draft              remoteStorage                      June 2014
 
 
+    requests to, respectively:
+
+    * https://storage.example.com/bob/public/documents/
+    * https://storage.example.com/bob/public/documents/draft.txt
+
+9. Bearer tokens and access control
 
     A bearer token represents one or more access scopes. These access
     scopes are represented as strings of the form <module> <level>,
@@ -443,18 +449,18 @@ Internet-Draft              remoteStorage                      June 2014
     <user> at <host>', exactly one link of the following format SHOULD
     be added to the webfinger record [WEBFINGER] of <user> at <host>:
 
-    {
-      "href": <storage_root>,
-      "rel": "remotestorage",
-      "properties": {
-        "http://remotestorage.io/spec/version": <storage_api>,
-
 
 de Jong                                                         [Page 9]
 
 Internet-Draft              remoteStorage                      June 2014
 
 
+
+    {
+      "href": <storage_root>,
+      "rel": "remotestorage",
+      "properties": {
+        "http://remotestorage.io/spec/version": <storage_api>,
         "http://tools.ietf.org/html/rfc6749#section-4.2": <auth-dialog>,
         "http://tools.ietf.org/html/rfc6750#section-2.3": <query-param>,
         "https://tools.ietf.org/html/rfc2616#section-14.16": <ranges>
@@ -492,12 +498,6 @@ Internet-Draft              remoteStorage                      June 2014
     client_id parameter in favor of relying on the redirect_uri
     parameter for client identification.
 
-11. Storage-first bearer token issuance
-
-    The provider MAY also present a dashboard to the user, where they
-    have some way to add open web app manifests [MANIFEST]. Adding a
-    manifest to the dashboard is considered equivalent to clicking
-    'accept' in the dialog of the application-first flow. Removing one
 
 
 de Jong                                                        [Page 10]
@@ -505,6 +505,13 @@ de Jong                                                        [Page 10]
 Internet-Draft              remoteStorage                      June 2014
 
 
+
+11. Storage-first bearer token issuance
+
+    The provider MAY also present a dashboard to the user, where they
+    have some way to add open web app manifests [MANIFEST]. Adding a
+    manifest to the dashboard is considered equivalent to clicking
+    'accept' in the dialog of the application-first flow. Removing one
     is considered equivalent to revoking its access token.
 
     As an equivalent to OAuth's 'scope' parameter, a 'datastores-access'
@@ -541,13 +548,6 @@ Internet-Draft              remoteStorage                      June 2014
     SHOULD merge the list of applications there with the list of
     issued access tokens as specified by OAuth into one list. Also,
     the interface for revoking an access token as specified by OAuth
-    SHOULD coincide with removing an application from the dashboard.
-
-    Servers MAY also provide a way to create access tokens directly from
-    their user interface. Such functionality would be aimed mainly at
-    developers, to manually copy and paste a token into a script or
-    debug tool, thus bypassing the need for an OAuth dance. Clients
-    SHOULD NOT rely on this in production.
 
 
 de Jong                                                        [Page 11]
@@ -555,6 +555,13 @@ de Jong                                                        [Page 11]
 Internet-Draft              remoteStorage                      June 2014
 
 
+    SHOULD coincide with removing an application from the dashboard.
+
+    Servers MAY also provide a way to create access tokens directly from
+    their user interface. Such functionality would be aimed mainly at
+    developers, to manually copy and paste a token into a script or
+    debug tool, thus bypassing the need for an OAuth dance. Clients
+    SHOULD NOT rely on this in production.
 
 12. Example wire transcripts
 
@@ -591,13 +598,6 @@ gth
              "rel": "remotestorage",
              "properties": {
                "http://remotestorage.io/spec/version": "draft-dejong-re\
-motestorage-03",
-               "http://tools.ietf.org/html/rfc6750#section-4.2": "https\
-://3pp.io:4439/oauth/michiel",
-               "http://tools.ietf.org/html/rfc6750#section-2.3": false,
-               "http://tools.ietf.org/html/rfc2616#section-14.16": false
-             }
-           }]
 
 
 de Jong                                                        [Page 12]
@@ -605,6 +605,13 @@ de Jong                                                        [Page 12]
 Internet-Draft              remoteStorage                      June 2014
 
 
+motestorage-03",
+               "http://tools.ietf.org/html/rfc6750#section-4.2": "https\
+://3pp.io:4439/oauth/michiel",
+               "http://tools.ietf.org/html/rfc6750#section-2.3": false,
+               "http://tools.ietf.org/html/rfc2616#section-14.16": false
+             }
+           }]
          }
 
 12.2. OAuth dialog form
@@ -641,13 +648,6 @@ unhosted.5apps.com&response_type=token HTTP/1.1
         Origin: https://3pp.io:4439
         Content-Type: application/x-www-form-urlencoded
         Referer: https://3pp.io:4439/oauth/michiel?redirect_uri=https%3\
-A%2F%2Fdrinks-unhosted.5apps.com%2F&scope=myfavoritedrinks%3Arw&client_\
-id=https%3A%2F%2Fdrinks-unhosted.5apps.com&response_type=token
-
-        client_id=https%3A%2F%2Fdrinks-unhosted.5apps.com&redirect_uri=\
-https%3A%2F%2Fdrinks-unhosted.5apps.com%2F&response_type=token&scope=my\
-favoritedrinks%3Arw&state=&username=michiel&password=something&allow=Al\
-low
 
 
 de Jong                                                        [Page 13]
@@ -655,6 +655,13 @@ de Jong                                                        [Page 13]
 Internet-Draft              remoteStorage                      June 2014
 
 
+A%2F%2Fdrinks-unhosted.5apps.com%2F&scope=myfavoritedrinks%3Arw&client_\
+id=https%3A%2F%2Fdrinks-unhosted.5apps.com&response_type=token
+
+        client_id=https%3A%2F%2Fdrinks-unhosted.5apps.com&redirect_uri=\
+https%3A%2F%2Fdrinks-unhosted.5apps.com%2F&response_type=token&scope=my\
+favoritedrinks%3Arw&state=&username=michiel&password=something&allow=Al\
+low
 
     To which the server could respond with a 302 redirect, back to the
     origin of the requesting application:
@@ -691,13 +698,6 @@ ntent-Type, Origin, X-Requested-With, If-Match, If-None-Match
         PUT /storage/michiel/myfavoritedrinks/test HTTP/1.1
         Host: 3pp.io:4439
         Content-Length: 91
-        Origin: https://drinks-unhosted.5apps.com
-        Authorization: Bearer j2YnGtXjzzzHNjkd1CJxoQubA1o=
-        Content-Type: application/json; charset=UTF-8
-        Referer: https://drinks-unhosted.5apps.com/?
-        If-None-Match: *
-
-        {"name":"test","@context":"http://remotestorage.io/spec/modules\
 
 
 de Jong                                                        [Page 14]
@@ -705,6 +705,13 @@ de Jong                                                        [Page 14]
 Internet-Draft              remoteStorage                      June 2014
 
 
+        Origin: https://drinks-unhosted.5apps.com
+        Authorization: Bearer j2YnGtXjzzzHNjkd1CJxoQubA1o=
+        Content-Type: application/json; charset=UTF-8
+        Referer: https://drinks-unhosted.5apps.com/?
+        If-None-Match: *
+
+        {"name":"test","@context":"http://remotestorage.io/spec/modules\
 /myfavoritedrinks/drink"}
 
     And the server may respond with either a 201 Created or a 200 OK
@@ -742,19 +749,19 @@ e.io/spec/modules/myfavoritedrinks/drink"}
     A GET request would also include the bearer token, and optionally
     an If-None-Match header:
 
-        GET /storage/michiel/myfavoritedrinks/test HTTP/1.1
-        Host: 3pp.io:4439
-        Origin: https://drinks-unhosted.5apps.com
-        Authorization: Bearer j2YnGtXjzzzHNjkd1CJxoQubA1o=
-        Referer: https://drinks-unhosted.5apps.com/?
-        If-None-Match: "1382694045000", "1382694048000"
-
 
 de Jong                                                        [Page 15]
 
 Internet-Draft              remoteStorage                      June 2014
 
 
+
+        GET /storage/michiel/myfavoritedrinks/test HTTP/1.1
+        Host: 3pp.io:4439
+        Origin: https://drinks-unhosted.5apps.com
+        Authorization: Bearer j2YnGtXjzzzHNjkd1CJxoQubA1o=
+        Referer: https://drinks-unhosted.5apps.com/?
+        If-None-Match: "1382694045000", "1382694048000"
 
         {"name":"test", "updated":true, "@context":"http://remotestora\
 ge.io/spec/modules/myfavoritedrinks/drink"}
@@ -791,13 +798,6 @@ ge.io/spec/modules/myfavoritedrinks/drink"}
     same time it will hopefully help readers who intend to develop an
     application that uses remoteStorage as its per-user data storage.
     When multiple clients have read/write access to the same document,
-    versioning conflicts may occur. For instance, client A may make
-    a PUT request that changes the document from version 1 to version
-    2, after which client B may make a PUT request attempting to change
-    the same document from version 1 to version 3.
-
-    In this case, client B can add an 'If-Match: "1"' header, which
-    would trigger a 412 Conflict response code, since the current
 
 
 de Jong                                                        [Page 16]
@@ -805,6 +805,13 @@ de Jong                                                        [Page 16]
 Internet-Draft              remoteStorage                      June 2014
 
 
+    versioning conflicts may occur. For instance, client A may make
+    a PUT request that changes the document from version 1 to version
+    2, after which client B may make a PUT request attempting to change
+    the same document from version 1 to version 3.
+
+    In this case, client B can add an 'If-Match: "1"' header, which
+    would trigger a 412 Conflict response code, since the current
     version ("2") does not match the version required as a condition by
     the header If-Match header ("1").
 
@@ -841,19 +848,19 @@ Internet-Draft              remoteStorage                      June 2014
     caused the root folder's ETag to change.
 
     Note that the remoteStorage server does not get involved in the
-    conflict resolution. It keeps the canonical current version at all
-    times, and allows clients to make conditional GET and PUT requests,
-    but it is up to whichever client discovers a given version
-    conflict, to resolve it.
-
-14. Security Considerations
-
 
 
 de Jong                                                        [Page 17]
 
 Internet-Draft              remoteStorage                      June 2014
 
+
+    conflict resolution. It keeps the canonical current version at all
+    times, and allows clients to make conditional GET and PUT requests,
+    but it is up to whichever client discovers a given version
+    conflict, to resolve it.
+
+14. Security Considerations
 
     To prevent man-in-the-middle attacks, the use of https instead of
     http is important for both the interface itself and all end-points
@@ -891,13 +898,6 @@ Internet-Draft              remoteStorage                      June 2014
     The server SHOULD also detect and stop denial-of-service attacks
     that aim to overwhelm its interface with too much traffic.
 
-15. IANA Considerations
-
-    This document registers the 'remotestorage' link relation, as well
-    as the following WebFinger properties:
-      * "http://remotestorage.io/spec/version"
-      * "http://tools.ietf.org/html/rfc6749#section-4.2"
-      * "http://tools.ietf.org/html/rfc6750#section-2.3"
 
 
 de Jong                                                        [Page 18]
@@ -905,6 +905,13 @@ de Jong                                                        [Page 18]
 Internet-Draft              remoteStorage                      June 2014
 
 
+15. IANA Considerations
+
+    This document registers the 'remotestorage' link relation, as well
+    as the following WebFinger properties:
+      * "http://remotestorage.io/spec/version"
+      * "http://tools.ietf.org/html/rfc6749#section-4.2"
+      * "http://tools.ietf.org/html/rfc6750#section-2.3"
       * "https://tools.ietf.org/html/rfc2616#section-14.16
 
 16. Acknowledgements
@@ -941,13 +948,6 @@ Internet-Draft              remoteStorage                      June 2014
 
 17.2. Informative References
 
-    [HTTPS]
-        Rescorla, E., "HTTP Over TLS", RFC2818, May 2000.
-    [HTTP]
-        Fielding et al., "Hypertext Transfer Protocol -- HTTP/1.1",
-        RFC2616, June 1999.
-
-    [SPDY]
 
 
 de Jong                                                        [Page 19]
@@ -955,6 +955,13 @@ de Jong                                                        [Page 19]
 Internet-Draft              remoteStorage                      June 2014
 
 
+    [HTTPS]
+        Rescorla, E., "HTTP Over TLS", RFC2818, May 2000.
+    [HTTP]
+        Fielding et al., "Hypertext Transfer Protocol -- HTTP/1.1",
+        RFC2616, June 1999.
+
+    [SPDY]
         Mark Belshe, Roberto Peon, "SPDY Protocol - Draft 3.1", http://
         www.chromium.org/spdy/spdy-protocol/spdy-protocol-draft3-1,
         September 2013.
@@ -988,6 +995,16 @@ Internet-Draft              remoteStorage                      June 2014
         Bearer Token Usage", RFC6750,
         http://tools.ietf.org/html/rfc6750#section-2.3, October 2012.
 
+
+
+
+
+
+de Jong                                                        [Page 20]
+
+Internet-Draft              remoteStorage                      June 2014
+
+
 18. Authors' addresses
 
     Michiel B. de Jong
@@ -998,13 +1015,6 @@ Internet-Draft              remoteStorage                      June 2014
 
     F. Kooman
     (independent)
-
-
-de Jong                                                        [Page 20]
-
-Internet-Draft              remoteStorage                      June 2014
-
-
 
     Email: fkooman@tuxed.net
 

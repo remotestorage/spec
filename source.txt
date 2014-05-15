@@ -56,26 +56,26 @@ Table of Contents
    4. Requests.......................................................4
    5. Response codes.................................................6
    6. Versioning.....................................................7
-   7. CORS headers...................................................7
+   7. CORS headers...................................................8
    8. Session description............................................8
-   9. Bearer tokens and access control...............................8
+   9. Bearer tokens and access control...............................9
   10. Application-first bearer token issuance........................9
-  11. Storage-first bearer token issuance...........................10
-  12. Example wire transcripts......................................11
-     12.1. WebFinger................................................11
-     12.2. OAuth dialog form........................................12
+  11. Storage-first bearer token issuance...........................11
+  12. Example wire transcripts......................................12
+     12.1. WebFinger................................................12
+     12.2. OAuth dialog form........................................13
      12.3. OAuth dialog form submission.............................13
-     12.4. OPTIONS preflight........................................13
+     12.4. OPTIONS preflight........................................14
      12.5. Initial PUT..............................................14
-     12.6. Subsequent PUT...........................................14
+     12.6. Subsequent PUT...........................................15
      12.7. GET......................................................15
-     12.8. DELETE...................................................15
+     12.8. DELETE...................................................16
   13. Distributed versioning........................................16
-  14. Security Considerations.......................................16
-  15. IANA Considerations...........................................18
-  16. Acknowledgments...............................................18
-  17. References....................................................18
-     17.1. Normative References.....................................18
+  14. Security Considerations.......................................18
+  15. IANA Considerations...........................................19
+  16. Acknowledgments...............................................19
+  17. References....................................................19
+     17.1. Normative References.....................................19
      17.2. Informative References...................................19
   18. Authors' addresses............................................20
 
@@ -319,6 +319,7 @@ Table of Contents
     reply to OPTIONS requests as per CORS. For GET requests, a wildcard
     origin MAY be returned, but for PUT and DELETE requests, the
     response MUST echo back the Origin header sent by the client.
+
 8. Session description
 
     The information that a client needs to receive in order to be able
@@ -433,6 +434,7 @@ Table of Contents
     client registration is required, then the server MAY ignore the
     client_id parameter in favor of relying on the redirect_uri
     parameter for client identification.
+
 
 11. Storage-first bearer token issuance
 
@@ -859,6 +861,9 @@ ge.io/spec/modules/myfavoritedrinks/drink"}
         M. Jones, D. Hardt, "The OAuth 2.0 Authorization Framework:
         Bearer Token Usage", RFC6750,
         http://tools.ietf.org/html/rfc6750#section-2.3, October 2012.
+
+
+
 
 18. Authors' addresses
 
