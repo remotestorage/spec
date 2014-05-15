@@ -179,8 +179,8 @@ Table of Contents
     JSON-LD [JSON-LD] document (content type 'application/ld+json'),
     containing as its 'items' field a map in which contained documents
     appear as entries <item_name> to a document description, and
-    contained folders appear as entries <item_name> '/' to a folder
-    description. It SHOULD furthermore contain an '@context' field with
+    contained non-empty folders appear as entries <item_name> '/' to a
+    folder description. It SHOULD also contain an '@context' field with
     the value 'http://remotestorage.io/spec/folder-description'. For
     instance:
 
@@ -198,13 +198,18 @@ Table of Contents
          }
        }
 
-    Empty folders are treated as non-existing, and therefore GET
-    requests to them SHOULD be responded to with a 404 response. An
-    empty folder MUST NOT be listed as an item in its parent folder.
+    All folders are treated as existing, and therefore GET requests to
+    untouched folders SHOULD be responded to with a folder description
+    with no items (the items field set to '{}'). However, an empty
+    folder MUST NOT be listed as an item in its parent folder.
 
-    Also, folders SHOULD be created silently, as necessary to contain
-    newly added items. This way, PUT and DELETE requests only need to be
-    made to documents, and folder management becomes an implicit result.
+    Also, since folders exist automatically, PUT and DELETE requests
+    only need to be made to documents, and never to folders. A document
+    PUT will make all ancestor folders along its path become non-empty;
+    deleting the last document from a subtree will make that whole
+    subtree become empty. Folders will therefore show up in their parent
+    folder descriptions if and only if their subtree contains at least
+    one document.
 
     A successful GET request to a document SHOULD be responded to with
     the full document contents in the body, the document's content type

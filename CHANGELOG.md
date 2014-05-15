@@ -6,7 +6,7 @@
 * Switch to the datastores-access syntax in open web app manifest format
 
 ## Breaking for servers:
-* Serving folder listings with zero items is no longer allowed; serve a 404 instead.
+* Serving a 404 for a folder is no longer allowed; serve a folder description with zero items instead.
 * Servers MUST now comply with all of HTTP/1.1, including chunked uploads
 
 ## Breaking for clients:
