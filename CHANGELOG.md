@@ -1,3 +1,8 @@
+# draft-dejong-remotestorage-04.txt
+
+## Breaking for servers as well as clients:
+* The version string in the webfinger announcement was updated from -03 to -04
+
 # draft-dejong-remotestorage-03.txt
 
 ## Breaking for servers as well as clients:

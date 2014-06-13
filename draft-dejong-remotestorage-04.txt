@@ -48,6 +48,13 @@ Copyright Notice
    include Simplified BSD License text as described in Section 4.e of
    the Trust Legal Provisions and are provided without warranty as
    described in the Simplified BSD License.
+
+
+de Jong                                                         [Page 1]
+
+Internet-Draft              remoteStorage                  December 2014
+
+
 Table of Contents
 
    1. Introduction...................................................2
@@ -91,6 +98,13 @@ Table of Contents
 
        *  GET a folder: retrieve the names and current versions of the
           documents and subfolders currently contained by the folder
+
+
+de Jong                                                         [Page 2]
+
+Internet-Draft              remoteStorage                  December 2014
+
+
        *  GET a document: retrieve its content type, current version,
           and contents
 
@@ -132,6 +146,13 @@ Table of Contents
        * current version
        * content type
        * content length
+
+
+
+
+de Jong                                                         [Page 3]
+
+Internet-Draft              remoteStorage                  December 2014
 
 
     For a document, the server stores, and should be able to produce:
@@ -177,6 +198,13 @@ Table of Contents
 
     A successful GET request to a folder SHOULD be responded to with a
     JSON-LD [JSON-LD] document (content type 'application/ld+json'),
+
+
+de Jong                                                         [Page 4]
+
+Internet-Draft              remoteStorage                  December 2014
+
+
     containing as its 'items' field a map in which contained documents
     appear as entries <item_name> to a document description, and
     contained non-empty folders appear as entries <item_name> '/' to a
@@ -220,6 +248,13 @@ Table of Contents
     Note that the use of strong ETags prohibits changing the response
     body based on request headers; in particular, the server will not be
     able to serve the same document uncompressed to some clients and
+
+
+de Jong                                                         [Page 5]
+
+Internet-Draft              remoteStorage                  December 2014
+
+
     gzipped when requested by the client, since the two bodies would not
     be identical byte-for-byte.
 
@@ -264,6 +299,13 @@ Table of Contents
     [BEARER, section 3.1]. The following is a non-normative checklist
     of status codes that are likely to occur in practice:
 
+
+de Jong                                                         [Page 6]
+
+Internet-Draft              remoteStorage                  December 2014
+
+
+
        * 500 if an internal server error occurs,
        * 429 if the client makes too frequent requests or is suspected
              of malicious activity,
@@ -307,6 +349,13 @@ Table of Contents
     in which case it MUST fail with a 412 response code if the document
     already exists.
 
+
+de Jong                                                         [Page 7]
+
+Internet-Draft              remoteStorage                  December 2014
+
+
+
     In all 'ETag', 'If-Match' and 'If-None-Match' headers, revision
     strings should appear inside double quotes (").
 
@@ -349,6 +398,13 @@ Table of Contents
     "https://storage.example.com/bob", then to retrieve the folder
     contents of the /public/documents/ folder, or to retrieve a
     'draft.txt' document from that folder, the client would make
+
+
+de Jong                                                         [Page 8]
+
+Internet-Draft              remoteStorage                  December 2014
+
+
     requests to, respectively:
 
     * https://storage.example.com/bob/public/documents/
@@ -393,6 +449,13 @@ Table of Contents
     <user> at <host>', exactly one link of the following format SHOULD
     be added to the webfinger record [WEBFINGER] of <user> at <host>:
 
+
+de Jong                                                         [Page 9]
+
+Internet-Draft              remoteStorage                  December 2014
+
+
+
     {
       "href": <storage_root>,
       "rel": "remotestorage",
@@ -434,6 +497,13 @@ Table of Contents
     client registration is required, then the server MAY ignore the
     client_id parameter in favor of relying on the redirect_uri
     parameter for client identification.
+
+
+
+de Jong                                                        [Page 10]
+
+Internet-Draft              remoteStorage                  December 2014
+
 
 
 11. Storage-first bearer token issuance
@@ -478,6 +548,13 @@ Table of Contents
     SHOULD merge the list of applications there with the list of
     issued access tokens as specified by OAuth into one list. Also,
     the interface for revoking an access token as specified by OAuth
+
+
+de Jong                                                        [Page 11]
+
+Internet-Draft              remoteStorage                  December 2014
+
+
     SHOULD coincide with removing an application from the dashboard.
 
     Servers MAY also provide a way to create access tokens directly from
@@ -521,6 +598,13 @@ gth
              "rel": "remotestorage",
              "properties": {
                "http://remotestorage.io/spec/version": "draft-dejong-re\
+
+
+de Jong                                                        [Page 12]
+
+Internet-Draft              remoteStorage                  December 2014
+
+
 motestorage-04",
                "http://tools.ietf.org/html/rfc6750#section-4.2": "https\
 ://3pp.io:4439/oauth/michiel",
@@ -564,6 +648,13 @@ unhosted.5apps.com&response_type=token HTTP/1.1
         Origin: https://3pp.io:4439
         Content-Type: application/x-www-form-urlencoded
         Referer: https://3pp.io:4439/oauth/michiel?redirect_uri=https%3\
+
+
+de Jong                                                        [Page 13]
+
+Internet-Draft              remoteStorage                  December 2014
+
+
 A%2F%2Fdrinks-unhosted.5apps.com%2F&scope=myfavoritedrinks%3Arw&client_\
 id=https%3A%2F%2Fdrinks-unhosted.5apps.com&response_type=token
 
@@ -607,6 +698,13 @@ ntent-Type, Origin, X-Requested-With, If-Match, If-None-Match
         PUT /storage/michiel/myfavoritedrinks/test HTTP/1.1
         Host: 3pp.io:4439
         Content-Length: 91
+
+
+de Jong                                                        [Page 14]
+
+Internet-Draft              remoteStorage                  December 2014
+
+
         Origin: https://drinks-unhosted.5apps.com
         Authorization: Bearer j2YnGtXjzzzHNjkd1CJxoQubA1o=
         Content-Type: application/json; charset=UTF-8
@@ -651,6 +749,13 @@ e.io/spec/modules/myfavoritedrinks/drink"}
     A GET request would also include the bearer token, and optionally
     an If-None-Match header:
 
+
+de Jong                                                        [Page 15]
+
+Internet-Draft              remoteStorage                  December 2014
+
+
+
         GET /storage/michiel/myfavoritedrinks/test HTTP/1.1
         Host: 3pp.io:4439
         Origin: https://drinks-unhosted.5apps.com
@@ -693,6 +798,13 @@ ge.io/spec/modules/myfavoritedrinks/drink"}
     same time it will hopefully help readers who intend to develop an
     application that uses remoteStorage as its per-user data storage.
     When multiple clients have read/write access to the same document,
+
+
+de Jong                                                        [Page 16]
+
+Internet-Draft              remoteStorage                  December 2014
+
+
     versioning conflicts may occur. For instance, client A may make
     a PUT request that changes the document from version 1 to version
     2, after which client B may make a PUT request attempting to change
@@ -736,6 +848,13 @@ ge.io/spec/modules/myfavoritedrinks/drink"}
     caused the root folder's ETag to change.
 
     Note that the remoteStorage server does not get involved in the
+
+
+de Jong                                                        [Page 17]
+
+Internet-Draft              remoteStorage                  December 2014
+
+
     conflict resolution. It keeps the canonical current version at all
     times, and allows clients to make conditional GET and PUT requests,
     but it is up to whichever client discovers a given version
@@ -778,6 +897,13 @@ ge.io/spec/modules/myfavoritedrinks/drink"}
 
     The server SHOULD also detect and stop denial-of-service attacks
     that aim to overwhelm its interface with too much traffic.
+
+
+
+de Jong                                                        [Page 18]
+
+Internet-Draft              remoteStorage                  December 2014
+
 
 15. IANA Considerations
 
@@ -822,6 +948,13 @@ ge.io/spec/modules/myfavoritedrinks/drink"}
 
 17.2. Informative References
 
+
+
+de Jong                                                        [Page 19]
+
+Internet-Draft              remoteStorage                  December 2014
+
+
     [HTTPS]
         Rescorla, E., "HTTP Over TLS", RFC2818, May 2000.
     [HTTP]
@@ -865,6 +998,13 @@ ge.io/spec/modules/myfavoritedrinks/drink"}
 
 
 
+
+
+de Jong                                                        [Page 20]
+
+Internet-Draft              remoteStorage                  December 2014
+
+
 18. Authors' addresses
 
     Michiel B. de Jong
@@ -877,3 +1017,4 @@ ge.io/spec/modules/myfavoritedrinks/drink"}
     (independent)
 
     Email: fkooman@tuxed.net
+
