@@ -61,29 +61,29 @@ Table of Contents
    2. Terminology....................................................3
    3. Storage model..................................................3
    4. Requests.......................................................4
-   5. Response codes.................................................6
+   5. Response codes.................................................7
    6. Versioning.....................................................7
    7. CORS headers...................................................8
    8. Session description............................................8
    9. Bearer tokens and access control...............................9
-  10. Application-first bearer token issuance........................9
+  10. Application-first bearer token issuance.......................10
   11. Storage-first bearer token issuance...........................11
   12. Example wire transcripts......................................12
      12.1. WebFinger................................................12
      12.2. OAuth dialog form........................................13
      12.3. OAuth dialog form submission.............................13
      12.4. OPTIONS preflight........................................14
-     12.5. Initial PUT..............................................14
+     12.5. Initial PUT..............................................15
      12.6. Subsequent PUT...........................................15
-     12.7. GET......................................................15
+     12.7. GET......................................................16
      12.8. DELETE...................................................16
-  13. Distributed versioning........................................16
+  13. Distributed versioning........................................17
   14. Security Considerations.......................................18
   15. IANA Considerations...........................................19
   16. Acknowledgments...............................................19
   17. References....................................................19
      17.1. Normative References.....................................19
-     17.2. Informative References...................................19
+     17.2. Informative References...................................20
   18. Authors' addresses............................................20
 
 
@@ -169,6 +169,11 @@ Internet-Draft              remoteStorage                  December 2014
     MUST support chunked transfer coding on PUT requests. Servers MAY
     also offer an optional switch from https to SPDY [SPDY].
 
+    A request is considered successful if the HTTP response code is in
+    the 2xx range (e.g. 200 OK, 201 Created), and unsuccessful if an
+    error occurred or a condition was not met (response code e.g. 404
+    Not Found, 304 Not Modified).
+
     The root folder of the storage tree is represented by the following
     URL:
 
@@ -193,11 +198,6 @@ Internet-Draft              remoteStorage                  December 2014
     that content length is measured in octets (bytes), not in
     characters.
 
-    A folder description is a map containing a string-valued 'ETag'
-    field, representing the folder's current version.
-
-    A successful GET request to a folder SHOULD be responded to with a
-    JSON-LD [JSON-LD] document (content type 'application/ld+json'),
 
 
 de Jong                                                         [Page 4]
@@ -205,6 +205,11 @@ de Jong                                                         [Page 4]
 Internet-Draft              remoteStorage                  December 2014
 
 
+    A folder description is a map containing a string-valued 'ETag'
+    field, representing the folder's current version.
+
+    A successful GET request to a folder SHOULD be responded to with a
+    JSON-LD [JSON-LD] document (content type 'application/ld+json'),
     containing as its 'items' field a map in which contained documents
     appear as entries <item_name> to a document description, and
     contained non-empty folders appear as entries <item_name> '/' to a
@@ -243,11 +248,6 @@ Internet-Draft              remoteStorage                  December 2014
     the full document contents in the body, the document's content type
     in a 'Content-Type' header, its content length in octets (not in
     characters) in a 'Content-Length' header, and the document's current
-    version as a strong ETag in an 'ETag' header.
-
-    Note that the use of strong ETags prohibits changing the response
-    body based on request headers; in particular, the server will not be
-    able to serve the same document uncompressed to some clients and
 
 
 de Jong                                                         [Page 5]
@@ -255,6 +255,11 @@ de Jong                                                         [Page 5]
 Internet-Draft              remoteStorage                  December 2014
 
 
+    version as a strong ETag in an 'ETag' header.
+
+    Note that the use of strong ETags prohibits changing the response
+    body based on request headers; in particular, the server will not be
+    able to serve the same document uncompressed to some clients and
     gzipped when requested by the client, since the two bodies would not
     be identical byte-for-byte.
 
@@ -293,11 +298,6 @@ Internet-Draft              remoteStorage                  December 2014
     A successful HEAD request SHOULD be responded to like to the
     equivalent GET request, but omitting the response body.
 
-5. Response codes
-
-    Response codes SHOULD be given as defined by [HTTP, section 10] and
-    [BEARER, section 3.1]. The following is a non-normative checklist
-    of status codes that are likely to occur in practice:
 
 
 de Jong                                                         [Page 6]
@@ -305,6 +305,11 @@ de Jong                                                         [Page 6]
 Internet-Draft              remoteStorage                  December 2014
 
 
+5. Response codes
+
+    Response codes SHOULD be given as defined by [HTTP, section 10] and
+    [BEARER, section 3.1]. The following is a non-normative checklist
+    of status codes that are likely to occur in practice:
 
        * 500 if an internal server error occurs,
        * 429 if the client makes too frequent requests or is suspected
@@ -335,19 +340,14 @@ Internet-Draft              remoteStorage                  December 2014
 
 6. Versioning
 
-    All successful requests MUST return an 'Expires: 0' header, and an
-    'ETag' header [HTTP] with, in the case of GET, the current version,
-    in the case of PUT, the new version, and in case of DELETE, the
-    version that was deleted. PUT and DELETE requests MAY have an
-    'If-Match' request header [HTTP], and MUST fail with a 412 response
-    code if that doesn't match the document's current version.
+    All successful requests MUST return an 'ETag' header [HTTP] with, in
+    the case of GET, the current version, in the case of PUT, the new
+    version, and in case of DELETE, the version that was deleted. All
+    successful GET requests MUST return an 'Expires: 0' header. PUT and
+    DELETE requests MAY have an 'If-Match' request header [HTTP], and
+    MUST fail with a 412 response code if that doesn't match the
+    document's current version.
 
-    GET requests MAY have a comma-separated list of revisions in an
-    'If-None-Match' header [HTTP], and SHOULD be responded to with a 412
-    response if that list includes the document or folder's current
-    version. A PUT request MAY have an 'If-None-Match: *' header [HTTP],
-    in which case it MUST fail with a 412 response code if the document
-    already exists.
 
 
 de Jong                                                         [Page 7]
@@ -355,6 +355,12 @@ de Jong                                                         [Page 7]
 Internet-Draft              remoteStorage                  December 2014
 
 
+    GET requests MAY have a comma-separated list of revisions in an
+    'If-None-Match' header [HTTP], and SHOULD be responded to with a 412
+    response if that list includes the document or folder's current
+    version. A PUT request MAY have an 'If-None-Match: *' header [HTTP],
+    in which case it MUST fail with a 412 response code if the document
+    already exists.
 
     In all 'ETag', 'If-Match' and 'If-None-Match' headers, revision
     strings should appear inside double quotes (").
@@ -392,12 +398,6 @@ Internet-Draft              remoteStorage                  December 2014
 
     The client can make its requests using https with CORS and bearer
     tokens, to the URL that is the concatenation of <storage_root> with
-    '/' plus one or more <folder> '/' strings indicating a path in the
-    folder tree, followed by zero or one <document> strings, indicating
-    a document. For example, if <storage_root> is
-    "https://storage.example.com/bob", then to retrieve the folder
-    contents of the /public/documents/ folder, or to retrieve a
-    'draft.txt' document from that folder, the client would make
 
 
 de Jong                                                         [Page 8]
@@ -405,6 +405,12 @@ de Jong                                                         [Page 8]
 Internet-Draft              remoteStorage                  December 2014
 
 
+    '/' plus one or more <folder> '/' strings indicating a path in the
+    folder tree, followed by zero or one <document> strings, indicating
+    a document. For example, if <storage_root> is
+    "https://storage.example.com/bob", then to retrieve the folder
+    contents of the /public/documents/ folder, or to retrieve a
+    'draft.txt' document from that folder, the client would make
     requests to, respectively:
 
     * https://storage.example.com/bob/public/documents/
@@ -443,18 +449,18 @@ Internet-Draft              remoteStorage                  December 2014
     is not recommended, due to its security deficiencies; see [BEARER,
     section 2.3].
 
-10. Application-first bearer token issuance
-
-    To make a remoteStorage server available as 'the remoteStorage of
-    <user> at <host>', exactly one link of the following format SHOULD
-    be added to the webfinger record [WEBFINGER] of <user> at <host>:
-
 
 de Jong                                                         [Page 9]
 
 Internet-Draft              remoteStorage                  December 2014
 
 
+
+10. Application-first bearer token issuance
+
+    To make a remoteStorage server available as 'the remoteStorage of
+    <user> at <host>', exactly one link of the following format SHOULD
+    be added to the webfinger record [WEBFINGER] of <user> at <host>:
 
     {
       "href": <storage_root>,
@@ -492,18 +498,18 @@ Internet-Draft              remoteStorage                  December 2014
     Content-Range headers are supported for GET requests as per
     [HTTP, section 14.16], and the boolean value false if not.
 
-    The server MAY expire bearer tokens, and MAY require the user to
-    register applications as OAuth clients before first use; if no
-    client registration is required, then the server MAY ignore the
-    client_id parameter in favor of relying on the redirect_uri
-    parameter for client identification.
-
 
 
 de Jong                                                        [Page 10]
 
 Internet-Draft              remoteStorage                  December 2014
 
+
+    The server MAY expire bearer tokens, and MAY require the user to
+    register applications as OAuth clients before first use; if no
+    client registration is required, then the server MAY ignore the
+    client_id parameter in favor of relying on the redirect_uri
+    parameter for client identification.
 
 
 11. Storage-first bearer token issuance
@@ -542,12 +548,6 @@ Internet-Draft              remoteStorage                  December 2014
     remember their <user> '@' <host> webfinger address at that provider.
     Applications SHOULD, however, support both flows, which means
     checking the URL for a 'remotestorage' parameter, but giving the
-    user a way to specify their webfinger address if there is none.
-
-    If a server provides an application manifest dashboard, then it
-    SHOULD merge the list of applications there with the list of
-    issued access tokens as specified by OAuth into one list. Also,
-    the interface for revoking an access token as specified by OAuth
 
 
 de Jong                                                        [Page 11]
@@ -555,6 +555,12 @@ de Jong                                                        [Page 11]
 Internet-Draft              remoteStorage                  December 2014
 
 
+    user a way to specify their webfinger address if there is none.
+
+    If a server provides an application manifest dashboard, then it
+    SHOULD merge the list of applications there with the list of
+    issued access tokens as specified by OAuth into one list. Also,
+    the interface for revoking an access token as specified by OAuth
     SHOULD coincide with removing an application from the dashboard.
 
     Servers MAY also provide a way to create access tokens directly from
@@ -592,12 +598,6 @@ gth
              "rel": "post-me-anything"
            }, {
              "href": "https://michielbdejong.com/me.jpg",
-             "rel": "avatar"
-           }, {
-             "href": "https://3pp.io:4439/storage/michiel",
-             "rel": "remotestorage",
-             "properties": {
-               "http://remotestorage.io/spec/version": "draft-dejong-re\
 
 
 de Jong                                                        [Page 12]
@@ -605,6 +605,12 @@ de Jong                                                        [Page 12]
 Internet-Draft              remoteStorage                  December 2014
 
 
+             "rel": "avatar"
+           }, {
+             "href": "https://3pp.io:4439/storage/michiel",
+             "rel": "remotestorage",
+             "properties": {
+               "http://remotestorage.io/spec/version": "draft-dejong-re\
 motestorage-04",
                "http://tools.ietf.org/html/rfc6750#section-4.2": "https\
 ://3pp.io:4439/oauth/michiel",
@@ -643,18 +649,18 @@ unhosted.5apps.com&response_type=token HTTP/1.1
     When the user submits the form, the request would look something
     like this:
 
-        POST /oauth HTTP/1.1
-        Host: 3pp.io:4439
-        Origin: https://3pp.io:4439
-        Content-Type: application/x-www-form-urlencoded
-        Referer: https://3pp.io:4439/oauth/michiel?redirect_uri=https%3\
-
 
 de Jong                                                        [Page 13]
 
 Internet-Draft              remoteStorage                  December 2014
 
 
+
+        POST /oauth HTTP/1.1
+        Host: 3pp.io:4439
+        Origin: https://3pp.io:4439
+        Content-Type: application/x-www-form-urlencoded
+        Referer: https://3pp.io:4439/oauth/michiel?redirect_uri=https%3\
 A%2F%2Fdrinks-unhosted.5apps.com%2F&scope=myfavoritedrinks%3Arw&client_\
 id=https%3A%2F%2Fdrinks-unhosted.5apps.com&response_type=token
 
@@ -691,13 +697,7 @@ XjzzzHNjkd1CJxoQubA1o%3D&token_type=bearer&state=
         Access-Control-Allow-Headers: Authorization, Content-Length, Co\
 ntent-Type, Origin, X-Requested-With, If-Match, If-None-Match
 
-12.5. Initial PUT
 
-    An initial PUT may contain an 'If-None-Match: *' header, like this:
-
-        PUT /storage/michiel/myfavoritedrinks/test HTTP/1.1
-        Host: 3pp.io:4439
-        Content-Length: 91
 
 
 de Jong                                                        [Page 14]
@@ -705,6 +705,13 @@ de Jong                                                        [Page 14]
 Internet-Draft              remoteStorage                  December 2014
 
 
+12.5. Initial PUT
+
+    An initial PUT may contain an 'If-None-Match: *' header, like this:
+
+        PUT /storage/michiel/myfavoritedrinks/test HTTP/1.1
+        Host: 3pp.io:4439
+        Content-Length: 91
         Origin: https://drinks-unhosted.5apps.com
         Authorization: Bearer j2YnGtXjzzzHNjkd1CJxoQubA1o=
         Content-Type: application/json; charset=UTF-8
@@ -741,13 +748,6 @@ e.io/spec/modules/myfavoritedrinks/drink"}
     And the server may respond with a 412 Conflict or a 200 OK status:
 
         HTTP/1.1 200 OK
-        Access-Control-Allow-Origin: https://drinks-unhosted.5apps.com
-        ETag: "1382694048000"
-
-12.7. GET
-
-    A GET request would also include the bearer token, and optionally
-    an If-None-Match header:
 
 
 de Jong                                                        [Page 15]
@@ -755,6 +755,13 @@ de Jong                                                        [Page 15]
 Internet-Draft              remoteStorage                  December 2014
 
 
+        Access-Control-Allow-Origin: https://drinks-unhosted.5apps.com
+        ETag: "1382694048000"
+
+12.7. GET
+
+    A GET request would also include the bearer token, and optionally
+    an If-None-Match header:
 
         GET /storage/michiel/myfavoritedrinks/test HTTP/1.1
         Host: 3pp.io:4439
@@ -791,13 +798,6 @@ ge.io/spec/modules/myfavoritedrinks/drink"}
         Access-Control-Allow-Origin: https://drinks-unhosted.5apps.com
         ETag: "1382694048000"
 
-13. Distributed versioning
-
-    This section is non-normative, and is intended to explain some of
-    the design choices concerning ETags and folder listings. At the
-    same time it will hopefully help readers who intend to develop an
-    application that uses remoteStorage as its per-user data storage.
-    When multiple clients have read/write access to the same document,
 
 
 de Jong                                                        [Page 16]
@@ -805,6 +805,13 @@ de Jong                                                        [Page 16]
 Internet-Draft              remoteStorage                  December 2014
 
 
+13. Distributed versioning
+
+    This section is non-normative, and is intended to explain some of
+    the design choices concerning ETags and folder listings. At the
+    same time it will hopefully help readers who intend to develop an
+    application that uses remoteStorage as its per-user data storage.
+    When multiple clients have read/write access to the same document,
     versioning conflicts may occur. For instance, client A may make
     a PUT request that changes the document from version 1 to version
     2, after which client B may make a PUT request attempting to change
@@ -841,13 +848,6 @@ Internet-Draft              remoteStorage                  December 2014
     etcetera. Then one GET request to the root folder '/' will be
     enough to know if any of these 1000 documents has changed.
 
-    Say document '/7/9/2' has changed; then the GET request to '/' will
-    come back with a different ETag, and entry '7/' will have a
-    different value in its JSON content. The client could then request
-    '/7/', '/7/9/', and '/7/9/2' to narrow down the one document that
-    caused the root folder's ETag to change.
-
-    Note that the remoteStorage server does not get involved in the
 
 
 de Jong                                                        [Page 17]
@@ -855,6 +855,13 @@ de Jong                                                        [Page 17]
 Internet-Draft              remoteStorage                  December 2014
 
 
+    Say document '/7/9/2' has changed; then the GET request to '/' will
+    come back with a different ETag, and entry '7/' will have a
+    different value in its JSON content. The client could then request
+    '/7/', '/7/9/', and '/7/9/2' to narrow down the one document that
+    caused the root folder's ETag to change.
+
+    Note that the remoteStorage server does not get involved in the
     conflict resolution. It keeps the canonical current version at all
     times, and allows clients to make conditional GET and PUT requests,
     but it is up to whichever client discovers a given version
@@ -891,19 +898,19 @@ Internet-Draft              remoteStorage                  December 2014
     store documents on hard-to-guess URLs whose path after
     <storage_root> starts with '/public/', while sharing this URL only
     with the intended audience. That way, only parties who know the
-    document's hard-to-guess URL, can access it. The server SHOULD
-    therefore make an effort to detect and stop brute-force attacks that
-    attempt to guess the location of such documents.
-
-    The server SHOULD also detect and stop denial-of-service attacks
-    that aim to overwhelm its interface with too much traffic.
-
 
 
 de Jong                                                        [Page 18]
 
 Internet-Draft              remoteStorage                  December 2014
 
+
+    document's hard-to-guess URL, can access it. The server SHOULD
+    therefore make an effort to detect and stop brute-force attacks that
+    attempt to guess the location of such documents.
+
+    The server SHOULD also detect and stop denial-of-service attacks
+    that aim to overwhelm its interface with too much traffic.
 
 15. IANA Considerations
 
@@ -942,18 +949,18 @@ Internet-Draft              remoteStorage                  December 2014
         Jones, P., Salguerio, G., Jones, M, and Smarr, J.,
         "WebFinger", RFC7033, September 2013.
 
-    [OAUTH]
-        "Section 4.2: Implicit Grant", in: Hardt, D. (ed), "The OAuth
-        2.0 Authorization Framework", RFC6749, October 2012.
-
-17.2. Informative References
-
-
 
 de Jong                                                        [Page 19]
 
 Internet-Draft              remoteStorage                  December 2014
 
+
+
+    [OAUTH]
+        "Section 4.2: Implicit Grant", in: Hardt, D. (ed), "The OAuth
+        2.0 Authorization Framework", RFC6749, October 2012.
+
+17.2. Informative References
 
     [HTTPS]
         Rescorla, E., "HTTP Over TLS", RFC2818, May 2000.
@@ -991,18 +998,18 @@ Internet-Draft              remoteStorage                  December 2014
         https://tools.ietf.org/html/rfc4120
 
     [BEARER]
-        M. Jones, D. Hardt, "The OAuth 2.0 Authorization Framework:
-        Bearer Token Usage", RFC6750,
-        http://tools.ietf.org/html/rfc6750#section-2.3, October 2012.
-
-
-
-
 
 
 de Jong                                                        [Page 20]
 
 Internet-Draft              remoteStorage                  December 2014
+
+
+        M. Jones, D. Hardt, "The OAuth 2.0 Authorization Framework:
+        Bearer Token Usage", RFC6750,
+        http://tools.ietf.org/html/rfc6750#section-2.3, October 2012.
+
+
 
 
 18. Authors' addresses

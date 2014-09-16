@@ -54,29 +54,29 @@ Table of Contents
    2. Terminology....................................................3
    3. Storage model..................................................3
    4. Requests.......................................................4
-   5. Response codes.................................................6
+   5. Response codes.................................................7
    6. Versioning.....................................................7
    7. CORS headers...................................................8
    8. Session description............................................8
    9. Bearer tokens and access control...............................9
-  10. Application-first bearer token issuance........................9
+  10. Application-first bearer token issuance.......................10
   11. Storage-first bearer token issuance...........................11
   12. Example wire transcripts......................................12
      12.1. WebFinger................................................12
      12.2. OAuth dialog form........................................13
      12.3. OAuth dialog form submission.............................13
      12.4. OPTIONS preflight........................................14
-     12.5. Initial PUT..............................................14
+     12.5. Initial PUT..............................................15
      12.6. Subsequent PUT...........................................15
-     12.7. GET......................................................15
+     12.7. GET......................................................16
      12.8. DELETE...................................................16
-  13. Distributed versioning........................................16
+  13. Distributed versioning........................................17
   14. Security Considerations.......................................18
   15. IANA Considerations...........................................19
   16. Acknowledgments...............................................19
   17. References....................................................19
      17.1. Normative References.....................................19
-     17.2. Informative References...................................19
+     17.2. Informative References...................................20
   18. Authors' addresses............................................20
 
 
@@ -147,6 +147,11 @@ Table of Contents
     servers MUST comply with HTTP/1.1 [HTTP]. Specifically, they
     MUST support chunked transfer coding on PUT requests. Servers MAY
     also offer an optional switch from https to SPDY [SPDY].
+
+    A request is considered successful if the HTTP response code is in
+    the 2xx range (e.g. 200 OK, 201 Created), and unsuccessful if an
+    error occurred or a condition was not met (response code e.g. 404
+    Not Found, 304 Not Modified).
 
     The root folder of the storage tree is represented by the following
     URL:
@@ -293,12 +298,13 @@ Table of Contents
 
 6. Versioning
 
-    All successful requests MUST return an 'Expires: 0' header, and an
-    'ETag' header [HTTP] with, in the case of GET, the current version,
-    in the case of PUT, the new version, and in case of DELETE, the
-    version that was deleted. PUT and DELETE requests MAY have an
-    'If-Match' request header [HTTP], and MUST fail with a 412 response
-    code if that doesn't match the document's current version.
+    All successful requests MUST return an 'ETag' header [HTTP] with, in
+    the case of GET, the current version, in the case of PUT, the new
+    version, and in case of DELETE, the version that was deleted. All
+    successful GET requests MUST return an 'Expires: 0' header. PUT and
+    DELETE requests MAY have an 'If-Match' request header [HTTP], and
+    MUST fail with a 412 response code if that doesn't match the
+    document's current version.
 
     GET requests MAY have a comma-separated list of revisions in an
     'If-None-Match' header [HTTP], and SHOULD be responded to with a 412
@@ -599,6 +605,7 @@ XjzzzHNjkd1CJxoQubA1o%3D&token_type=bearer&state=
         Access-Control-Allow-Methods: GET, PUT, DELETE
         Access-Control-Allow-Headers: Authorization, Content-Length, Co\
 ntent-Type, Origin, X-Requested-With, If-Match, If-None-Match
+
 
 12.5. Initial PUT
 
