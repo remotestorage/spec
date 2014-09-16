@@ -1,5 +1,5 @@
 INTERNET DRAFT                                      Michiel B. de Jong
-Document: draft-dejong-remotestorage-04                  (independent)
+Document: draft-dejong-remotestorage-04                   IndieHosters
                                                              F. Kooman
 Intended Status: Proposed Standard                       (independent)
 Expires: 18 June 2015                                 15 December 2014
@@ -875,7 +875,7 @@ ge.io/spec/modules/myfavoritedrinks/drink"}
 18. Authors' addresses
 
     Michiel B. de Jong
-    (independent)
+    IndieHosters
 
     Email: michiel@michielbdejong.com
 
