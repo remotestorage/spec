@@ -64,7 +64,7 @@ Table of Contents
   12. Example wire transcripts......................................12
      12.1. WebFinger................................................12
      12.2. OAuth dialog form........................................13
-     12.3. OAuth dialog form submission.............................13
+     12.3. OAuth dialog form submission.............................14
      12.4. OPTIONS preflight........................................14
      12.5. Initial PUT..............................................15
      12.6. Subsequent PUT...........................................15
@@ -143,7 +143,7 @@ Table of Contents
 
 4. Requests
 
-    Client-to-server requests SHOULD be made over https [HTTPS], and 
+    Client-to-server requests SHOULD be made over https [HTTPS], and
     servers MUST comply with HTTP/1.1 [HTTP]. Specifically, they
     MUST support chunked transfer coding on PUT requests. Servers MAY
     also offer an optional switch from https to SPDY [SPDY].
@@ -406,7 +406,8 @@ Table of Contents
         "http://remotestorage.io/spec/version": <storage_api>,
         "http://tools.ietf.org/html/rfc6749#section-4.2": <auth-dialog>,
         "http://tools.ietf.org/html/rfc6750#section-2.3": <query-param>,
-        "https://tools.ietf.org/html/rfc2616#section-14.16": <ranges>
+        "https://tools.ietf.org/html/rfc2616#section-14.16": <ranges>,
+        "http://remotestorage.io/spec/web-authoring": <web-authoring>
       }
     }
 
@@ -434,6 +435,11 @@ Table of Contents
     The <ranges> variable SHOULD have a string value of "GET" if
     Content-Range headers are supported for GET requests as per
     [HTTP, section 14.16], and the boolean value false if not.
+
+    The <web-authoring> variable SHOULD have the string value the fully
+    qualified domain name to which web authoring content is published if
+    the server supports web authoring as per [AUTHORING], and false
+    otherwise.
 
     The server MAY expire bearer tokens, and MAY require the user to
     register applications as OAuth clients before first use; if no
@@ -819,6 +825,7 @@ ge.io/spec/modules/myfavoritedrinks/drink"}
     [IRI]
         Duerst, M., "Internationalized Resource Identifiers (IRIs)",
         RFC 3987, January 2005.
+
     [WEBFINGER]
         Jones, P., Salguerio, G., Jones, M, and Smarr, J.,
         "WebFinger", RFC7033, September 2013.
@@ -831,6 +838,7 @@ ge.io/spec/modules/myfavoritedrinks/drink"}
 
     [HTTPS]
         Rescorla, E., "HTTP Over TLS", RFC2818, May 2000.
+
     [HTTP]
         Fielding et al., "Hypertext Transfer Protocol -- HTTP/1.1",
         RFC2616, June 1999.
@@ -869,8 +877,10 @@ ge.io/spec/modules/myfavoritedrinks/drink"}
         Bearer Token Usage", RFC6750,
         http://tools.ietf.org/html/rfc6750#section-2.3, October 2012.
 
-
-
+    [AUTHORING]
+        "Using remoteStorage for web authoring", reSite wiki, retrieved
+        September 2014. https://github.com/michielbdejong/resite/wiki
+        /Using-remoteStorage-for-web-authoring
 
 18. Authors' addresses
 

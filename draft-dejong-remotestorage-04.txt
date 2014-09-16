@@ -71,7 +71,7 @@ Table of Contents
   12. Example wire transcripts......................................12
      12.1. WebFinger................................................12
      12.2. OAuth dialog form........................................13
-     12.3. OAuth dialog form submission.............................13
+     12.3. OAuth dialog form submission.............................14
      12.4. OPTIONS preflight........................................14
      12.5. Initial PUT..............................................15
      12.6. Subsequent PUT...........................................15
@@ -164,7 +164,7 @@ Internet-Draft              remoteStorage                  December 2014
 
 4. Requests
 
-    Client-to-server requests SHOULD be made over https [HTTPS], and 
+    Client-to-server requests SHOULD be made over https [HTTPS], and
     servers MUST comply with HTTP/1.1 [HTTP]. Specifically, they
     MUST support chunked transfer coding on PUT requests. Servers MAY
     also offer an optional switch from https to SPDY [SPDY].
@@ -469,7 +469,8 @@ Internet-Draft              remoteStorage                  December 2014
         "http://remotestorage.io/spec/version": <storage_api>,
         "http://tools.ietf.org/html/rfc6749#section-4.2": <auth-dialog>,
         "http://tools.ietf.org/html/rfc6750#section-2.3": <query-param>,
-        "https://tools.ietf.org/html/rfc2616#section-14.16": <ranges>
+        "https://tools.ietf.org/html/rfc2616#section-14.16": <ranges>,
+        "http://remotestorage.io/spec/web-authoring": <web-authoring>
       }
     }
 
@@ -499,11 +500,16 @@ Internet-Draft              remoteStorage                  December 2014
     [HTTP, section 14.16], and the boolean value false if not.
 
 
-
 de Jong                                                        [Page 10]
 
 Internet-Draft              remoteStorage                  December 2014
 
+
+
+    The <web-authoring> variable SHOULD have the string value the fully
+    qualified domain name to which web authoring content is published if
+    the server supports web authoring as per [AUTHORING], and false
+    otherwise.
 
     The server MAY expire bearer tokens, and MAY require the user to
     register applications as OAuth clients before first use; if no
@@ -542,12 +548,6 @@ Internet-Draft              remoteStorage                  December 2014
     extract the <auth_endpoint> information from webfinger, and continue
     as per application-first bearer token issuance.
 
-    Note that whereas a remoteStorage server SHOULD offer support of the
-    application-first flow with webfinger and OAuth, it MAY choose not
-    to support the storage-first flow, provided that users will easily
-    remember their <user> '@' <host> webfinger address at that provider.
-    Applications SHOULD, however, support both flows, which means
-    checking the URL for a 'remotestorage' parameter, but giving the
 
 
 de Jong                                                        [Page 11]
@@ -555,6 +555,12 @@ de Jong                                                        [Page 11]
 Internet-Draft              remoteStorage                  December 2014
 
 
+    Note that whereas a remoteStorage server SHOULD offer support of the
+    application-first flow with webfinger and OAuth, it MAY choose not
+    to support the storage-first flow, provided that users will easily
+    remember their <user> '@' <host> webfinger address at that provider.
+    Applications SHOULD, however, support both flows, which means
+    checking the URL for a 'remotestorage' parameter, but giving the
     user a way to specify their webfinger address if there is none.
 
     If a server provides an application manifest dashboard, then it
@@ -592,12 +598,6 @@ g.com HTTP/1.1
          Access-Control-Expose-Headers: ETag, Content-Type, Content-Len\
 gth
 
-         {
-           "links":[{
-             "href": "https://michielbdejong.com:7678/inbox",
-             "rel": "post-me-anything"
-           }, {
-             "href": "https://michielbdejong.com/me.jpg",
 
 
 de Jong                                                        [Page 12]
@@ -605,6 +605,12 @@ de Jong                                                        [Page 12]
 Internet-Draft              remoteStorage                  December 2014
 
 
+         {
+           "links":[{
+             "href": "https://michielbdejong.com:7678/inbox",
+             "rel": "post-me-anything"
+           }, {
+             "href": "https://michielbdejong.com/me.jpg",
              "rel": "avatar"
            }, {
              "href": "https://3pp.io:4439/storage/michiel",
@@ -644,17 +650,17 @@ unhosted.5apps.com&response_type=token HTTP/1.1
         ...
 
 
-12.3. OAuth dialog form submission
-
-    When the user submits the form, the request would look something
-    like this:
-
-
 de Jong                                                        [Page 13]
 
 Internet-Draft              remoteStorage                  December 2014
 
 
+
+
+12.3. OAuth dialog form submission
+
+    When the user submits the form, the request would look something
+    like this:
 
         POST /oauth HTTP/1.1
         Host: 3pp.io:4439
@@ -692,17 +698,17 @@ XjzzzHNjkd1CJxoQubA1o%3D&token_type=bearer&state=
     To which the server can for instance respond:
 
         HTTP/1.1 200 OK
-        Access-Control-Allow-Origin: https://drinks-unhosted.5apps.com
-        Access-Control-Allow-Methods: GET, PUT, DELETE
-        Access-Control-Allow-Headers: Authorization, Content-Length, Co\
-ntent-Type, Origin, X-Requested-With, If-Match, If-None-Match
-
-
 
 
 de Jong                                                        [Page 14]
 
 Internet-Draft              remoteStorage                  December 2014
+
+
+        Access-Control-Allow-Origin: https://drinks-unhosted.5apps.com
+        Access-Control-Allow-Methods: GET, PUT, DELETE
+        Access-Control-Allow-Headers: Authorization, Content-Length, Co\
+ntent-Type, Origin, X-Requested-With, If-Match, If-None-Match
 
 
 12.5. Initial PUT
@@ -742,12 +748,6 @@ Internet-Draft              remoteStorage                  December 2014
         Referer: https://drinks-unhosted.5apps.com/?
         If-Match: "1382694045000"
 
-        {"name":"test", "updated":true, "@context":"http://remotestorag\
-e.io/spec/modules/myfavoritedrinks/drink"}
-
-    And the server may respond with a 412 Conflict or a 200 OK status:
-
-        HTTP/1.1 200 OK
 
 
 de Jong                                                        [Page 15]
@@ -755,6 +755,12 @@ de Jong                                                        [Page 15]
 Internet-Draft              remoteStorage                  December 2014
 
 
+        {"name":"test", "updated":true, "@context":"http://remotestorag\
+e.io/spec/modules/myfavoritedrinks/drink"}
+
+    And the server may respond with a 412 Conflict or a 200 OK status:
+
+        HTTP/1.1 200 OK
         Access-Control-Allow-Origin: https://drinks-unhosted.5apps.com
         ETag: "1382694048000"
 
@@ -792,18 +798,18 @@ ge.io/spec/modules/myfavoritedrinks/drink"}
         Referer: https://drinks-unhosted.5apps.com/?
         If-Match: "1382694045000"
 
-    And the server may respond with a 412 Conflict or a 200 OK status:
-
-        HTTP/1.1 412 Conflict
-        Access-Control-Allow-Origin: https://drinks-unhosted.5apps.com
-        ETag: "1382694048000"
-
 
 
 de Jong                                                        [Page 16]
 
 Internet-Draft              remoteStorage                  December 2014
 
+
+    And the server may respond with a 412 Conflict or a 200 OK status:
+
+        HTTP/1.1 412 Conflict
+        Access-Control-Allow-Origin: https://drinks-unhosted.5apps.com
+        ETag: "1382694048000"
 
 13. Distributed versioning
 
@@ -842,18 +848,18 @@ Internet-Draft              remoteStorage                  December 2014
     to the root folder, it is not necessary to poll each document for
     changes individually.
 
-    As an example, the root folder may contain 10 directories,
-    each of which contain 10 directories, which each contain 10
-    documents, so their paths would be for instance '/0/0/1', '/0/0/2',
-    etcetera. Then one GET request to the root folder '/' will be
-    enough to know if any of these 1000 documents has changed.
-
 
 
 de Jong                                                        [Page 17]
 
 Internet-Draft              remoteStorage                  December 2014
 
+
+    As an example, the root folder may contain 10 directories,
+    each of which contain 10 directories, which each contain 10
+    documents, so their paths would be for instance '/0/0/1', '/0/0/2',
+    etcetera. Then one GET request to the root folder '/' will be
+    enough to know if any of these 1000 documents has changed.
 
     Say document '/7/9/2' has changed; then the GET request to '/' will
     come back with a different ETag, and entry '7/' will have a
@@ -892,12 +898,6 @@ Internet-Draft              remoteStorage                  December 2014
     therefore NOT be used for anything else, and the user SHOULD be
     warned not to visit any web pages on that origin. In particular, the
     OAuth dialog and launch dashboard or token revokation interface
-    SHOULD be on a different origin than the remoteStorage interface.
-
-    Where the use of bearer tokens is impractical, a user may choose to
-    store documents on hard-to-guess URLs whose path after
-    <storage_root> starts with '/public/', while sharing this URL only
-    with the intended audience. That way, only parties who know the
 
 
 de Jong                                                        [Page 18]
@@ -905,6 +905,12 @@ de Jong                                                        [Page 18]
 Internet-Draft              remoteStorage                  December 2014
 
 
+    SHOULD be on a different origin than the remoteStorage interface.
+
+    Where the use of bearer tokens is impractical, a user may choose to
+    store documents on hard-to-guess URLs whose path after
+    <storage_root> starts with '/public/', while sharing this URL only
+    with the intended audience. That way, only parties who know the
     document's hard-to-guess URL, can access it. The server SHOULD
     therefore make an effort to detect and stop brute-force attacks that
     attempt to guess the location of such documents.
@@ -942,12 +948,6 @@ Internet-Draft              remoteStorage                  December 2014
         Bradner, S., "Key words for use in RFCs to Indicate Requirement
         Levels", BCP 14, RFC 2119, March 1997.
 
-    [IRI]
-        Duerst, M., "Internationalized Resource Identifiers (IRIs)",
-        RFC 3987, January 2005.
-    [WEBFINGER]
-        Jones, P., Salguerio, G., Jones, M, and Smarr, J.,
-        "WebFinger", RFC7033, September 2013.
 
 
 de Jong                                                        [Page 19]
@@ -955,6 +955,13 @@ de Jong                                                        [Page 19]
 Internet-Draft              remoteStorage                  December 2014
 
 
+    [IRI]
+        Duerst, M., "Internationalized Resource Identifiers (IRIs)",
+        RFC 3987, January 2005.
+
+    [WEBFINGER]
+        Jones, P., Salguerio, G., Jones, M, and Smarr, J.,
+        "WebFinger", RFC7033, September 2013.
 
     [OAUTH]
         "Section 4.2: Implicit Grant", in: Hardt, D. (ed), "The OAuth
@@ -964,6 +971,7 @@ Internet-Draft              remoteStorage                  December 2014
 
     [HTTPS]
         Rescorla, E., "HTTP Over TLS", RFC2818, May 2000.
+
     [HTTP]
         Fielding et al., "Hypertext Transfer Protocol -- HTTP/1.1",
         RFC2616, June 1999.
@@ -990,6 +998,13 @@ Internet-Draft              remoteStorage                  December 2014
 
     [DATASTORE]
         "WebAPI/DataStore", MozillaWiki, retrieved May 2014.
+
+
+de Jong                                                        [Page 20]
+
+Internet-Draft              remoteStorage                  December 2014
+
+
         https://wiki.mozilla.org/WebAPI/DataStore#Manifest
 
     [KERBEROS]
@@ -998,19 +1013,14 @@ Internet-Draft              remoteStorage                  December 2014
         https://tools.ietf.org/html/rfc4120
 
     [BEARER]
-
-
-de Jong                                                        [Page 20]
-
-Internet-Draft              remoteStorage                  December 2014
-
-
         M. Jones, D. Hardt, "The OAuth 2.0 Authorization Framework:
         Bearer Token Usage", RFC6750,
         http://tools.ietf.org/html/rfc6750#section-2.3, October 2012.
 
-
-
+    [AUTHORING]
+        "Using remoteStorage for web authoring", reSite wiki, retrieved
+        September 2014. https://github.com/michielbdejong/resite/wiki
+        /Using-remoteStorage-for-web-authoring
 
 18. Authors' addresses
 
