@@ -397,7 +397,7 @@ Table of Contents
 
     To make a remoteStorage server available as 'the remoteStorage of
     <user> at <host>', exactly one link of the following format SHOULD
-    be added to the webfinger record [WEBFINGER] of <user> at <host>:
+    be added to the WebFinger record [WEBFINGER] of <user> at <host>:
 
     {
       "href": <storage_root>,
@@ -436,7 +436,7 @@ Table of Contents
     Content-Range headers are supported for GET requests as per
     [HTTP, section 14.16], and the boolean value false if not.
 
-    The <web-authoring> variable SHOULD have the string value the fully
+    The <web-authoring> variable SHOULD have a string value of the fully
     qualified domain name to which web authoring content is published if
     the server supports web authoring as per [AUTHORING], and false
     otherwise.
@@ -471,20 +471,20 @@ Table of Contents
     Regardless of whether 'access_token' and 'scope' are specified, it
     SHOULD add a 'remotestorage' field to the URL fragment, with a
     value of the form <user> '@' <host>. When the application detects
-    this parameter, it SHOULD resolve the webfinger record for <user> at
+    this parameter, it SHOULD resolve the WebFinger record for <user> at
     <host> and extract the <storage_root> and <storage_api> information.
 
     If no access_token was given, then the application SHOULD also
-    extract the <auth_endpoint> information from webfinger, and continue
+    extract the <auth_endpoint> information from WebFinger, and continue
     as per application-first bearer token issuance.
 
-    Note that whereas a remoteStorage server SHOULD offer support of the
-    application-first flow with webfinger and OAuth, it MAY choose not
+    Note that whereas a remoteStorage server SHOULD offer support for the
+    application-first flow with WebFinger and OAuth, it MAY choose not
     to support the storage-first flow, provided that users will easily
-    remember their <user> '@' <host> webfinger address at that provider.
+    remember their <user> '@' <host> WebFinger address at that provider.
     Applications SHOULD, however, support both flows, which means
     checking the URL for a 'remotestorage' parameter, but giving the
-    user a way to specify their webfinger address if there is none.
+    user a way to specify their WebFinger address if there is none.
 
     If a server provides an application manifest dashboard, then it
     SHOULD merge the list of applications there with the list of
@@ -758,7 +758,7 @@ ge.io/spec/modules/myfavoritedrinks/drink"}
 
     To prevent man-in-the-middle attacks, the use of https instead of
     http is important for both the interface itself and all end-points
-    involved in webfinger, OAuth, and (if present) the storage-first
+    involved in WebFinger, OAuth, and (if present) the storage-first
     application launch dashboard.
 
     A malicious party could link to an application, but specifying a
