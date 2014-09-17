@@ -36,7 +36,7 @@ Status of this Memo
 
 Copyright Notice
 
-   Copyright (c) 2013 IETF Trust and the persons identified as the
+   Copyright (c) 2014 IETF Trust and the persons identified as the
    document authors. All rights reserved.
 
    This document is subject to BCP 78 and the IETF Trust's Legal
@@ -228,7 +228,7 @@ Table of Contents
     gzipped when requested by the client, since the two bodies would not
     be identical byte-for-byte.
 
-    Servers MAY support Content-Range headers [HTTP] on GET requests,
+    Servers MAY support Content-Range headers [RANGE] on GET requests,
     but whether or not they do SHOULD be announced through the <ranges>
     variable mentioned below in section 10.
 
@@ -243,7 +243,7 @@ Table of Contents
          document's new content type,
        * its version being updated, as well as that of its parent folder
          and further ancestor folders, using a strong validator [HTTP,
-         section 13.3.3].
+         section 7.2].
 
     The response MUST contain a strong ETag header, with the document's
     new version (for instance a hash of its contents) as its value.
@@ -265,7 +265,7 @@ Table of Contents
 
 5. Response codes
 
-    Response codes SHOULD be given as defined by [HTTP, section 10] and
+    Response codes SHOULD be given as defined by [HTTP, section 6] and
     [BEARER, section 3.1]. The following is a non-normative checklist
     of status codes that are likely to occur in practice:
 
@@ -302,14 +302,14 @@ Table of Contents
     the case of GET, the current version, in the case of PUT, the new
     version, and in case of DELETE, the version that was deleted. All
     successful GET requests MUST return an 'Expires: 0' header. PUT and
-    DELETE requests MAY have an 'If-Match' request header [HTTP], and
+    DELETE requests MAY have an 'If-Match' request header [COND], and
     MUST fail with a 412 response code if that doesn't match the
     document's current version.
 
     GET requests MAY have a comma-separated list of revisions in an
-    'If-None-Match' header [HTTP], and SHOULD be responded to with a 412
+    'If-None-Match' header [COND], and SHOULD be responded to with a 412
     response if that list includes the document or folder's current
-    version. A PUT request MAY have an 'If-None-Match: *' header [HTTP],
+    version. A PUT request MAY have an 'If-None-Match: *' header [COND],
     in which case it MUST fail with a 412 response code if the document
     already exists.
 
@@ -434,7 +434,7 @@ Table of Contents
 
     The <ranges> variable SHOULD have a string value of "GET" if
     Content-Range headers are supported for GET requests as per
-    [HTTP, section 14.16], and the boolean value false if not.
+    [RANGE], and the boolean value false if not.
 
     The <web-authoring> variable SHOULD have a string value of the fully
     qualified domain name to which web authoring content is published if
@@ -478,13 +478,13 @@ Table of Contents
     extract the <auth_endpoint> information from WebFinger, and continue
     as per application-first bearer token issuance.
 
-    Note that whereas a remoteStorage server SHOULD offer support for the
-    application-first flow with WebFinger and OAuth, it MAY choose not
-    to support the storage-first flow, provided that users will easily
-    remember their <user> '@' <host> WebFinger address at that provider.
-    Applications SHOULD, however, support both flows, which means
-    checking the URL for a 'remotestorage' parameter, but giving the
-    user a way to specify their WebFinger address if there is none.
+    Note that whereas a remoteStorage server SHOULD offer support for
+    the application-first flow with WebFinger and OAuth, it MAY choose
+    not to support the storage-first flow, provided that users will
+    easily remember their <user> '@' <host> WebFinger address at that
+    provider. Applications SHOULD, however, support both flows, which
+    means checking the URL for a 'remotestorage' parameter, but giving
+    the user a way to specify their WebFinger address if there is none.
 
     If a server provides an application manifest dashboard, then it
     SHOULD merge the list of applications there with the list of
@@ -840,8 +840,16 @@ ge.io/spec/modules/myfavoritedrinks/drink"}
         Rescorla, E., "HTTP Over TLS", RFC2818, May 2000.
 
     [HTTP]
-        Fielding et al., "Hypertext Transfer Protocol -- HTTP/1.1",
-        RFC2616, June 1999.
+        Fielding et al., "Hypertext Transfer Protocol (HTTP/1.1):
+        Semantics and Content", RFC7231, June 2014.
+
+    [COND]
+        Fielding et al., "Hypertext Transfer Protocol (HTTP/1.1):
+        Conditional Requests", RFC7232, June 2014.
+
+    [RANGE]
+        Fielding et al., "Hypertext Transfer Protocol (HTTP/1.1):
+        Conditional Requests", RFC7233, June 2014.
 
     [SPDY]
         Mark Belshe, Roberto Peon, "SPDY Protocol - Draft 3.1", http://
