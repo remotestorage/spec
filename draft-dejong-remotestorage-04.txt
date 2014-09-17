@@ -84,7 +84,7 @@ Table of Contents
   17. References....................................................20
      17.1. Normative References.....................................20
      17.2. Informative References...................................21
-  18. Authors' addresses............................................20
+  18. Authors' addresses............................................22
 
 
 1.  Introduction
@@ -1081,3 +1081,23 @@ Internet-Draft              remoteStorage                  December 2014
 
     Email: fkooman@tuxed.net
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+de Jong                                                        [Page 22]

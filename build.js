@@ -8,7 +8,7 @@ var fs = require('fs'),
 
 while (line < lines.length) {
   console.log(lines[line]);
-  if (lines[line].length > 73) {
+  if (lines[line].length > 72) {
     console.log('123456789012345678901234567890123456789012345678901234567890123456789012*****');
     break;
   }
@@ -18,3 +18,8 @@ while (line < lines.length) {
     page++;
   }
 }
+while (line%43 !== 7) {
+  console.log('');
+  line++;
+}
+console.log((page < 10 ? breaker1a : breaker1b) + page + breaker2 + (line < lines.length ? breaker3 : ''));
