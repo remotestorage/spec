@@ -76,14 +76,14 @@ Table of Contents
      12.5. Initial PUT..............................................15
      12.6. Subsequent PUT...........................................15
      12.7. GET......................................................16
-     12.8. DELETE...................................................16
+     12.8. DELETE...................................................17
   13. Distributed versioning........................................17
-  14. Security Considerations.......................................18
-  15. IANA Considerations...........................................19
-  16. Acknowledgments...............................................19
-  17. References....................................................19
-     17.1. Normative References.....................................19
-     17.2. Informative References...................................20
+  14. Security Considerations.......................................19
+  15. IANA Considerations...........................................20
+  16. Acknowledgments...............................................20
+  17. References....................................................20
+     17.1. Normative References.....................................20
+     17.2. Informative References...................................21
   18. Authors' addresses............................................20
 
 
@@ -776,15 +776,52 @@ e.io/spec/modules/myfavoritedrinks/drink"}
         Referer: https://drinks-unhosted.5apps.com/?
         If-None-Match: "1382694045000", "1382694048000"
 
-        {"name":"test", "updated":true, "@context":"http://remotestora\
-ge.io/spec/modules/myfavoritedrinks/drink"}
-
-    And the server may respond with a 304 Not Modified or a 200 OK
-    status:
+    And the server may respond with a 304 Not Modified status:
 
         HTTP/1.1 304 Not Modified
         Access-Control-Allow-Origin: https://drinks-unhosted.5apps.com
         ETag: "1382694048000"
+
+    Or a 200 OK status, plus a response body:
+
+        HTTP/1.1 200 OK
+        Access-Control-Allow-Origin: https://drinks-unhosted.5apps.com
+        Content-Type: application/json; charset=UTF-8
+        Content-Length: 106
+        ETag: "1382694048000"
+        Expires: 0
+
+        {"name":"test", "updated":true, "@context":"http://remotestora\
+ge.io/spec/modules/myfavoritedrinks/drink"}
+
+    If the GET URL would have been "/storage/michiel/myfavoritedrinks/",
+    a 200 OK response would have a folder description as the response
+    body:
+
+
+
+de Jong                                                        [Page 16]
+
+Internet-Draft              remoteStorage                  December 2014
+
+
+        HTTP/1.1 200 OK
+        Access-Control-Allow-Origin: https://drinks-unhosted.5apps.com
+        Content-Type: application/ld+json
+        Content-Length: 171
+        ETag: "1382694048000"
+        Expires: 0
+
+        {"@context":"http://remotestorage.io/spec/folder-version","ite\
+ms":{"test":{"ETag":"1382694048000","Content-Type":"application/json; \
+charset=UTF-8","Content-Length":106}}}
+
+    If the GET URL would have been a non-existing document like
+    "/storage/michiel/myfavoritedrinks/x", the response would have a 404
+    Not Found status, and no ETag header:
+
+        HTTP/1.1 404 Not Found
+        Access-Control-Allow-Origin: https://drinks-unhosted.5apps.com
 
 12.8. DELETE
 
@@ -797,13 +834,6 @@ ge.io/spec/modules/myfavoritedrinks/drink"}
         Content-Type: application/json; charset=UTF-8
         Referer: https://drinks-unhosted.5apps.com/?
         If-Match: "1382694045000"
-
-
-
-de Jong                                                        [Page 16]
-
-Internet-Draft              remoteStorage                  December 2014
-
 
     And the server may respond with a 412 Conflict or a 200 OK status:
 
@@ -818,6 +848,13 @@ Internet-Draft              remoteStorage                  December 2014
     same time it will hopefully help readers who intend to develop an
     application that uses remoteStorage as its per-user data storage.
     When multiple clients have read/write access to the same document,
+
+
+de Jong                                                        [Page 17]
+
+Internet-Draft              remoteStorage                  December 2014
+
+
     versioning conflicts may occur. For instance, client A may make
     a PUT request that changes the document from version 1 to version
     2, after which client B may make a PUT request attempting to change
@@ -848,13 +885,6 @@ Internet-Draft              remoteStorage                  December 2014
     to the root folder, it is not necessary to poll each document for
     changes individually.
 
-
-
-de Jong                                                        [Page 17]
-
-Internet-Draft              remoteStorage                  December 2014
-
-
     As an example, the root folder may contain 10 directories,
     each of which contain 10 directories, which each contain 10
     documents, so their paths would be for instance '/0/0/1', '/0/0/2',
@@ -868,6 +898,13 @@ Internet-Draft              remoteStorage                  December 2014
     caused the root folder's ETag to change.
 
     Note that the remoteStorage server does not get involved in the
+
+
+de Jong                                                        [Page 18]
+
+Internet-Draft              remoteStorage                  December 2014
+
+
     conflict resolution. It keeps the canonical current version at all
     times, and allows clients to make conditional GET and PUT requests,
     but it is up to whichever client discovers a given version
@@ -898,13 +935,6 @@ Internet-Draft              remoteStorage                  December 2014
     therefore NOT be used for anything else, and the user SHOULD be
     warned not to visit any web pages on that origin. In particular, the
     OAuth dialog and launch dashboard or token revokation interface
-
-
-de Jong                                                        [Page 18]
-
-Internet-Draft              remoteStorage                  December 2014
-
-
     SHOULD be on a different origin than the remoteStorage interface.
 
     Where the use of bearer tokens is impractical, a user may choose to
@@ -917,6 +947,13 @@ Internet-Draft              remoteStorage                  December 2014
 
     The server SHOULD also detect and stop denial-of-service attacks
     that aim to overwhelm its interface with too much traffic.
+
+
+
+de Jong                                                        [Page 19]
+
+Internet-Draft              remoteStorage                  December 2014
+
 
 15. IANA Considerations
 
@@ -948,13 +985,6 @@ Internet-Draft              remoteStorage                  December 2014
         Bradner, S., "Key words for use in RFCs to Indicate Requirement
         Levels", BCP 14, RFC 2119, March 1997.
 
-
-
-de Jong                                                        [Page 19]
-
-Internet-Draft              remoteStorage                  December 2014
-
-
     [IRI]
         Duerst, M., "Internationalized Resource Identifiers (IRIs)",
         RFC 3987, January 2005.
@@ -966,6 +996,14 @@ Internet-Draft              remoteStorage                  December 2014
     [OAUTH]
         "Section 4.2: Implicit Grant", in: Hardt, D. (ed), "The OAuth
         2.0 Authorization Framework", RFC6749, October 2012.
+
+
+
+
+de Jong                                                        [Page 20]
+
+Internet-Draft              remoteStorage                  December 2014
+
 
 17.2. Informative References
 
@@ -999,13 +1037,6 @@ Internet-Draft              remoteStorage                  December 2014
         W3C Candidate Recommendation 29 January 2013",
         http://www.w3.org/TR/cors/, January 2013.
 
-
-de Jong                                                        [Page 20]
-
-Internet-Draft              remoteStorage                  December 2014
-
-
-
     [MANIFEST]
         Mozilla Developer Network (ed), "App manifest -- Revision
         330541", https://developer.mozilla.org/en-
@@ -1017,6 +1048,13 @@ Internet-Draft              remoteStorage                  December 2014
 
     [KERBEROS]
         C. Neuman et al., "The Kerberos Network Authentication Service
+
+
+de Jong                                                        [Page 21]
+
+Internet-Draft              remoteStorage                  December 2014
+
+
         (V5)", RFC4120,
         https://tools.ietf.org/html/rfc4120
 

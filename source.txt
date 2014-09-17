@@ -69,15 +69,15 @@ Table of Contents
      12.5. Initial PUT..............................................15
      12.6. Subsequent PUT...........................................15
      12.7. GET......................................................16
-     12.8. DELETE...................................................16
+     12.8. DELETE...................................................17
   13. Distributed versioning........................................17
-  14. Security Considerations.......................................18
-  15. IANA Considerations...........................................19
-  16. Acknowledgments...............................................19
-  17. References....................................................19
-     17.1. Normative References.....................................19
-     17.2. Informative References...................................20
-  18. Authors' addresses............................................20
+  14. Security Considerations.......................................19
+  15. IANA Considerations...........................................20
+  16. Acknowledgments...............................................20
+  17. References....................................................20
+     17.1. Normative References.....................................20
+     17.2. Informative References...................................21
+  18. Authors' addresses............................................22
 
 
 1.  Introduction
@@ -671,15 +671,45 @@ e.io/spec/modules/myfavoritedrinks/drink"}
         Referer: https://drinks-unhosted.5apps.com/?
         If-None-Match: "1382694045000", "1382694048000"
 
-        {"name":"test", "updated":true, "@context":"http://remotestora\
-ge.io/spec/modules/myfavoritedrinks/drink"}
-
-    And the server may respond with a 304 Not Modified or a 200 OK
-    status:
+    And the server may respond with a 304 Not Modified status:
 
         HTTP/1.1 304 Not Modified
         Access-Control-Allow-Origin: https://drinks-unhosted.5apps.com
         ETag: "1382694048000"
+
+    Or a 200 OK status, plus a response body:
+
+        HTTP/1.1 200 OK
+        Access-Control-Allow-Origin: https://drinks-unhosted.5apps.com
+        Content-Type: application/json; charset=UTF-8
+        Content-Length: 106
+        ETag: "1382694048000"
+        Expires: 0
+
+        {"name":"test", "updated":true, "@context":"http://remotestora\
+ge.io/spec/modules/myfavoritedrinks/drink"}
+
+    If the GET URL would have been "/storage/michiel/myfavoritedrinks/",
+    a 200 OK response would have a folder description as the response
+    body:
+
+        HTTP/1.1 200 OK
+        Access-Control-Allow-Origin: https://drinks-unhosted.5apps.com
+        Content-Type: application/ld+json
+        Content-Length: 171
+        ETag: "1382694048000"
+        Expires: 0
+
+        {"@context":"http://remotestorage.io/spec/folder-version","ite\
+ms":{"test":{"ETag":"1382694048000","Content-Type":"application/json; \
+charset=UTF-8","Content-Length":106}}}
+
+    If the GET URL would have been a non-existing document like
+    "/storage/michiel/myfavoritedrinks/x", the response would have a 404
+    Not Found status, and no ETag header:
+
+        HTTP/1.1 404 Not Found
+        Access-Control-Allow-Origin: https://drinks-unhosted.5apps.com
 
 12.8. DELETE
 
@@ -833,6 +863,7 @@ ge.io/spec/modules/myfavoritedrinks/drink"}
     [OAUTH]
         "Section 4.2: Implicit Grant", in: Hardt, D. (ed), "The OAuth
         2.0 Authorization Framework", RFC6749, October 2012.
+
 
 17.2. Informative References
 
