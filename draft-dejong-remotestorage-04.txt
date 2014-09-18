@@ -469,7 +469,7 @@ Internet-Draft              remoteStorage                  December 2014
         "http://remotestorage.io/spec/version": <storage_api>,
         "http://tools.ietf.org/html/rfc6749#section-4.2": <auth-dialog>,
         "http://tools.ietf.org/html/rfc6750#section-2.3": <query-param>,
-        "https://tools.ietf.org/html/rfc2616#section-14.16": <ranges>,
+        "https://tools.ietf.org/html/rfc7233": <ranges>,
         "http://remotestorage.io/spec/web-authoring": <web-authoring>
       }
     }
@@ -621,7 +621,8 @@ motestorage-04",
                "http://tools.ietf.org/html/rfc6750#section-4.2": "https\
 ://3pp.io:4439/oauth/michiel",
                "http://tools.ietf.org/html/rfc6750#section-2.3": false,
-               "http://tools.ietf.org/html/rfc2616#section-14.16": false
+               "http://tools.ietf.org/html/rfc7233": false,
+               "http://remotestorage.io/spec/web-authoring": false
              }
            }]
          }
@@ -647,7 +648,6 @@ unhosted.5apps.com&response_type=token HTTP/1.1
         <html lang="en">
           <head>
             <title>Allow access?</title>
-        ...
 
 
 de Jong                                                        [Page 13]
@@ -655,6 +655,7 @@ de Jong                                                        [Page 13]
 Internet-Draft              remoteStorage                  December 2014
 
 
+        ...
 
 
 12.3. OAuth dialog form submission
@@ -697,7 +698,6 @@ XjzzzHNjkd1CJxoQubA1o%3D&token_type=bearer&state=
 
     To which the server can for instance respond:
 
-        HTTP/1.1 200 OK
 
 
 de Jong                                                        [Page 14]
@@ -705,6 +705,7 @@ de Jong                                                        [Page 14]
 Internet-Draft              remoteStorage                  December 2014
 
 
+        HTTP/1.1 200 OK
         Access-Control-Allow-Origin: https://drinks-unhosted.5apps.com
         Access-Control-Allow-Methods: GET, PUT, DELETE
         Access-Control-Allow-Headers: Authorization, Content-Length, Co\
@@ -749,10 +750,10 @@ ntent-Type, Origin, X-Requested-With, If-Match, If-None-Match
         If-Match: "1382694045000"
 
 
-
 de Jong                                                        [Page 15]
 
 Internet-Draft              remoteStorage                  December 2014
+
 
 
         {"name":"test", "updated":true, "@context":"http://remotestorag\
@@ -799,10 +800,10 @@ ge.io/spec/modules/myfavoritedrinks/drink"}
     body:
 
 
-
 de Jong                                                        [Page 16]
 
 Internet-Draft              remoteStorage                  December 2014
+
 
 
         HTTP/1.1 200 OK
@@ -847,7 +848,6 @@ charset=UTF-8","Content-Length":106}}}
     the design choices concerning ETags and folder listings. At the
     same time it will hopefully help readers who intend to develop an
     application that uses remoteStorage as its per-user data storage.
-    When multiple clients have read/write access to the same document,
 
 
 de Jong                                                        [Page 17]
@@ -855,6 +855,7 @@ de Jong                                                        [Page 17]
 Internet-Draft              remoteStorage                  December 2014
 
 
+    When multiple clients have read/write access to the same document,
     versioning conflicts may occur. For instance, client A may make
     a PUT request that changes the document from version 1 to version
     2, after which client B may make a PUT request attempting to change
@@ -897,7 +898,6 @@ Internet-Draft              remoteStorage                  December 2014
     '/7/', '/7/9/', and '/7/9/2' to narrow down the one document that
     caused the root folder's ETag to change.
 
-    Note that the remoteStorage server does not get involved in the
 
 
 de Jong                                                        [Page 18]
@@ -905,6 +905,7 @@ de Jong                                                        [Page 18]
 Internet-Draft              remoteStorage                  December 2014
 
 
+    Note that the remoteStorage server does not get involved in the
     conflict resolution. It keeps the canonical current version at all
     times, and allows clients to make conditional GET and PUT requests,
     but it is up to whichever client discovers a given version
@@ -949,10 +950,10 @@ Internet-Draft              remoteStorage                  December 2014
     that aim to overwhelm its interface with too much traffic.
 
 
-
 de Jong                                                        [Page 19]
 
 Internet-Draft              remoteStorage                  December 2014
+
 
 
 15. IANA Considerations
@@ -962,7 +963,8 @@ Internet-Draft              remoteStorage                  December 2014
       * "http://remotestorage.io/spec/version"
       * "http://tools.ietf.org/html/rfc6749#section-4.2"
       * "http://tools.ietf.org/html/rfc6750#section-2.3"
-      * "https://tools.ietf.org/html/rfc2616#section-14.16
+      * "https://tools.ietf.org/html/rfc7233"
+      * "http://remotestorage.io/spec/web-authoring"
 
 16. Acknowledgements
 
@@ -998,11 +1000,11 @@ Internet-Draft              remoteStorage                  December 2014
         2.0 Authorization Framework", RFC6749, October 2012.
 
 
-
-
 de Jong                                                        [Page 20]
 
 Internet-Draft              remoteStorage                  December 2014
+
+
 
 
 17.2. Informative References
@@ -1046,8 +1048,6 @@ Internet-Draft              remoteStorage                  December 2014
         "WebAPI/DataStore", MozillaWiki, retrieved May 2014.
         https://wiki.mozilla.org/WebAPI/DataStore#Manifest
 
-    [KERBEROS]
-        C. Neuman et al., "The Kerberos Network Authentication Service
 
 
 de Jong                                                        [Page 21]
@@ -1055,6 +1055,8 @@ de Jong                                                        [Page 21]
 Internet-Draft              remoteStorage                  December 2014
 
 
+    [KERBEROS]
+        C. Neuman et al., "The Kerberos Network Authentication Service
         (V5)", RFC4120,
         https://tools.ietf.org/html/rfc4120
 
@@ -1080,8 +1082,6 @@ Internet-Draft              remoteStorage                  December 2014
     (independent)
 
     Email: fkooman@tuxed.net
-
-
 
 
 
