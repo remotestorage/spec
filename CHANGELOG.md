@@ -28,4 +28,10 @@
 * Several small changes to clarify and correct the spec text
 * A build script and this changelog were added to the git repo on github.
 
+# draft-dejong-remotestorage-02.txt
 
+## Breaking for servers as well as clients:
+* The root scope was renamed from 'root' to '*'
+
+## Breaking for servers:
+* The 'Expires: 0' caching header became obligatory on successful GET requests
