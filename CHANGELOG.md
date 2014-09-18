@@ -1,7 +1,11 @@
 # draft-dejong-remotestorage-04.txt
 
 ## Breaking for servers as well as clients:
-* The version string in the webfinger announcement was updated from -03 to -04
+* The properties in the WebFinger announcement were changed to:
+  https://github.com/remotestorage/spec/blob/04-rc3/draft-dejong-remotestorage-04.txt#L468-L474
+
+## Non-breaking:
+* Support for web-authoring was added as an optional feature.
 
 # draft-dejong-remotestorage-03.txt
 
@@ -18,8 +22,10 @@
 * Servers MAY now expire access tokens, in line with the OAuth spec.
 * Servers MAY now use Kerberos instead of OAuth.
 
-## non-breaking:
+## Non-breaking:
 * The option to offer a manual way to create access tokens is now mentioned
 * The fact that strong ETags make gzipping impossible is now mentioned
 * Several small changes to clarify and correct the spec text
 * A build script and this changelog were added to the git repo on github.
+
+
