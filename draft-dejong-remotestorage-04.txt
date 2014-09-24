@@ -618,7 +618,7 @@ Internet-Draft              remoteStorage                  December 2014
              "properties": {
                "http://remotestorage.io/spec/version": "draft-dejong-re\
 motestorage-04",
-               "http://tools.ietf.org/html/rfc6750#section-4.2": "https\
+               "http://tools.ietf.org/html/rfc6749#section-4.2": "https\
 ://3pp.io:4439/oauth/michiel",
                "http://tools.ietf.org/html/rfc6750#section-2.3": false,
                "http://tools.ietf.org/html/rfc7233": false,
