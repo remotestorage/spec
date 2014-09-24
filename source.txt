@@ -277,8 +277,8 @@ Table of Contents
              request can not be satisfied,
        * 401 for all requests that don't have a bearer token with
              sufficient permissions,
-       * 404 for all DELETE and GET requests to nodes that do not exist
-             on the storage,
+       * 404 for all DELETE and GET requests to documents that do not
+             exist on the storage,
        * 304 for a conditional GET request whose pre-condition
              fails (see "Versioning" below),
        * 409 for a PUT request where any folder name in the path
