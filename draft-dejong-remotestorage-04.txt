@@ -356,7 +356,7 @@ Internet-Draft              remoteStorage                  December 2014
 
 
     GET requests MAY have a comma-separated list of revisions in an
-    'If-None-Match' header [COND], and SHOULD be responded to with a 412
+    'If-None-Match' header [COND], and SHOULD be responded to with a 304
     response if that list includes the document or folder's current
     version. A PUT request MAY have an 'If-None-Match: *' header [COND],
     in which case it MUST fail with a 412 response code if the document
