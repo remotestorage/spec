@@ -2,7 +2,7 @@
 
 ## Breaking for servers as well as clients:
 * The properties in the WebFinger announcement were changed to:
-  https://github.com/remotestorage/spec/blob/04-rc3/draft-dejong-remotestorage-04.txt#L468-L474
+  https://github.com/remotestorage/spec/blob/cee9a26/draft-dejong-remotestorage-04.txt#L468-L474
 
 ## Non-breaking:
 * Support for web-authoring was added as an optional feature.
