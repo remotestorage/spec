@@ -406,7 +406,7 @@ Table of Contents
         "http://remotestorage.io/spec/version": <storage_api>,
         "http://tools.ietf.org/html/rfc6749#section-4.2": <auth-dialog>,
         "http://tools.ietf.org/html/rfc6750#section-2.3": <query-param>,
-        "https://tools.ietf.org/html/rfc7233": <ranges>,
+        "http://tools.ietf.org/html/rfc7233": <ranges>,
         "http://remotestorage.io/spec/web-authoring": <web-authoring>
       }
     }
@@ -830,7 +830,7 @@ charset=UTF-8","Content-Length":106}}}
       * "http://remotestorage.io/spec/version"
       * "http://tools.ietf.org/html/rfc6749#section-4.2"
       * "http://tools.ietf.org/html/rfc6750#section-2.3"
-      * "https://tools.ietf.org/html/rfc7233"
+      * "http://tools.ietf.org/html/rfc7233"
       * "http://remotestorage.io/spec/web-authoring"
 
 16. Acknowledgements
