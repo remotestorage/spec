@@ -597,12 +597,13 @@ g.com HTTP/1.1
          Access-Control-Allow-Headers: If-Match, If-None-Match
          Access-Control-Expose-Headers: ETag, Content-Type, Content-Len\
 gth
-
+         Content-Type: application/jrd+json
 
 
 de Jong                                                        [Page 12]
 
 Internet-Draft              remoteStorage                  December 2014
+
 
 
          {
@@ -647,7 +648,6 @@ unhosted.5apps.com&response_type=token HTTP/1.1
         <!DOCTYPE html>
         <html lang="en">
           <head>
-            <title>Allow access?</title>
 
 
 de Jong                                                        [Page 13]
@@ -655,6 +655,7 @@ de Jong                                                        [Page 13]
 Internet-Draft              remoteStorage                  December 2014
 
 
+            <title>Allow access?</title>
         ...
 
 
@@ -699,10 +700,10 @@ XjzzzHNjkd1CJxoQubA1o%3D&token_type=bearer&state=
     To which the server can for instance respond:
 
 
-
 de Jong                                                        [Page 14]
 
 Internet-Draft              remoteStorage                  December 2014
+
 
 
         HTTP/1.1 200 OK
@@ -747,7 +748,6 @@ ntent-Type, Origin, X-Requested-With, If-Match, If-None-Match
         Authorization: Bearer j2YnGtXjzzzHNjkd1CJxoQubA1o=
         Content-Type: application/json; charset=UTF-8
         Referer: https://drinks-unhosted.5apps.com/?
-        If-Match: "1382694045000"
 
 
 de Jong                                                        [Page 15]
@@ -755,6 +755,7 @@ de Jong                                                        [Page 15]
 Internet-Draft              remoteStorage                  December 2014
 
 
+        If-Match: "1382694045000"
 
         {"name":"test", "updated":true, "@context":"http://remotestorag\
 e.io/spec/modules/myfavoritedrinks/drink"}
@@ -797,7 +798,6 @@ ge.io/spec/modules/myfavoritedrinks/drink"}
 
     If the GET URL would have been "/storage/michiel/myfavoritedrinks/",
     a 200 OK response would have a folder description as the response
-    body:
 
 
 de Jong                                                        [Page 16]
@@ -805,6 +805,7 @@ de Jong                                                        [Page 16]
 Internet-Draft              remoteStorage                  December 2014
 
 
+    body:
 
         HTTP/1.1 200 OK
         Access-Control-Allow-Origin: https://drinks-unhosted.5apps.com
@@ -847,7 +848,6 @@ charset=UTF-8","Content-Length":106}}}
     This section is non-normative, and is intended to explain some of
     the design choices concerning ETags and folder listings. At the
     same time it will hopefully help readers who intend to develop an
-    application that uses remoteStorage as its per-user data storage.
 
 
 de Jong                                                        [Page 17]
@@ -855,6 +855,7 @@ de Jong                                                        [Page 17]
 Internet-Draft              remoteStorage                  December 2014
 
 
+    application that uses remoteStorage as its per-user data storage.
     When multiple clients have read/write access to the same document,
     versioning conflicts may occur. For instance, client A may make
     a PUT request that changes the document from version 1 to version
@@ -899,10 +900,10 @@ Internet-Draft              remoteStorage                  December 2014
     caused the root folder's ETag to change.
 
 
-
 de Jong                                                        [Page 18]
 
 Internet-Draft              remoteStorage                  December 2014
+
 
 
     Note that the remoteStorage server does not get involved in the
@@ -947,7 +948,6 @@ Internet-Draft              remoteStorage                  December 2014
     attempt to guess the location of such documents.
 
     The server SHOULD also detect and stop denial-of-service attacks
-    that aim to overwhelm its interface with too much traffic.
 
 
 de Jong                                                        [Page 19]
@@ -955,6 +955,7 @@ de Jong                                                        [Page 19]
 Internet-Draft              remoteStorage                  December 2014
 
 
+    that aim to overwhelm its interface with too much traffic.
 
 15. IANA Considerations
 
@@ -997,7 +998,6 @@ Internet-Draft              remoteStorage                  December 2014
 
     [OAUTH]
         "Section 4.2: Implicit Grant", in: Hardt, D. (ed), "The OAuth
-        2.0 Authorization Framework", RFC6749, October 2012.
 
 
 de Jong                                                        [Page 20]
@@ -1005,6 +1005,7 @@ de Jong                                                        [Page 20]
 Internet-Draft              remoteStorage                  December 2014
 
 
+        2.0 Authorization Framework", RFC6749, October 2012.
 
 
 17.2. Informative References
@@ -1049,10 +1050,10 @@ Internet-Draft              remoteStorage                  December 2014
         https://wiki.mozilla.org/WebAPI/DataStore#Manifest
 
 
-
 de Jong                                                        [Page 21]
 
 Internet-Draft              remoteStorage                  December 2014
+
 
 
     [KERBEROS]
@@ -1080,7 +1081,6 @@ Internet-Draft              remoteStorage                  December 2014
     (independent)
 
     Email: fkooman@tuxed.net
-
 
 
 
