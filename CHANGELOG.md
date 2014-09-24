@@ -6,6 +6,8 @@
 
 ## Non-breaking:
 * Support for web-authoring was added as an optional feature.
+* Several mistakes in the text and wire examples were fixed.
+* Several confusing formulations in the text were improved.
 
 # draft-dejong-remotestorage-03.txt
 
