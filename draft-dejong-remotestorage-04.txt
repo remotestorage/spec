@@ -1057,13 +1057,11 @@ Internet-Draft              remoteStorage                  December 2014
 
     [KERBEROS]
         C. Neuman et al., "The Kerberos Network Authentication Service
-        (V5)", RFC4120,
-        https://tools.ietf.org/html/rfc4120
+        (V5)", RFC4120, July 2005.
 
     [BEARER]
         M. Jones, D. Hardt, "The OAuth 2.0 Authorization Framework:
-        Bearer Token Usage", RFC6750,
-        http://tools.ietf.org/html/rfc6750#section-2.3, October 2012.
+        Bearer Token Usage", RFC6750, October 2012.
 
     [AUTHORING]
         "Using remoteStorage for web authoring", reSite wiki, retrieved
@@ -1082,6 +1080,8 @@ Internet-Draft              remoteStorage                  December 2014
     (independent)
 
     Email: fkooman@tuxed.net
+
+
 
 
 
