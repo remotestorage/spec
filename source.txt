@@ -529,8 +529,7 @@ g.com HTTP/1.1
          Access-Control-Allow-Origin: *
          Access-Control-Allow-Methods: GET
          Access-Control-Allow-Headers: If-Match, If-None-Match
-         Access-Control-Expose-Headers: ETag, Content-Type, Content-Len\
-gth
+         Access-Control-Expose-Headers: ETag, Content-Length
          Content-Type: application/jrd+json
 
          {

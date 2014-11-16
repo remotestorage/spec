@@ -613,8 +613,7 @@ Internet-Draft              remoteStorage                  December 2014
          Access-Control-Allow-Origin: *
          Access-Control-Allow-Methods: GET
          Access-Control-Allow-Headers: If-Match, If-None-Match
-         Access-Control-Expose-Headers: ETag, Content-Type, Content-Len\
-gth
+         Access-Control-Expose-Headers: ETag, Content-Length
          Content-Type: application/jrd+json
 
          {
@@ -648,6 +647,7 @@ motestorage-04",
     the user's "myfavoritedrinks" scope:
 
         GET /oauth/michiel?redirect_uri=https%3A%2F%2Fdrinks-unhosted.5\
+apps.com%2F&scope=myfavoritedrinks%3Arw&client_id=https%3A%2F%2Fdrinks-\
 
 
 de Jong                                                        [Page 13]
@@ -655,7 +655,6 @@ de Jong                                                        [Page 13]
 Internet-Draft              remoteStorage                  December 2014
 
 
-apps.com%2F&scope=myfavoritedrinks%3Arw&client_id=https%3A%2F%2Fdrinks-\
 unhosted.5apps.com&response_type=token HTTP/1.1
         Host: 3pp.io
 
@@ -698,6 +697,7 @@ XjzzzHNjkd1CJxoQubA1o%3D&token_type=bearer&state=
 12.4. OPTIONS preflight
 
     When an in-browser application makes a cross-origin request which
+    may affect the server-state, the browser will make a preflight
 
 
 de Jong                                                        [Page 14]
@@ -705,7 +705,6 @@ de Jong                                                        [Page 14]
 Internet-Draft              remoteStorage                  December 2014
 
 
-    may affect the server-state, the browser will make a preflight
     request first, with the OPTIONS verb, for instance:
 
         OPTIONS /storage/michiel/myfavoritedrinks/ HTTP/1.1
@@ -750,10 +749,10 @@ ntent-Type, Origin, X-Requested-With, If-Match, If-None-Match
 12.6. Subsequent PUT
 
 
+
 de Jong                                                        [Page 15]
 
 Internet-Draft              remoteStorage                  December 2014
-
 
 
     A subsequent PUT may contain an 'If-Match' header referring to the
@@ -798,6 +797,7 @@ e.io/spec/modules/myfavoritedrinks/drink"}
     Or a 200 OK status, plus a response body:
 
         HTTP/1.1 200 OK
+        Access-Control-Allow-Origin: https://drinks-unhosted.5apps.com
 
 
 de Jong                                                        [Page 16]
@@ -805,7 +805,6 @@ de Jong                                                        [Page 16]
 Internet-Draft              remoteStorage                  December 2014
 
 
-        Access-Control-Allow-Origin: https://drinks-unhosted.5apps.com
         Content-Type: application/json; charset=UTF-8
         Content-Length: 106
         ETag: "1382694048000"
@@ -848,6 +847,7 @@ charset=UTF-8","Content-Length":106}}}
         Referer: https://drinks-unhosted.5apps.com/?
         If-Match: "1382694045000"
 
+    And the server may respond with a 412 Conflict or a 200 OK status:
 
 
 de Jong                                                        [Page 17]
@@ -855,7 +855,6 @@ de Jong                                                        [Page 17]
 Internet-Draft              remoteStorage                  December 2014
 
 
-    And the server may respond with a 412 Conflict or a 200 OK status:
 
         HTTP/1.1 412 Conflict
         Access-Control-Allow-Origin: https://drinks-unhosted.5apps.com
@@ -898,6 +897,7 @@ Internet-Draft              remoteStorage                  December 2014
     to the root folder, it is not necessary to poll each document for
     changes individually.
 
+    As an example, the root folder may contain 10 directories,
 
 
 de Jong                                                        [Page 18]
@@ -905,7 +905,6 @@ de Jong                                                        [Page 18]
 Internet-Draft              remoteStorage                  December 2014
 
 
-    As an example, the root folder may contain 10 directories,
     each of which contain 10 directories, which each contain 10
     documents, so their paths would be for instance '/0/0/1', '/0/0/2',
     etcetera. Then one GET request to the root folder '/' will be
@@ -948,6 +947,7 @@ Internet-Draft              remoteStorage                  December 2014
     therefore NOT be used for anything else, and the user SHOULD be
     warned not to visit any web pages on that origin. In particular, the
     OAuth dialog and launch dashboard or token revokation interface
+    SHOULD be on a different origin than the remoteStorage interface.
 
 
 de Jong                                                        [Page 19]
@@ -955,7 +955,6 @@ de Jong                                                        [Page 19]
 Internet-Draft              remoteStorage                  December 2014
 
 
-    SHOULD be on a different origin than the remoteStorage interface.
 
     Where the use of bearer tokens is impractical, a user may choose to
     store documents on hard-to-guess URLs whose path after
@@ -1000,10 +999,10 @@ Internet-Draft              remoteStorage                  December 2014
         Levels", BCP 14, RFC 2119, March 1997.
 
 
+
 de Jong                                                        [Page 20]
 
 Internet-Draft              remoteStorage                  December 2014
-
 
 
     [IRI]
@@ -1048,6 +1047,7 @@ Internet-Draft              remoteStorage                  December 2014
 
     [CORS]
         van Kesteren, Anne (ed), "Cross-Origin Resource Sharing --
+        W3C Candidate Recommendation 29 January 2013",
 
 
 de Jong                                                        [Page 21]
@@ -1055,7 +1055,6 @@ de Jong                                                        [Page 21]
 Internet-Draft              remoteStorage                  December 2014
 
 
-        W3C Candidate Recommendation 29 January 2013",
         http://www.w3.org/TR/cors/, January 2013.
 
     [MANIFEST]
@@ -1092,6 +1091,7 @@ Internet-Draft              remoteStorage                  December 2014
     (independent)
 
     Email: fkooman@tuxed.net
+
 
 
 
