@@ -2,13 +2,11 @@
 
 ## Breaking for servers as well as clients:
 * The version string in the WebFinger announcement was updated from -03 to -04
-
-## Breaking for clients:
-* The properties in the WebFinger announcement were made optional:
-  https://github.com/remotestorage/spec/blob/master/draft-dejong-remotestorage-04.txt#L461
+* Implicit auth is now indicated with a `null` <auth-dialog> property instead of `false`.
+* The way to announce support for query parameter bearer tokens and range requests has changed, both for servers that do support it, and servers that don't.
 
 ## Non-breaking:
-* Support for web-authoring was added as an optional feature.
+* Servers may now offer any extension features they want.
 * Several mistakes in the text and wire examples were fixed.
 * Several confusing formulations in the text were improved.
 
