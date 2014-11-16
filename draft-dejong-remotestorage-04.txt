@@ -208,12 +208,12 @@ Internet-Draft              remoteStorage                  December 2014
     A folder description is a map containing a string-valued 'ETag'
     field, representing the folder's current version.
 
-    A successful GET request to a folder SHOULD be responded to with a
+    A successful GET request to a folder MUST be responded to with a
     JSON-LD [JSON-LD] document (content type 'application/ld+json'),
     containing as its 'items' field a map in which contained documents
     appear as entries <item_name> to a document description, and
     contained non-empty folders appear as entries <item_name> '/' to a
-    folder description. It SHOULD also contain an '@context' field with
+    folder description. It MUST also contain an '@context' field with
     the value 'http://remotestorage.io/spec/folder-description'. For
     instance:
 
