@@ -468,9 +468,7 @@ Internet-Draft              remoteStorage                  December 2014
       "properties": {
         "http://remotestorage.io/spec/version": <storage_api>,
         "http://tools.ietf.org/html/rfc6749#section-4.2": <auth-dialog>,
-        "http://tools.ietf.org/html/rfc6750#section-2.3": <query-param>,
-        "http://tools.ietf.org/html/rfc7233": <ranges>,
-        "http://remotestorage.io/spec/web-authoring": <web-authoring>
+        ... : ... ,
       }
     }
 
@@ -491,13 +489,15 @@ Internet-Draft              remoteStorage                  December 2014
     impose any such access barriers for resources that would normally
     not require an access token.
 
-    The <query-param> variable SHOULD have the boolean value true if
-    the server supports passing the bearer token in the URI query
-    parameter as per section 2.3 of [BEARER], and false otherwise.
+    The '...' ellipses indicate that more properties may be present.
+    Non-breaking examples that have been proposed so far, include a
+    "http://tools.ietf.org/html/rfc6750#section-2.3" property, set to
+    the boolean value true if the server supports passing the bearer
+    token in the URI query parameter as per section 2.3 of [BEARER],
+    instead of in the request header.
 
-    The <ranges> variable SHOULD have a string value of "GET" if
-    Content-Range headers are supported for GET requests as per
-    [RANGE], and the boolean value false if not.
+    Another example is "http://tools.ietf.org/html/rfc7233" with a
+    string value of "GET" if Content-Range headers are supported for
 
 
 de Jong                                                        [Page 10]
@@ -505,11 +505,22 @@ de Jong                                                        [Page 10]
 Internet-Draft              remoteStorage                  December 2014
 
 
+    GET requests as per [RANGE], "PUT" if they are supported for PUT
+    requests, and "GET,PUT" if supported for both.
 
-    The <web-authoring> variable SHOULD have a string value of the fully
-    qualified domain name to which web authoring content is published if
-    the server supports web authoring as per [AUTHORING], and false
-    otherwise.
+    Both these proposals are non-breaking extensions, since the client
+    will have a way to work around it if these features are not present
+    (e.g. retrieve the protected resource asynchronously in the first
+    case, or request the entire resource in the second case).
+
+    A "http://remotestorage.io/spec/web-authoring" property has been
+    proposed with a string value of the fully qualified domain name to
+    which web authoring content is published if the server supports web
+    authoring as per [AUTHORING]. Note that this extension is a breaking
+    extension in the sense that it divides users into "haves", whose
+    remoteStorage accounts allow them to author web content, and
+    "have-nots", whose remoteStorage account does not support this
+    functionality.
 
     The server MAY expire bearer tokens, and MAY require the user to
     register applications as OAuth clients before first use; if no
@@ -538,6 +549,13 @@ Internet-Draft              remoteStorage                  December 2014
     from the OAuth dialog, it MAY add 'access_token' and 'scope'
     fields to the URL fragment.
 
+
+de Jong                                                        [Page 11]
+
+Internet-Draft              remoteStorage                  December 2014
+
+
+
     Regardless of whether 'access_token' and 'scope' are specified, it
     SHOULD add a 'remotestorage' field to the URL fragment, with a
     value of the form <user> '@' <host>. When the application detects
@@ -547,13 +565,6 @@ Internet-Draft              remoteStorage                  December 2014
     If no access_token was given, then the application SHOULD also
     extract the <auth_endpoint> information from WebFinger, and continue
     as per application-first bearer token issuance.
-
-
-
-de Jong                                                        [Page 11]
-
-Internet-Draft              remoteStorage                  December 2014
-
 
     Note that whereas a remoteStorage server SHOULD offer support for
     the application-first flow with WebFinger and OAuth, it MAY choose
@@ -587,6 +598,13 @@ Internet-Draft              remoteStorage                  December 2014
 
          GET /.well-known/webfinger?resource=acct:michiel@michielbdejon\
 g.com HTTP/1.1
+
+
+de Jong                                                        [Page 12]
+
+Internet-Draft              remoteStorage                  December 2014
+
+
          Host: michielbdejong.com
 
     and the server's response might look like this:
@@ -598,13 +616,6 @@ g.com HTTP/1.1
          Access-Control-Expose-Headers: ETag, Content-Type, Content-Len\
 gth
          Content-Type: application/jrd+json
-
-
-de Jong                                                        [Page 12]
-
-Internet-Draft              remoteStorage                  December 2014
-
-
 
          {
            "links":[{
@@ -637,6 +648,13 @@ motestorage-04",
     the user's "myfavoritedrinks" scope:
 
         GET /oauth/michiel?redirect_uri=https%3A%2F%2Fdrinks-unhosted.5\
+
+
+de Jong                                                        [Page 13]
+
+Internet-Draft              remoteStorage                  December 2014
+
+
 apps.com%2F&scope=myfavoritedrinks%3Arw&client_id=https%3A%2F%2Fdrinks-\
 unhosted.5apps.com&response_type=token HTTP/1.1
         Host: 3pp.io
@@ -648,13 +666,6 @@ unhosted.5apps.com&response_type=token HTTP/1.1
         <!DOCTYPE html>
         <html lang="en">
           <head>
-
-
-de Jong                                                        [Page 13]
-
-Internet-Draft              remoteStorage                  December 2014
-
-
             <title>Allow access?</title>
         ...
 
@@ -687,6 +698,13 @@ XjzzzHNjkd1CJxoQubA1o%3D&token_type=bearer&state=
 12.4. OPTIONS preflight
 
     When an in-browser application makes a cross-origin request which
+
+
+de Jong                                                        [Page 14]
+
+Internet-Draft              remoteStorage                  December 2014
+
+
     may affect the server-state, the browser will make a preflight
     request first, with the OPTIONS verb, for instance:
 
@@ -698,13 +716,6 @@ XjzzzHNjkd1CJxoQubA1o%3D&token_type=bearer&state=
         Referer: https://drinks-unhosted.5apps.com/
 
     To which the server can for instance respond:
-
-
-de Jong                                                        [Page 14]
-
-Internet-Draft              remoteStorage                  December 2014
-
-
 
         HTTP/1.1 200 OK
         Access-Control-Allow-Origin: https://drinks-unhosted.5apps.com
@@ -738,6 +749,13 @@ ntent-Type, Origin, X-Requested-With, If-Match, If-None-Match
 
 12.6. Subsequent PUT
 
+
+de Jong                                                        [Page 15]
+
+Internet-Draft              remoteStorage                  December 2014
+
+
+
     A subsequent PUT may contain an 'If-Match' header referring to the
     ETag previously returned, like this:
 
@@ -748,13 +766,6 @@ ntent-Type, Origin, X-Requested-With, If-Match, If-None-Match
         Authorization: Bearer j2YnGtXjzzzHNjkd1CJxoQubA1o=
         Content-Type: application/json; charset=UTF-8
         Referer: https://drinks-unhosted.5apps.com/?
-
-
-de Jong                                                        [Page 15]
-
-Internet-Draft              remoteStorage                  December 2014
-
-
         If-Match: "1382694045000"
 
         {"name":"test", "updated":true, "@context":"http://remotestorag\
@@ -787,6 +798,13 @@ e.io/spec/modules/myfavoritedrinks/drink"}
     Or a 200 OK status, plus a response body:
 
         HTTP/1.1 200 OK
+
+
+de Jong                                                        [Page 16]
+
+Internet-Draft              remoteStorage                  December 2014
+
+
         Access-Control-Allow-Origin: https://drinks-unhosted.5apps.com
         Content-Type: application/json; charset=UTF-8
         Content-Length: 106
@@ -798,13 +816,6 @@ ge.io/spec/modules/myfavoritedrinks/drink"}
 
     If the GET URL would have been "/storage/michiel/myfavoritedrinks/",
     a 200 OK response would have a folder description as the response
-
-
-de Jong                                                        [Page 16]
-
-Internet-Draft              remoteStorage                  December 2014
-
-
     body:
 
         HTTP/1.1 200 OK
@@ -837,6 +848,13 @@ charset=UTF-8","Content-Length":106}}}
         Referer: https://drinks-unhosted.5apps.com/?
         If-Match: "1382694045000"
 
+
+
+de Jong                                                        [Page 17]
+
+Internet-Draft              remoteStorage                  December 2014
+
+
     And the server may respond with a 412 Conflict or a 200 OK status:
 
         HTTP/1.1 412 Conflict
@@ -848,13 +866,6 @@ charset=UTF-8","Content-Length":106}}}
     This section is non-normative, and is intended to explain some of
     the design choices concerning ETags and folder listings. At the
     same time it will hopefully help readers who intend to develop an
-
-
-de Jong                                                        [Page 17]
-
-Internet-Draft              remoteStorage                  December 2014
-
-
     application that uses remoteStorage as its per-user data storage.
     When multiple clients have read/write access to the same document,
     versioning conflicts may occur. For instance, client A may make
@@ -887,6 +898,13 @@ Internet-Draft              remoteStorage                  December 2014
     to the root folder, it is not necessary to poll each document for
     changes individually.
 
+
+
+de Jong                                                        [Page 18]
+
+Internet-Draft              remoteStorage                  December 2014
+
+
     As an example, the root folder may contain 10 directories,
     each of which contain 10 directories, which each contain 10
     documents, so their paths would be for instance '/0/0/1', '/0/0/2',
@@ -898,13 +916,6 @@ Internet-Draft              remoteStorage                  December 2014
     different value in its JSON content. The client could then request
     '/7/', '/7/9/', and '/7/9/2' to narrow down the one document that
     caused the root folder's ETag to change.
-
-
-de Jong                                                        [Page 18]
-
-Internet-Draft              remoteStorage                  December 2014
-
-
 
     Note that the remoteStorage server does not get involved in the
     conflict resolution. It keeps the canonical current version at all
@@ -937,6 +948,13 @@ Internet-Draft              remoteStorage                  December 2014
     therefore NOT be used for anything else, and the user SHOULD be
     warned not to visit any web pages on that origin. In particular, the
     OAuth dialog and launch dashboard or token revokation interface
+
+
+de Jong                                                        [Page 19]
+
+Internet-Draft              remoteStorage                  December 2014
+
+
     SHOULD be on a different origin than the remoteStorage interface.
 
     Where the use of bearer tokens is impractical, a user may choose to
@@ -948,13 +966,6 @@ Internet-Draft              remoteStorage                  December 2014
     attempt to guess the location of such documents.
 
     The server SHOULD also detect and stop denial-of-service attacks
-
-
-de Jong                                                        [Page 19]
-
-Internet-Draft              remoteStorage                  December 2014
-
-
     that aim to overwhelm its interface with too much traffic.
 
 15. IANA Considerations
@@ -988,6 +999,13 @@ Internet-Draft              remoteStorage                  December 2014
         Bradner, S., "Key words for use in RFCs to Indicate Requirement
         Levels", BCP 14, RFC 2119, March 1997.
 
+
+de Jong                                                        [Page 20]
+
+Internet-Draft              remoteStorage                  December 2014
+
+
+
     [IRI]
         Duerst, M., "Internationalized Resource Identifiers (IRIs)",
         RFC 3987, January 2005.
@@ -998,13 +1016,6 @@ Internet-Draft              remoteStorage                  December 2014
 
     [OAUTH]
         "Section 4.2: Implicit Grant", in: Hardt, D. (ed), "The OAuth
-
-
-de Jong                                                        [Page 20]
-
-Internet-Draft              remoteStorage                  December 2014
-
-
         2.0 Authorization Framework", RFC6749, October 2012.
 
 
@@ -1037,6 +1048,13 @@ Internet-Draft              remoteStorage                  December 2014
 
     [CORS]
         van Kesteren, Anne (ed), "Cross-Origin Resource Sharing --
+
+
+de Jong                                                        [Page 21]
+
+Internet-Draft              remoteStorage                  December 2014
+
+
         W3C Candidate Recommendation 29 January 2013",
         http://www.w3.org/TR/cors/, January 2013.
 
@@ -1048,13 +1066,6 @@ Internet-Draft              remoteStorage                  December 2014
     [DATASTORE]
         "WebAPI/DataStore", MozillaWiki, retrieved May 2014.
         https://wiki.mozilla.org/WebAPI/DataStore#Manifest
-
-
-de Jong                                                        [Page 21]
-
-Internet-Draft              remoteStorage                  December 2014
-
-
 
     [KERBEROS]
         C. Neuman et al., "The Kerberos Network Authentication Service
@@ -1081,17 +1092,6 @@ Internet-Draft              remoteStorage                  December 2014
     (independent)
 
     Email: fkooman@tuxed.net
-
-
-
-
-
-
-
-
-
-
-
 
 
 

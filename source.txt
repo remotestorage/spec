@@ -405,9 +405,7 @@ Table of Contents
       "properties": {
         "http://remotestorage.io/spec/version": <storage_api>,
         "http://tools.ietf.org/html/rfc6749#section-4.2": <auth-dialog>,
-        "http://tools.ietf.org/html/rfc6750#section-2.3": <query-param>,
-        "http://tools.ietf.org/html/rfc7233": <ranges>,
-        "http://remotestorage.io/spec/web-authoring": <web-authoring>
+        ... : ... ,
       }
     }
 
@@ -428,18 +426,31 @@ Table of Contents
     impose any such access barriers for resources that would normally
     not require an access token.
 
-    The <query-param> variable SHOULD have the boolean value true if
-    the server supports passing the bearer token in the URI query
-    parameter as per section 2.3 of [BEARER], and false otherwise.
+    The '...' ellipses indicate that more properties may be present.
+    Non-breaking examples that have been proposed so far, include a
+    "http://tools.ietf.org/html/rfc6750#section-2.3" property, set to
+    the boolean value true if the server supports passing the bearer
+    token in the URI query parameter as per section 2.3 of [BEARER],
+    instead of in the request header.
 
-    The <ranges> variable SHOULD have a string value of "GET" if
-    Content-Range headers are supported for GET requests as per
-    [RANGE], and the boolean value false if not.
+    Another example is "http://tools.ietf.org/html/rfc7233" with a
+    string value of "GET" if Content-Range headers are supported for
+    GET requests as per [RANGE], "PUT" if they are supported for PUT
+    requests, and "GET,PUT" if supported for both.
 
-    The <web-authoring> variable SHOULD have a string value of the fully
-    qualified domain name to which web authoring content is published if
-    the server supports web authoring as per [AUTHORING], and false
-    otherwise.
+    Both these proposals are non-breaking extensions, since the client
+    will have a way to work around it if these features are not present
+    (e.g. retrieve the protected resource asynchronously in the first
+    case, or request the entire resource in the second case).
+
+    A "http://remotestorage.io/spec/web-authoring" property has been
+    proposed with a string value of the fully qualified domain name to
+    which web authoring content is published if the server supports web
+    authoring as per [AUTHORING]. Note that this extension is a breaking
+    extension in the sense that it divides users into "haves", whose
+    remoteStorage accounts allow them to author web content, and
+    "have-nots", whose remoteStorage account does not support this
+    functionality.
 
     The server MAY expire bearer tokens, and MAY require the user to
     register applications as OAuth clients before first use; if no

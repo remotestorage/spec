@@ -1,8 +1,11 @@
 # draft-dejong-remotestorage-04.txt
 
 ## Breaking for servers as well as clients:
-* The properties in the WebFinger announcement were changed to:
-  https://github.com/remotestorage/spec/blob/cee9a26/draft-dejong-remotestorage-04.txt#L468-L474
+* The version string in the WebFinger announcement was updated from -03 to -04
+
+## Breaking for clients:
+* The properties in the WebFinger announcement were made optional:
+  https://github.com/remotestorage/spec/blob/master/draft-dejong-remotestorage-04.txt#L461
 
 ## Non-breaking:
 * Support for web-authoring was added as an optional feature.
@@ -13,7 +16,7 @@
 
 ## Breaking for servers as well as clients:
 * The content-type for folder listings was corrected to application/ld+json
-* The version string in the webfinger announcement was updated from -02 to -03
+* The version string in the WebFinger announcement was updated from -02 to -03
 * Switch to the datastores-access syntax in open web app manifest format
 
 ## Breaking for servers:
