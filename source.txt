@@ -65,17 +65,17 @@ Table of Contents
      12.1. WebFinger................................................12
      12.2. OAuth dialog form........................................13
      12.3. OAuth dialog form submission.............................14
-     12.4. OPTIONS preflight........................................14
+     12.4. OPTIONS preflight........................................15
      12.5. Initial PUT..............................................15
-     12.6. Subsequent PUT...........................................15
+     12.6. Subsequent PUT...........................................16
      12.7. GET......................................................16
      12.8. DELETE...................................................17
   13. Distributed versioning........................................17
   14. Security Considerations.......................................19
   15. IANA Considerations...........................................20
   16. Acknowledgments...............................................20
-  17. References....................................................20
-     17.1. Normative References.....................................20
+  17. References....................................................21
+     17.1. Normative References.....................................21
      17.2. Informative References...................................21
   18. Authors' addresses............................................22
 
@@ -132,7 +132,6 @@ Table of Contents
        * current version
        * content type
        * content length
-
 
     For a document, the server stores, and should be able to produce:
 
@@ -263,6 +262,7 @@ Table of Contents
     A successful HEAD request SHOULD be responded to like to the
     equivalent GET request, but omitting the response body.
 
+
 5. Response codes
 
     Response codes SHOULD be given as defined by [HTTP, section 6] and
@@ -287,7 +287,7 @@ Table of Contents
              existing folder's name at the same level.
        * 412 for a conditional PUT or DELETE request whose pre-condition
              fails (see "Versioning" below),
-       * 507 in case the user's account is over its storage quota,
+       * 507 in case the account is over its storage quota,
        * 4xx for all malformed requests (e.g. foreign characters in the
              path), as well as for all PUT and DELETE requests to
              folders,
@@ -396,8 +396,9 @@ Table of Contents
 10. Application-first bearer token issuance
 
     To make a remoteStorage server available as 'the remoteStorage of
-    <user> at <host>', exactly one link of the following format SHOULD
-    be added to the WebFinger record [WEBFINGER] of <user> at <host>:
+    <account> at <host>', exactly one link of the following format
+    SHOULD be added to the WebFinger record [WEBFINGER] of <account> at
+    <host>:
 
     {
       "href": <storage_root>,
@@ -415,9 +416,11 @@ Table of Contents
     presented.
 
     If <auth-dialog> is a URL, the user can supply their credentials
-    there (how, is out of scope), and allow or reject a request by the
-    connecting application to obtain a bearer token for a certain list
-    of access scopes.
+    for accessing the account (how, is out of scope), and allow or
+    reject a request by the connecting application to obtain a bearer
+    token for a certain list of access scopes. Note that an account
+    will often belong to just one human user, but may also belong to a
+    group of multiple users (the remoteStorage of <group> at <host>).
 
     If <auth-dialog> is null, the client will not have a way to obtain
     an access token, and SHOULD send all requests without Authorization
@@ -458,7 +461,6 @@ Table of Contents
     client_id parameter in favor of relying on the redirect_uri
     parameter for client identification.
 
-
 11. Storage-first bearer token issuance
 
     The provider MAY also present a dashboard to the user, where they
@@ -481,9 +483,10 @@ Table of Contents
 
     Regardless of whether 'access_token' and 'scope' are specified, it
     SHOULD add a 'remotestorage' field to the URL fragment, with a
-    value of the form <user> '@' <host>. When the application detects
-    this parameter, it SHOULD resolve the WebFinger record for <user> at
-    <host> and extract the <storage_root> and <storage_api> information.
+    value of the form <account> '@' <host>. When the application detects
+    this parameter, it SHOULD resolve the WebFinger record for <account>
+    at <host> and extract the <storage_root> and <storage_api>
+    information.
 
     If no access_token was given, then the application SHOULD also
     extract the <auth_endpoint> information from WebFinger, and continue
@@ -492,10 +495,10 @@ Table of Contents
     Note that whereas a remoteStorage server SHOULD offer support for
     the application-first flow with WebFinger and OAuth, it MAY choose
     not to support the storage-first flow, provided that users will
-    easily remember their <user> '@' <host> WebFinger address at that
+    easily remember their <account> '@' <host> WebFinger address at that
     provider. Applications SHOULD, however, support both flows, which
     means checking the URL for a 'remotestorage' parameter, but giving
-    the user a way to specify their WebFinger address if there is none.
+    the user a way to specify the WebFinger address if there is none.
 
     If a server provides an application manifest dashboard, then it
     SHOULD merge the list of applications there with the list of
@@ -560,7 +563,7 @@ motestorage-04",
     end-point, it will typically redirect the user to this URL, in
     order to obtain a bearer token. Say the application is hosted on
     https://drinks-unhosted.5apps.com/ and wants read-write access to
-    the user's "myfavoritedrinks" scope:
+    the account's "myfavoritedrinks" scope:
 
         GET /oauth/michiel?redirect_uri=https%3A%2F%2Fdrinks-unhosted.5\
 apps.com%2F&scope=myfavoritedrinks%3Arw&client_id=https%3A%2F%2Fdrinks-\
@@ -576,7 +579,6 @@ unhosted.5apps.com&response_type=token HTTP/1.1
           <head>
             <title>Allow access?</title>
         ...
-
 
 12.3. OAuth dialog form submission
 
@@ -623,7 +625,6 @@ XjzzzHNjkd1CJxoQubA1o%3D&token_type=bearer&state=
         Access-Control-Allow-Methods: GET, PUT, DELETE
         Access-Control-Allow-Headers: Authorization, Content-Length, Co\
 ntent-Type, Origin, X-Requested-With, If-Match, If-None-Match
-
 
 12.5. Initial PUT
 
@@ -804,11 +805,11 @@ charset=UTF-8","Content-Length":106}}}
     application launch dashboard.
 
     A malicious party could link to an application, but specifying a
-    remoteStorage user address that it controls, thus tricking the user
-    into using a trusted application to send sensitive data to the wrong
-    remoteStorage server. To mitigate this, applications SHOULD clearly
-    display to which remoteStorage server they are sending the user's
-    data.
+    remoteStorage account address that it controls, thus tricking the
+    user into using a trusted application to send sensitive data to the
+    wrong remoteStorage server. To mitigate this, applications SHOULD
+    clearly display to which remoteStorage server they are sending the
+    user's data.
 
     Applications could request scopes that the user did not intend to
     give access to. The user SHOULD always be prompted to carefully
@@ -876,7 +877,6 @@ charset=UTF-8","Content-Length":106}}}
     [OAUTH]
         "Section 4.2: Implicit Grant", in: Hardt, D. (ed), "The OAuth
         2.0 Authorization Framework", RFC6749, October 2012.
-
 
 17.2. Informative References
 

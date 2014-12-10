@@ -9,6 +9,7 @@
 * Servers may now offer any extension features they want.
 * Several mistakes in the text and wire examples were fixed.
 * Several confusing formulations in the text were improved.
+* Mention "group accounts", to which multiple human users have access.
 
 # draft-dejong-remotestorage-03.txt
 
