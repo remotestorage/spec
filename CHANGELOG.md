@@ -1,11 +1,14 @@
 # draft-dejong-remotestorage-05.txt
 
 ## Breaking for servers as well as clients:
+* The link relation in the WebFinger announcement was updated from 'remotestorage'
+  to 'http://tools.ietf.org/id/draft-dejong-remotestorage' (issue #78).
 * The version string in the WebFinger announcement was updated from -04 to -05.
 
 ## Breaking for clients:
 * Servers MAY respond with a 4xx response code if the Content-Type is not an
-official MIME Media Type, is too long, is missing altogether, etc. (issues #84 and #86).
+  official MIME Media Type, is too long, is missing altogether, etc. (issues #84
+  and #86).
 
 # draft-dejong-remotestorage-04.txt
 

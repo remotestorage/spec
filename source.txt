@@ -408,7 +408,7 @@ Table of Contents
 
     {
       "href": <storage_root>,
-      "rel": "remotestorage",
+      "rel": "http://tools.ietf.org/id/draft-dejong-remotestorage",
       "properties": {
         "http://remotestorage.io/spec/version": <storage_api>,
         "http://tools.ietf.org/html/rfc6749#section-4.2": <auth-dialog>,
@@ -550,7 +550,8 @@ g.com HTTP/1.1
              "rel": "avatar"
            }, {
              "href": "https://3pp.io:4439/storage/michiel",
-             "rel": "remotestorage",
+             "rel": "http://tools.ietf.org/id/draft-dejong-remotestorag\
+e",
              "properties": {
                "http://remotestorage.io/spec/version": "draft-dejong-re\
 motestorage-05",
@@ -843,8 +844,7 @@ charset=UTF-8","Content-Length":106}}}
 
 15. IANA Considerations
 
-    This document registers the 'remotestorage' link relation, as well
-    as the following WebFinger properties:
+    This document registers the following WebFinger properties:
       * "http://remotestorage.io/spec/version"
       * "http://tools.ietf.org/html/rfc6749#section-4.2"
       * "http://tools.ietf.org/html/rfc6750#section-2.3"
