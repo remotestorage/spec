@@ -279,6 +279,12 @@ Internet-Draft              remoteStorage                  December 2014
          and further ancestor folders, using a strong validator [HTTP,
          section 7.2].
 
+    If no Content-Type header was received as part of a PUT request,
+    the server SHOULD EITHER default to 'application/octet-stream' or
+    some other value, OR leave it at the existing value (if any), OR
+    refuse to process the request, using a descriptive error message in
+    the response body and a http status code from the 4xx range.
+
     The response MUST contain a strong ETag header, with the document's
     new version (for instance a hash of its contents) as its value.
 
@@ -292,17 +298,17 @@ Internet-Draft              remoteStorage                  December 2014
          of further ancestor folders.
 
     A successful OPTIONS request SHOULD be responded to as described in
-    the CORS section below.
-
-    A successful HEAD request SHOULD be responded to like to the
-    equivalent GET request, but omitting the response body.
-
-
 
 
 de Jong                                                         [Page 6]
 
 Internet-Draft              remoteStorage                  December 2014
+
+
+    the CORS section below.
+
+    A successful HEAD request SHOULD be responded to like to the
+    equivalent GET request, but omitting the response body.
 
 
 5. Response codes
@@ -342,18 +348,18 @@ Internet-Draft              remoteStorage                  December 2014
 
     All successful requests MUST return an 'ETag' header [HTTP] with, in
     the case of GET, the current version, in the case of PUT, the new
-    version, and in case of DELETE, the version that was deleted. All
-    successful GET requests MUST return an 'Expires: 0' header. PUT and
-    DELETE requests MAY have an 'If-Match' request header [COND], and
-    MUST fail with a 412 response code if that doesn't match the
-    document's current version.
-
 
 
 de Jong                                                         [Page 7]
 
 Internet-Draft              remoteStorage                  December 2014
 
+
+    version, and in case of DELETE, the version that was deleted. All
+    successful GET requests MUST return an 'Expires: 0' header. PUT and
+    DELETE requests MAY have an 'If-Match' request header [COND], and
+    MUST fail with a 412 response code if that doesn't match the
+    document's current version.
 
     GET requests MAY have a comma-separated list of revisions in an
     'If-None-Match' header [COND], and SHOULD be responded to with a 304
@@ -392,12 +398,6 @@ Internet-Draft              remoteStorage                  December 2014
          guess and SHOULD NOT be reused from one client to another. It
          can however be reused in subsequent interactions with the same
          client, as long as that client is still trusted. Example:
-         * 'ofb24f1ac3973e70j6vts19qr9v2eei'
-       * <storage_api>, always 'draft-dejong-remotestorage-05' for this
-         alternative version of the specification.
-
-    The client can make its requests using https with CORS and bearer
-    tokens, to the URL that is the concatenation of <storage_root> with
 
 
 de Jong                                                         [Page 8]
@@ -405,6 +405,12 @@ de Jong                                                         [Page 8]
 Internet-Draft              remoteStorage                  December 2014
 
 
+         * 'ofb24f1ac3973e70j6vts19qr9v2eei'
+       * <storage_api>, always 'draft-dejong-remotestorage-05' for this
+         alternative version of the specification.
+
+    The client can make its requests using https with CORS and bearer
+    tokens, to the URL that is the concatenation of <storage_root> with
     '/' plus one or more <folder> '/' strings indicating a path in the
     folder tree, followed by zero or one <document> strings, indicating
     a document. For example, if <storage_root> is
@@ -442,12 +448,6 @@ Internet-Draft              remoteStorage                  December 2014
     SHOULD present a bearer token with sufficient access scope, using a
     header of the following form (no double quotes here):
 
-       Authorization: Bearer <access_token>
-
-    In addition, providing the access token via a HTTP query parameter
-    for GET requests MAY be supported by the server, although its use
-    is not recommended, due to its security deficiencies; see [BEARER,
-    section 2.3].
 
 
 de Jong                                                         [Page 9]
@@ -455,6 +455,12 @@ de Jong                                                         [Page 9]
 Internet-Draft              remoteStorage                  December 2014
 
 
+       Authorization: Bearer <access_token>
+
+    In addition, providing the access token via a HTTP query parameter
+    for GET requests MAY be supported by the server, although its use
+    is not recommended, due to its security deficiencies; see [BEARER,
+    section 2.3].
 
 10. Application-first bearer token issuance
 
@@ -492,12 +498,6 @@ Internet-Draft              remoteStorage                  December 2014
     impose any such access barriers for resources that would normally
     not require an access token.
 
-    The '...' ellipses indicate that more properties may be present.
-    Non-breaking examples that have been proposed so far, include a
-    "http://tools.ietf.org/html/rfc6750#section-2.3" property, set to
-    the string value "true" if the server supports passing the bearer
-    token in the URI query parameter as per section 2.3 of [BEARER],
-    instead of in the request header.
 
 
 de Jong                                                        [Page 10]
@@ -505,6 +505,12 @@ de Jong                                                        [Page 10]
 Internet-Draft              remoteStorage                  December 2014
 
 
+    The '...' ellipses indicate that more properties may be present.
+    Non-breaking examples that have been proposed so far, include a
+    "http://tools.ietf.org/html/rfc6750#section-2.3" property, set to
+    the string value "true" if the server supports passing the bearer
+    token in the URI query parameter as per section 2.3 of [BEARER],
+    instead of in the request header.
 
     Another example is "http://tools.ietf.org/html/rfc7233" with a
     string value of "GET" if Content-Range headers are supported for
@@ -542,12 +548,6 @@ Internet-Draft              remoteStorage                  December 2014
     As an equivalent to OAuth's 'scope' parameter, a 'datastores-access'
     field SHOULD be present in the root of such an application manifest
     document, with entries <module> -> '{"access": "readonly"}' for
-    <level> 'r' or '{"access": "readwrite"}' for <level> 'rw', as
-    prescribed in [DATASTORE].
-
-    When the user gestures they want to use a certain application whose
-    manifest is present on the dashboard, the dashboard SHOULD redirect
-    to the application or open it in a new window. To mimic coming back
 
 
 de Jong                                                        [Page 11]
@@ -555,6 +555,12 @@ de Jong                                                        [Page 11]
 Internet-Draft              remoteStorage                  December 2014
 
 
+    <level> 'r' or '{"access": "readwrite"}' for <level> 'rw', as
+    prescribed in [DATASTORE].
+
+    When the user gestures they want to use a certain application whose
+    manifest is present on the dashboard, the dashboard SHOULD redirect
+    to the application or open it in a new window. To mimic coming back
     from the OAuth dialog, it MAY add 'access_token' and 'scope'
     fields to the URL fragment.
 
@@ -592,12 +598,6 @@ Internet-Draft              remoteStorage                  December 2014
 12. Example wire transcripts
 
     The following examples are not normative ("\" indicates a line was
-    wrapped).
-
-12.1. WebFinger
-
-    In application-first, an in-browser application might issue the
-    following request, using XMLHttpRequest and CORS:
 
 
 de Jong                                                        [Page 12]
@@ -605,6 +605,12 @@ de Jong                                                        [Page 12]
 Internet-Draft              remoteStorage                  December 2014
 
 
+    wrapped).
+
+12.1. WebFinger
+
+    In application-first, an in-browser application might issue the
+    following request, using XMLHttpRequest and CORS:
 
          GET /.well-known/webfinger?resource=acct:michiel@michielbdejon\
 g.com HTTP/1.1
@@ -643,18 +649,18 @@ motestorage-05",
 
 12.2. OAuth dialog form
 
-    Once the in-browser application has discovered the server's OAuth
-    end-point, it will typically redirect the user to this URL, in
-    order to obtain a bearer token. Say the application is hosted on
-    https://drinks-unhosted.5apps.com/ and wants read-write access to
-    the account's "myfavoritedrinks" scope:
-
 
 de Jong                                                        [Page 13]
 
 Internet-Draft              remoteStorage                  December 2014
 
 
+
+    Once the in-browser application has discovered the server's OAuth
+    end-point, it will typically redirect the user to this URL, in
+    order to obtain a bearer token. Say the application is hosted on
+    https://drinks-unhosted.5apps.com/ and wants read-write access to
+    the account's "myfavoritedrinks" scope:
 
         GET /oauth/michiel?redirect_uri=https%3A%2F%2Fdrinks-unhosted.5\
 apps.com%2F&scope=myfavoritedrinks%3Arw&client_id=https%3A%2F%2Fdrinks-\
@@ -692,18 +698,18 @@ low
     To which the server could respond with a 302 redirect, back to the
     origin of the requesting application:
 
-        HTTP/1.1 302 Found
-        Location:https://drinks-unhosted.5apps.com/#access_token=j2YnGt\
-XjzzzHNjkd1CJxoQubA1o%3D&token_type=bearer&state=
-
-12.4. OPTIONS preflight
-
 
 
 de Jong                                                        [Page 14]
 
 Internet-Draft              remoteStorage                  December 2014
 
+
+        HTTP/1.1 302 Found
+        Location:https://drinks-unhosted.5apps.com/#access_token=j2YnGt\
+XjzzzHNjkd1CJxoQubA1o%3D&token_type=bearer&state=
+
+12.4. OPTIONS preflight
 
     When an in-browser application makes a cross-origin request which
     may affect the server-state, the browser will make a preflight
@@ -743,18 +749,18 @@ ntent-Type, Origin, X-Requested-With, If-Match, If-None-Match
     And the server may respond with either a 201 Created or a 200 OK
     status:
 
-        HTTP/1.1 201 Created
-        Access-Control-Allow-Origin: https://drinks-unhosted.5apps.com
-        ETag: "1382694045000"
-
-12.6. Subsequent PUT
-
 
 de Jong                                                        [Page 15]
 
 Internet-Draft              remoteStorage                  December 2014
 
 
+
+        HTTP/1.1 201 Created
+        Access-Control-Allow-Origin: https://drinks-unhosted.5apps.com
+        ETag: "1382694045000"
+
+12.6. Subsequent PUT
 
     A subsequent PUT may contain an 'If-Match' header referring to the
     ETag previously returned, like this:
@@ -792,12 +798,6 @@ e.io/spec/modules/myfavoritedrinks/drink"}
     And the server may respond with a 304 Not Modified status:
 
         HTTP/1.1 304 Not Modified
-        Access-Control-Allow-Origin: https://drinks-unhosted.5apps.com
-        ETag: "1382694048000"
-
-    Or a 200 OK status, plus a response body:
-
-        HTTP/1.1 200 OK
 
 
 de Jong                                                        [Page 16]
@@ -805,6 +805,12 @@ de Jong                                                        [Page 16]
 Internet-Draft              remoteStorage                  December 2014
 
 
+        Access-Control-Allow-Origin: https://drinks-unhosted.5apps.com
+        ETag: "1382694048000"
+
+    Or a 200 OK status, plus a response body:
+
+        HTTP/1.1 200 OK
         Access-Control-Allow-Origin: https://drinks-unhosted.5apps.com
         Content-Type: application/json; charset=UTF-8
         Content-Length: 106
@@ -842,18 +848,18 @@ charset=UTF-8","Content-Length":106}}}
 
         DELETE /storage/michiel/myfavoritedrinks/test HTTP/1.1
         Host: 3pp.io:4439
-        Origin: https://drinks-unhosted.5apps.com
-        Authorization: Bearer j2YnGtXjzzzHNjkd1CJxoQubA1o=
-        Content-Type: application/json; charset=UTF-8
-        Referer: https://drinks-unhosted.5apps.com/?
-        If-Match: "1382694045000"
-
 
 
 de Jong                                                        [Page 17]
 
 Internet-Draft              remoteStorage                  December 2014
 
+
+        Origin: https://drinks-unhosted.5apps.com
+        Authorization: Bearer j2YnGtXjzzzHNjkd1CJxoQubA1o=
+        Content-Type: application/json; charset=UTF-8
+        Referer: https://drinks-unhosted.5apps.com/?
+        If-Match: "1382694045000"
 
     And the server may respond with a 412 Conflict or a 200 OK status:
 
@@ -893,17 +899,17 @@ Internet-Draft              remoteStorage                  December 2014
     make a GET request to that child folder or document, to obtain
     its latest version.
 
-    Because an update in a document will result in a version change of
-    its containing folder, and that change will propagate all the way
-    to the root folder, it is not necessary to poll each document for
-    changes individually.
-
-
 
 de Jong                                                        [Page 18]
 
 Internet-Draft              remoteStorage                  December 2014
 
+
+
+    Because an update in a document will result in a version change of
+    its containing folder, and that change will propagate all the way
+    to the root folder, it is not necessary to poll each document for
+    changes individually.
 
     As an example, the root folder may contain 10 directories,
     each of which contain 10 directories, which each contain 10
@@ -942,12 +948,6 @@ Internet-Draft              remoteStorage                  December 2014
     review which scopes an application is requesting.
 
     An application may upload malicious html pages and then trick the
-    user into visiting them, or upload malicious client-side scripts,
-    that take advantage of being hosted on the user's domain name. The
-    origin on which the remoteStorage server has its interface SHOULD
-    therefore NOT be used for anything else, and the user SHOULD be
-    warned not to visit any web pages on that origin. In particular, the
-    OAuth dialog and launch dashboard or token revokation interface
 
 
 de Jong                                                        [Page 19]
@@ -955,6 +955,12 @@ de Jong                                                        [Page 19]
 Internet-Draft              remoteStorage                  December 2014
 
 
+    user into visiting them, or upload malicious client-side scripts,
+    that take advantage of being hosted on the user's domain name. The
+    origin on which the remoteStorage server has its interface SHOULD
+    therefore NOT be used for anything else, and the user SHOULD be
+    warned not to visit any web pages on that origin. In particular, the
+    OAuth dialog and launch dashboard or token revokation interface
     SHOULD be on a different origin than the remoteStorage interface.
 
     Where the use of bearer tokens is impractical, a user may choose to
@@ -993,18 +999,18 @@ Internet-Draft              remoteStorage                  December 2014
 
 17. References
 
-17.1. Normative References
-
-    [WORDS]
-        Bradner, S., "Key words for use in RFCs to Indicate Requirement
-        Levels", BCP 14, RFC 2119, March 1997.
-
 
 de Jong                                                        [Page 20]
 
 Internet-Draft              remoteStorage                  December 2014
 
 
+
+17.1. Normative References
+
+    [WORDS]
+        Bradner, S., "Key words for use in RFCs to Indicate Requirement
+        Levels", BCP 14, RFC 2119, March 1997.
 
     [IRI]
         Duerst, M., "Internationalized Resource Identifiers (IRIs)",
@@ -1042,12 +1048,6 @@ Internet-Draft              remoteStorage                  December 2014
 
     [JSON-LD]
         M. Sporny, G. Kellogg, M. Lanthaler, "JSON-LD 1.0", W3C
-        Proposed Recommendation,
-        http://www.w3.org/TR/2014/REC-json-ld-20140116/, January 2014.
-
-    [CORS]
-        van Kesteren, Anne (ed), "Cross-Origin Resource Sharing --
-        W3C Candidate Recommendation 29 January 2013",
 
 
 de Jong                                                        [Page 21]
@@ -1055,6 +1055,12 @@ de Jong                                                        [Page 21]
 Internet-Draft              remoteStorage                  December 2014
 
 
+        Proposed Recommendation,
+        http://www.w3.org/TR/2014/REC-json-ld-20140116/, January 2014.
+
+    [CORS]
+        van Kesteren, Anne (ed), "Cross-Origin Resource Sharing --
+        W3C Candidate Recommendation 29 January 2013",
         http://www.w3.org/TR/cors/, January 2013.
 
     [MANIFEST]
@@ -1092,6 +1098,13 @@ Internet-Draft              remoteStorage                  December 2014
     Email: michiel@michielbdejong.com
 
 
+
+
+de Jong                                                        [Page 22]
+
+Internet-Draft              remoteStorage                  December 2014
+
+
     F. Kooman
     (independent)
 
@@ -1100,4 +1113,41 @@ Internet-Draft              remoteStorage                  December 2014
 
 
 
-de Jong                                                        [Page 22]
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+de Jong                                                        [Page 23]

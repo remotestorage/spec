@@ -1,7 +1,10 @@
 # draft-dejong-remotestorage-05.txt
 
 ## Breaking for servers as well as clients:
-* The version string in the WebFinger announcement was updated from -04 to -05
+* The version string in the WebFinger announcement was updated from -04 to -05.
+
+## Non-breaking:
+* Describe what should happen when a PUT request no Content-Type is received (issue #86).
 
 # draft-dejong-remotestorage-04.txt
 

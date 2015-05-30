@@ -244,6 +244,12 @@ Table of Contents
          and further ancestor folders, using a strong validator [HTTP,
          section 7.2].
 
+    If no Content-Type header was received as part of a PUT request,
+    the server SHOULD EITHER default to 'application/octet-stream' or
+    some other value, OR leave it at the existing value (if any), OR
+    refuse to process the request, using a descriptive error message in
+    the response body and a http status code from the 4xx range.
+
     The response MUST contain a strong ETag header, with the document's
     new version (for instance a hash of its contents) as its value.
 
