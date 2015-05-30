@@ -3,8 +3,9 @@
 ## Breaking for servers as well as clients:
 * The version string in the WebFinger announcement was updated from -04 to -05.
 
-## Non-breaking:
-* Describe what should happen when a PUT request no Content-Type is received (issue #86).
+## Breaking for clients:
+* Servers MAY respond with a 4xx response code if the Content-Type is not an
+official MIME Media Type, is too long, is missing altogether, etc. (issues #84 and #86).
 
 # draft-dejong-remotestorage-04.txt
 

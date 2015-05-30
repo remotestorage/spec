@@ -245,10 +245,10 @@ Table of Contents
          section 7.2].
 
     If no Content-Type header was received as part of a PUT request,
-    the server SHOULD EITHER default to 'application/octet-stream' or
-    some other value, OR leave it at the existing value (if any), OR
-    refuse to process the request, using a descriptive error message in
-    the response body and a http status code from the 4xx range.
+    or the value of the Content-Type header does not appear in the IANA
+    registry of MIME Media Types [MEDIA-TYPES], the server MAY refuse to
+    process the request, and instead respond with a descriptive error
+    message in the body, and a http response code from the 4xx range.
 
     The response MUST contain a strong ETag header, with the document's
     new version (for instance a hash of its contents) as its value.
@@ -892,6 +892,10 @@ charset=UTF-8","Content-Length":106}}}
     [HTTP]
         Fielding et al., "Hypertext Transfer Protocol (HTTP/1.1):
         Semantics and Content", RFC7231, June 2014.
+
+    [MEDIA-TYPES]
+        N. Freed, N. Borenstein, "Multipurpose Internet Mail Extensions
+        (MIME) Part Two: Media Types", RFC2046, November 1996.
 
     [COND]
         Fielding et al., "Hypertext Transfer Protocol (HTTP/1.1):
