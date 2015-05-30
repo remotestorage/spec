@@ -825,9 +825,9 @@ charset=UTF-8","Content-Length":106}}}
     SHOULD be on a different origin than the remoteStorage interface.
 
     Where the use of bearer tokens is impractical, a user may choose to
-    store documents on hard-to-guess URLs whose path after
-    <storage_root> starts with '/public/', while sharing this URL only
-    with the intended audience. That way, only parties who know the
+    store documents on hard-to-guess URLs [CAPABILITIES] whose path
+    after <storage_root> starts with '/public/', while sharing this URL
+    only with the intended audience. That way, only parties who know the
     document's hard-to-guess URL, can access it. The server SHOULD
     therefore make an effort to detect and stop brute-force attacks that
     attempt to guess the location of such documents.
@@ -931,6 +931,11 @@ charset=UTF-8","Content-Length":106}}}
         "Using remoteStorage for web authoring", reSite wiki, retrieved
         September 2014. https://github.com/michielbdejong/resite/wiki
         /Using-remoteStorage-for-web-authoring
+
+    [CAPABILITIES]
+        J. Tennison (ed.), "Good Practices for Capability URLs",
+        http://www.w3.org/TR/capability-urls/, February 2014.
+
 
 18. Authors' addresses
 
