@@ -279,9 +279,9 @@ Internet-Draft              remoteStorage                  December 2014
          and further ancestor folders, using a strong validator [HTTP,
          section 7.2].
 
-    If no Content-Type header was received as part of a PUT request,
-    or the value of the Content-Type header does not appear in the IANA
-    registry of MIME Media Types [MEDIA-TYPES], the server MAY refuse to
+    If not exactly one Content-Type header was received as part of a
+    PUT request, the Content-Type header value contains non-ASCII
+    characters, or it is unreasonably long, the server MAY refuse to
     process the request, and instead respond with a descriptive error
     message in the body, and a http response code from the 4xx range.
 
@@ -1033,10 +1033,6 @@ Internet-Draft              remoteStorage                  December 2014
         Fielding et al., "Hypertext Transfer Protocol (HTTP/1.1):
         Semantics and Content", RFC7231, June 2014.
 
-    [MEDIA-TYPES]
-        N. Freed, N. Borenstein, "Multipurpose Internet Mail Extensions
-        (MIME) Part Two: Media Types", RFC2046, November 1996.
-
     [COND]
         Fielding et al., "Hypertext Transfer Protocol (HTTP/1.1):
         Conditional Requests", RFC7232, June 2014.
@@ -1048,6 +1044,10 @@ Internet-Draft              remoteStorage                  December 2014
     [SPDY]
         Mark Belshe, Roberto Peon, "SPDY Protocol - Draft 3.1", http://
         www.chromium.org/spdy/spdy-protocol/spdy-protocol-draft3-1,
+        September 2013.
+
+    [JSON-LD]
+        M. Sporny, G. Kellogg, M. Lanthaler, "JSON-LD 1.0", W3C
 
 
 de Jong                                                        [Page 21]
@@ -1055,10 +1055,6 @@ de Jong                                                        [Page 21]
 Internet-Draft              remoteStorage                  December 2014
 
 
-        September 2013.
-
-    [JSON-LD]
-        M. Sporny, G. Kellogg, M. Lanthaler, "JSON-LD 1.0", W3C
         Proposed Recommendation,
         http://www.w3.org/TR/2014/REC-json-ld-20140116/, January 2014.
 
@@ -1099,20 +1095,24 @@ Internet-Draft              remoteStorage                  December 2014
     Michiel B. de Jong
     IndieHosters
 
+    Email: michiel@michielbdejong.com
+
+
+
 
 de Jong                                                        [Page 22]
 
 Internet-Draft              remoteStorage                  December 2014
 
 
-
-    Email: michiel@michielbdejong.com
-
-
     F. Kooman
     (independent)
 
     Email: fkooman@tuxed.net
+
+
+
+
 
 
 

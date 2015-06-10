@@ -7,7 +7,7 @@
 
 ## Breaking for clients:
 * Servers MAY respond with a 4xx response code if the Content-Type is not an
-  official MIME Media Type, is too long, is missing altogether, etc. (issues #84
+  ASCII string, is too long, is missing altogether, etc. (issues #84
   and #86).
 
 # draft-dejong-remotestorage-04.txt
