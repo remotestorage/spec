@@ -204,7 +204,8 @@ Table of Contents
 
     All folders are treated as existing, and therefore GET requests to
     untouched folders SHOULD be responded to with a folder description
-    with no items (the items field set to '{}'). However, an empty
+    with no items (the items field set to '{}'). ETags of empty folders
+    MUST NOT change value for successive GET requests. However, an empty
     folder MUST NOT be listed as an item in its parent folder.
 
     Also, since folders exist automatically, PUT and DELETE requests
