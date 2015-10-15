@@ -560,9 +560,9 @@ e",
 motestorage-05",
                "http://tools.ietf.org/html/rfc6749#section-4.2": "https\
 ://3pp.io:4439/oauth/michiel",
-               "http://tools.ietf.org/html/rfc6750#section-2.3": false,
-               "http://tools.ietf.org/html/rfc7233": false,
-               "http://remotestorage.io/spec/web-authoring": false
+               "http://tools.ietf.org/html/rfc6750#section-2.3": null,
+               "http://tools.ietf.org/html/rfc7233": null,
+               "http://remotestorage.io/spec/web-authoring": null
              }
            }]
          }
