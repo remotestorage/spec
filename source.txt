@@ -331,9 +331,7 @@ Table of Contents
 7. CORS headers
 
     All responses MUST carry CORS headers [CORS]. The server MUST also
-    reply to OPTIONS requests as per CORS. For GET requests, a wildcard
-    origin MAY be returned, but for PUT and DELETE requests, the
-    response MUST echo back the Origin header sent by the client.
+    reply to OPTIONS requests as per CORS.
 
 8. Session description
 
