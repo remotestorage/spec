@@ -388,12 +388,12 @@ Table of Contents
     <module> ':r') any GET or HEAD requests to paths that start with
                    '/' <module> '/' or '/public/' <module> '/',
 
-    As a special exceptions, GET requests to a document (but not a
-    folder) whose path starts with '/public/' are always allowed. They,
-    as well as OPTIONS requests, can be made without a bearer token.
-    Unless [KERBEROS] is used (see section 10 below), all other requests
-    SHOULD present a bearer token with sufficient access scope, using a
-    header of the following form (no double quotes here):
+    As a special exceptions, GET and HEAD requests to a document (but
+    not a folder) whose path starts with '/public/' are always allowed.
+    They, as well as OPTIONS requests, can be made without a bearer
+    token.  Unless [KERBEROS] is used (see section 10 below), all other
+    requests SHOULD present a bearer token with sufficient access scope,
+    using a header of the following form (no double quotes here):
 
        Authorization: Bearer <access_token>
 
