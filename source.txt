@@ -405,9 +405,8 @@ Table of Contents
 10. Application-first bearer token issuance
 
     To make a remoteStorage server available as 'the remoteStorage of
-    <account> at <host>', exactly one link of the following format
-    SHOULD be added to the WebFinger record [WEBFINGER] of <account> at
-    <host>:
+    the person identified by <uri>', exactly one link of the following
+    format SHOULD be added to the WebFinger record [WEBFINGER] for <uri>:
 
     {
       "href": <storage_root>,
@@ -418,6 +417,11 @@ Table of Contents
         ... : ... ,
       }
     }
+
+    A common way of identifying persons as <user> at <host> is through a
+    uri of the format "acct:<user>@<host>". Persons who use a personal
+    domain name, not shared with any other users, can be identified by
+    a uri of the format "http://<host>/" (see [WEBFINGER, section 4.1]).
 
     Here <storage_root> and <storage_api> are as per "Session
     description" above, and <auth-dialog> SHOULD be either null or a
