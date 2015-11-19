@@ -169,6 +169,10 @@ Table of Contents
     for a folder. Item names MAY contain all characters except '/' and
     the null character, and MUST NOT have zero length.
 
+    It is recommended that client implementations avoid using any
+    reserved characters in file- and folder names, even if those are
+    percent-encoded.
+
     A document description is a map containing one string-valued 'ETag'
     field, one string-valued 'Content-Type' and one integer-valued
     'Content-Length' field. They represent the document's current
