@@ -166,8 +166,10 @@ Table of Contents
 
         URI_ENCODE( <parent_folder> <folder_name> '/' )
 
-    for a folder. Item names MAY contain all characters except '/' and
-    the null character, and MUST NOT have zero length.
+    for a folder. Item names MUST only consist of unreserved characters,
+    as defined in Section 2.3 of [URI]. Item names MUST NOT be equal to
+    either '.' or '..', as those have special semantics in URIs (Section
+    5.2.4 of [URI]).
 
     A document description is a map containing one string-valued 'ETag'
     field, one string-valued 'Content-Type' and one integer-valued
@@ -880,6 +882,10 @@ charset=UTF-8","Content-Length":106}}}
     [IRI]
         Duerst, M., "Internationalized Resource Identifiers (IRIs)",
         RFC 3987, January 2005.
+
+    [URI]
+        Fielding, R., "Uniform Resource Identifier (URI): Generic Syntax",
+        RFC 3986, January 2005.
 
     [WEBFINGER]
         Jones, P., Salguerio, G., Jones, M, and Smarr, J.,
