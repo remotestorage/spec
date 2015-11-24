@@ -469,8 +469,10 @@ Table of Contents
     The server MAY expire bearer tokens, and MAY require the user to
     register applications as OAuth clients before first use; if no
     client registration is required, then the server MAY ignore the
-    client_id parameter in favor of relying on the redirect_uri
-    parameter for client identification.
+    value of the client_id parameter, it MUST still be sent and valid, 
+    in favor of relying on the origin of the redirect_uri parameter 
+    for unique client identification. See section 4 of [ORIGIN] for 
+    computing the Origin.
 
 11. Storage-first bearer token issuance
 
@@ -888,6 +890,10 @@ charset=UTF-8","Content-Length":106}}}
     [OAUTH]
         "Section 4.2: Implicit Grant", in: Hardt, D. (ed), "The OAuth
         2.0 Authorization Framework", RFC6749, October 2012.
+
+    [ORIGIN]
+        "Section 4: Origin of a URI", in: Barth, A., "The Web Origin 
+        Concept", RFC6454, December 2011.
 
 17.2. Informative References
 
