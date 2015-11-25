@@ -299,7 +299,7 @@ Internet-Draft              remoteStorage                  November 2015
        * silent deletion of the parent folder if it is left empty by
          this, and so on for further ancestor folders,
        * the version of its parent folder being updated, as well as that
-         of further ancestor folders.
+         of further ancestor folders if they are not deleted.
 
 
 de Jong                                                         [Page 6]
