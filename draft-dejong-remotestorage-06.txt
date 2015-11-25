@@ -409,7 +409,7 @@ Internet-Draft              remoteStorage                  November 2015
          can however be reused in subsequent interactions with the same
          client, as long as that client is still trusted. Example:
          * 'ofb24f1ac3973e70j6vts19qr9v2eei'
-       * <storage_api>, always 'draft-dejong-remotestorage-05' for this
+       * <storage_api>, always 'draft-dejong-remotestorage-06' for this
          alternative version of the specification.
 
     The client can make its requests using https with CORS and bearer
@@ -656,7 +656,7 @@ Internet-Draft              remoteStorage                  November 2015
 
 
                "http://remotestorage.io/spec/version": "draft-dejong-re\
-motestorage-05",
+motestorage-06",
                "http://tools.ietf.org/html/rfc6749#section-4.2": "https\
 ://3pp.io:4439/oauth/michiel",
                "http://tools.ietf.org/html/rfc6750#section-2.3": null,
