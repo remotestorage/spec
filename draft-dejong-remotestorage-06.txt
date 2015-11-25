@@ -308,11 +308,11 @@ Internet-Draft              remoteStorage                  November 2015
 
 
 
-    A successful OPTIONS request SHOULD be responded to as described in
-    the CORS section below.
-
     A successful HEAD request SHOULD be responded to like to the
     equivalent GET request, but omitting the response body.
+
+    A successful OPTIONS request SHOULD be responded to as described in
+    the CORS section below.
 
 5. Response codes
 
