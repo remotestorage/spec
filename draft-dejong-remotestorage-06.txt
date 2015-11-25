@@ -748,7 +748,7 @@ low
     To which the server can for instance respond:
 
         HTTP/1.1 200 OK
-        Access-Control-Allow-Origin: https://drinks-unhosted.5apps.com
+        Access-Control-Allow-Origin: *
         Access-Control-Allow-Methods: GET, HEAD, PUT, DELETE, OPTIONS 
         Access-Control-Allow-Headers: Authorization, Content-Length, Co\
 ntent-Type, Origin, X-Requested-With, If-Match, If-None-Match
@@ -780,7 +780,7 @@ Internet-Draft              remoteStorage                  November 2015
     status:
 
         HTTP/1.1 201 Created
-        Access-Control-Allow-Origin: https://drinks-unhosted.5apps.com
+        Access-Control-Allow-Origin: *
         ETag: "1382694045000"
 
 12.6. Subsequent PUT
@@ -803,7 +803,7 @@ e.io/spec/modules/myfavoritedrinks/drink"}
     And the server may respond with a 412 Conflict or a 200 OK status:
 
         HTTP/1.1 200 OK
-        Access-Control-Allow-Origin: https://drinks-unhosted.5apps.com
+        Access-Control-Allow-Origin: *
         ETag: "1382694048000"
 
 12.7. GET
@@ -828,13 +828,13 @@ Internet-Draft              remoteStorage                  November 2015
     And the server may respond with a 304 Not Modified status:
 
         HTTP/1.1 304 Not Modified
-        Access-Control-Allow-Origin: https://drinks-unhosted.5apps.com
+        Access-Control-Allow-Origin: *
         ETag: "1382694048000"
 
     Or a 200 OK status, plus a response body:
 
         HTTP/1.1 200 OK
-        Access-Control-Allow-Origin: https://drinks-unhosted.5apps.com
+        Access-Control-Allow-Origin: *
         Content-Type: application/json; charset=UTF-8
         Content-Length: 106
         ETag: "1382694048000"
@@ -848,7 +848,7 @@ ge.io/spec/modules/myfavoritedrinks/drink"}
     body:
 
         HTTP/1.1 200 OK
-        Access-Control-Allow-Origin: https://drinks-unhosted.5apps.com
+        Access-Control-Allow-Origin: *
         Content-Type: application/ld+json
         Content-Length: 171
         ETag: "1382694048000"
@@ -870,7 +870,7 @@ Internet-Draft              remoteStorage                  November 2015
     Not Found status, and no ETag header:
 
         HTTP/1.1 404 Not Found
-        Access-Control-Allow-Origin: https://drinks-unhosted.5apps.com
+        Access-Control-Allow-Origin: *
 
 12.8. DELETE
 
@@ -887,7 +887,7 @@ Internet-Draft              remoteStorage                  November 2015
     And the server may respond with a 412 Conflict or a 200 OK status:
 
         HTTP/1.1 412 Conflict
-        Access-Control-Allow-Origin: https://drinks-unhosted.5apps.com
+        Access-Control-Allow-Origin: *
         ETag: "1382694048000"
 
 13. Distributed versioning
