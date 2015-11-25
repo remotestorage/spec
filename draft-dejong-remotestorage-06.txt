@@ -186,10 +186,12 @@ Internet-Draft              remoteStorage                  November 2015
 
         URI_ENCODE( <parent_folder> <folder_name> '/' )
 
-    for a folder. Item names MAY contain all characters except '/' and
-    the null character, and MUST NOT have zero length. Item names MUST
-    NOT be equal to '.' or to '..', as those have special semantics
-    in URIs (Section 5.2.4 of [URI]).
+    for a folder. 
+
+    Item names MAY contain all characters, before URI_ENCODE, except '/' 
+    and the null character '\0' and MUST NOT have zero length. Item 
+    names MUST NOT be equal to '.' or to '..', as those have a special 
+    semantic in URIs (Section 5.2.4 of [URI]).
 
     A document description is a map containing one string-valued 'ETag'
     field, one string-valued 'Content-Type' and one integer-valued
