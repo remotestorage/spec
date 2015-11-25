@@ -749,7 +749,7 @@ low
 
         HTTP/1.1 200 OK
         Access-Control-Allow-Origin: https://drinks-unhosted.5apps.com
-        Access-Control-Allow-Methods: GET, PUT, DELETE
+        Access-Control-Allow-Methods: GET, HEAD, PUT, DELETE, OPTIONS 
         Access-Control-Allow-Headers: Authorization, Content-Length, Co\
 ntent-Type, Origin, X-Requested-With, If-Match, If-None-Match
 
