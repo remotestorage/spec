@@ -965,7 +965,7 @@ Internet-Draft              remoteStorage                  November 2015
     give access to. The user SHOULD always be prompted to carefully
     review which scopes an application is requesting.
 
-    An application may upload malicious html pages and then trick the
+    An application may upload malicious HTML pages and then trick the
     user into visiting them, or upload malicious client-side scripts,
     that take advantage of being hosted on the user's domain name. The
     origin on which the remoteStorage server has its interface SHOULD
