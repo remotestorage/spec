@@ -448,11 +448,15 @@ Internet-Draft              remoteStorage                  November 2015
 
     '*:r') any GET or HEAD request,
 
-    <module> ':rw') any requests to paths that start with
-                    '/' <module> '/' or '/public/' <module> '/',
+    <module> ':rw') any requests to paths relative to <storage_root> 
+    that start with
 
-    <module> ':r') any GET or HEAD requests to paths that start with
-                   '/' <module> '/' or '/public/' <module> '/',
+        '/' <module> '/' or '/public/' <module> '/',
+
+    <module> ':r') any GET or HEAD requests to paths relative to 
+    <storage_root> that start with
+
+       '/' <module> '/' or '/public/' <module> '/',
 
     As a special exceptions, GET and HEAD requests to a document (but
     not a folder) whose path starts with '/public/' are always allowed.
@@ -473,7 +477,7 @@ Internet-Draft              remoteStorage                  November 2015
     In addition, providing the access token via a HTTP query parameter
     for GET requests MAY be supported by the server, although its use
     is not recommended, due to its security deficiencies; see [BEARER,
-    section 2.3].
+    section 2.3]. Support MAY be announced (see section 10 below).
 
 10. Application-first bearer token issuance
 
