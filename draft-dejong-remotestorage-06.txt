@@ -317,10 +317,10 @@ Internet-Draft              remoteStorage                  November 2015
 5. Response codes
 
     Response codes SHOULD be given as defined by [HTTP, section 6] and
-    [BEARER, section 3.1]. The following is a non-normative checklist
-    of status codes that are likely to occur in practice:
+    [BEARER, section 3.1]. The following is a non-normative list of
+    status codes that are likely to occur in practice:
 
-       * 500 if an internal server error occurs,
+       * 500 if an internal server error occurred,
        * 429 if the client makes too frequent requests or is suspected
              of malicious activity,
        * 414 if the request URI is too long,
@@ -332,20 +332,20 @@ Internet-Draft              remoteStorage                  November 2015
        * 403 for all requests that have insufficient scope, e.g.
              accessing a <module> for which no scope was obtained, or
              accessing data outside the user's <storage_root>,
-       * 404 for all DELETE and GET requests to documents that do not
-             exist on the storage,
-       * 304 for a conditional GET request whose pre-condition
+       * 404 for all DELETE, GET and HEAD requests to documents that do 
+             not exist on the storage,
+       * 304 for a conditional GET request whose precondition
              fails (see "Versioning" below),
        * 409 for a PUT request where any folder name in the path
              clashes with an existing document's name at the same
              level, or where the document name coincides with an
              existing folder's name at the same level.
-       * 412 for a conditional PUT or DELETE request whose pre-condition
+       * 412 for a conditional PUT or DELETE request whose precondition
              fails (see "Versioning" below),
        * 507 in case the account is over its storage quota,
-       * 4xx for all malformed requests (e.g. foreign characters in the
-             path), as well as for all PUT and DELETE requests to
-             folders,
+       * 4xx for all malformed requests, e.g. reserved characters in the
+             path [URI, section 2.2], as well as for all PUT and DELETE 
+             requests to folders,
        * 2xx for all successful requests.
 
     Clients SHOULD also handle the case where a response takes too long
