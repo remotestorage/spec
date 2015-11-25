@@ -266,8 +266,9 @@ Internet-Draft              remoteStorage                  November 2015
     would not be identical byte-for-byte.
 
     Servers MAY support Content-Range headers [RANGE] on GET requests,
-    but whether or not they do SHOULD be announced through the <ranges>
-    variable mentioned below in section 10.
+    but whether or not they do SHOULD be announced both through the 
+    <ranges> variable mentioned below in section 10 and the HTTP 
+    'Accept-Ranges' response header.
 
     A successful PUT request to a document MUST result in:
 
