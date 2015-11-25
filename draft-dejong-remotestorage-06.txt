@@ -717,8 +717,8 @@ low
     origin of the requesting application:
 
         HTTP/1.1 302 Found
-        Location:https://drinks-unhosted.5apps.com/#access_token=j2YnGt\
-XjzzzHNjkd1CJxoQubA1o%3D&token_type=bearer
+        Location: https://drinks-unhosted.5apps.com/#access_token=j2YnG\
+            tXjzzzHNjkd1CJxoQubA1o%3D&token_type=bearer
 
 12.4. OPTIONS preflight
 
