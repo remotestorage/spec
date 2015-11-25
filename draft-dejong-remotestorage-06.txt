@@ -262,8 +262,8 @@ Internet-Draft              remoteStorage                  November 2015
     Note that the use of strong ETags prohibits changing the response
     body based on request headers; in particular, the server will not be
     able to serve the same document uncompressed to some clients and
-    gzipped when requested by the client, since the two bodies would not
-    be identical byte-for-byte.
+    compressed to other clients when requested, since the two bodies 
+    would not be identical byte-for-byte.
 
     Servers MAY support Content-Range headers [RANGE] on GET requests,
     but whether or not they do SHOULD be announced through the <ranges>
