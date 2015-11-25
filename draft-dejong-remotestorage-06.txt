@@ -169,8 +169,8 @@ Internet-Draft              remoteStorage                  November 2015
 
     A request is considered successful if the HTTP response code is in
     the 2xx range (e.g. 200 OK, 201 Created), and unsuccessful if an
-    error occurred or a condition was not met (response code e.g. 404
-    Not Found, 304 Not Modified).
+    error occurred or a condition was not met, e.g. response code 404
+    Not Found, 304 Not Modified.
 
     The root folder of the storage tree is represented by the following
     URL:
