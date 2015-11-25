@@ -109,10 +109,9 @@ Internet-Draft              remoteStorage                  November 2015
           and contents
 
        *  PUT a document: store a new version, its content type, and
-          contents, conditional on the current version
+          contents
 
-       *  DELETE a document: remove it from the storage, conditional on
-          the current version
+       *  DELETE a document: remove it from the storage
 
        *  HEAD a folder or document: like GET, but omitting the response
           body
