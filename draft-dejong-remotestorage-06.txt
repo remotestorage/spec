@@ -178,8 +178,8 @@ Internet-Draft              remoteStorage                  November 2015
 
         URI_ENCODE( <storage_root> '/' )
 
-    Subsequently, if <parent_folder> is the URL of a folder, then the
-    URL of an item contained in it is:
+    Subsequently, let <parent_folder> be the URL of a folder, i.e. ends 
+    with a '/', then the URL of an item contained in it is:
 
         URI_ENCODE( <parent_folder> <document_name> )
 
