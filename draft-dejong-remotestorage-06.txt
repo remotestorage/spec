@@ -9,13 +9,12 @@ Expires: 3 June 2016                                  30 November 2015
 
 Abstract
 
-    This draft describes a protocol by which client-side applications,
-    running inside a web browser, can communicate with a data storage
-    server that is hosted on a different domain name. This way, the
-    provider of a web application need not also play the role of data
-    storage provider. The protocol supports storing, retrieving, and
-    removing individual documents, as well as listing the contents of an
-    individual folder, and access control is based on bearer tokens.
+    This draft describes a protocol how applications can discover 
+    and communicate with a data storage server. The provider of an 
+    application need not also play the role of data storage provider. 
+    The protocol supports storing, listing, retrieving and removing 
+    individual documents. Access control is used to restrict access
+    to the storage.
 
 Status of this Memo
 
@@ -89,9 +88,9 @@ Table of Contents
 
 1.  Introduction
 
-    Many services for data storage are available over the internet. This
+    Many services for data storage are available over the Internet. This
     specification describes a vendor-independent interface for such
-    services. It is based on https, CORS and bearer tokens. The
+    services. It is based on TLS, CORS and bearer tokens. The
     metaphor for addressing data on the storage is that of folders
     containing documents and subfolders. The actions the interface
     exposes are:
@@ -109,15 +108,14 @@ Internet-Draft              remoteStorage                  November 2015
           and contents
 
        *  PUT a document: store a new version, its content type, and
-          contents, conditional on the current version
+          contents
 
-       *  DELETE a document: remove it from the storage, conditional on
-          the current version
+       *  DELETE a document: remove it from the storage
 
        *  HEAD a folder or document: like GET, but omitting the response
           body
 
-    The exact details of these four actions are described in this
+    The semantics of these four HTTP verbs are described in this
     specification.
 
 2. Terminology
@@ -163,14 +161,13 @@ Internet-Draft              remoteStorage                  November 2015
 
 4. Requests
 
-    Client-to-server requests SHOULD be made over https [HTTPS], and
-    servers MUST comply with HTTP/1.1 [HTTP]. Specifically, they
-    MUST support chunked transfer coding on PUT requests. Servers MAY
+    Client-to-server requests SHOULD be made over HTTPS [HTTPS], and
+    servers MUST comply with HTTP/1.1 [HTTP]. Servers MAY
     also offer an optional switch to HTTP/2 [HTTP/2].
 
     A request is considered successful if the HTTP response code is in
     the 2xx range (e.g. 200 OK, 201 Created), and unsuccessful if an
-    error occurred or a condition was not met (response code e.g. 404
+    error occurred or a condition was not met, e.g. response code 404
     Not Found, 304 Not Modified).
 
     The root folder of the storage tree is represented by the following
@@ -178,8 +175,8 @@ Internet-Draft              remoteStorage                  November 2015
 
         URI_ENCODE( <storage_root> '/' )
 
-    Subsequently, if <parent_folder> is the URL of a folder, then the
-    URL of an item contained in it is:
+    Subsequently, if <parent_folder> is the URL of a folder, i.e. ends
+    with '/', then the URL of an item contained in it is:
 
         URI_ENCODE( <parent_folder> <document_name> )
 
@@ -187,10 +184,12 @@ Internet-Draft              remoteStorage                  November 2015
 
         URI_ENCODE( <parent_folder> <folder_name> '/' )
 
-    for a folder. Item names MAY contain all characters except '/' and
-    the null character, and MUST NOT have zero length. Item names MUST
-    NOT be equal to '.' or to '..', as those have special semantics
-    in URIs (Section 5.2.4 of [URI]).
+    for a folder. 
+
+    Item names MAY contain all characters, before URI_ENCODE, except '/' 
+    and the null character '\0' and MUST NOT have zero length. Item 
+    names MUST NOT be equal to '.' or to '..', as those have a special 
+    semantic in URIs (Section 5.2.4 of [URI]).
 
     A document description is a map containing one string-valued 'ETag'
     field, one string-valued 'Content-Type' and one integer-valued
@@ -261,12 +260,13 @@ Internet-Draft              remoteStorage                  November 2015
     Note that the use of strong ETags prohibits changing the response
     body based on request headers; in particular, the server will not be
     able to serve the same document uncompressed to some clients and
-    gzipped when requested by the client, since the two bodies would not
-    be identical byte-for-byte.
+    compressed when requested by the client, since the two bodies would 
+    not be identical byte-for-byte.
 
     Servers MAY support Content-Range headers [RANGE] on GET requests,
-    but whether or not they do SHOULD be announced through the <ranges>
-    variable mentioned below in section 10.
+    but whether or not they do SHOULD be announced both through the 
+    <ranges> variable mentioned below in section 10 and the HTTP 
+    'Accept-Ranges' response header.
 
     A successful PUT request to a document MUST result in:
 
@@ -284,8 +284,8 @@ Internet-Draft              remoteStorage                  November 2015
     If not exactly one Content-Type header was received as part of a
     PUT request, the Content-Type header value contains non-ASCII
     characters, or it is unreasonably long, the server MAY refuse to
-    process the request, and instead respond with a descriptive error
-    message in the body, and a http response code from the 4xx range.
+    process the request, and instead respond with a HTTP response code 
+    from the 4xx range.
 
     The response MUST contain a strong ETag header, with the document's
     new version (for instance a hash of its contents) as its value.
@@ -297,7 +297,7 @@ Internet-Draft              remoteStorage                  November 2015
        * silent deletion of the parent folder if it is left empty by
          this, and so on for further ancestor folders,
        * the version of its parent folder being updated, as well as that
-         of further ancestor folders.
+         of further ancestor folders if they are not deleted
 
 
 de Jong                                                         [Page 6]
@@ -306,19 +306,20 @@ Internet-Draft              remoteStorage                  November 2015
 
 
 
+    A successful HEAD request SHOULD be responded to like the
+    equivalent GET request, but omitting the response body.
+
     A successful OPTIONS request SHOULD be responded to as described in
     the CORS section below.
 
-    A successful HEAD request SHOULD be responded to like to the
-    equivalent GET request, but omitting the response body.
 
 5. Response codes
 
     Response codes SHOULD be given as defined by [HTTP, section 6] and
-    [BEARER, section 3.1]. The following is a non-normative checklist
-    of status codes that are likely to occur in practice:
+    [BEARER, section 3.1]. The following is a non-normative list of 
+    status codes that are likely to occur in practice:
 
-       * 500 if an internal server error occurs,
+       * 500 if an internal server error occurred,
        * 429 if the client makes too frequent requests or is suspected
              of malicious activity,
        * 414 if the request URI is too long,
@@ -330,19 +331,19 @@ Internet-Draft              remoteStorage                  November 2015
        * 403 for all requests that have insufficient scope, e.g.
              accessing a <module> for which no scope was obtained, or
              accessing data outside the user's <storage_root>,
-       * 404 for all DELETE and GET requests to documents that do not
-             exist on the storage,
-       * 304 for a conditional GET request whose pre-condition
+       * 404 for all DELETE, GET and HEAD requests to documents that do 
+             not exist on the storage,
+       * 304 for a conditional GET request whose precondition
              fails (see "Versioning" below),
        * 409 for a PUT request where any folder name in the path
              clashes with an existing document's name at the same
              level, or where the document name coincides with an
              existing folder's name at the same level.
-       * 412 for a conditional PUT or DELETE request whose pre-condition
+       * 412 for a conditional PUT or DELETE request whose precondition
              fails (see "Versioning" below),
        * 507 in case the account is over its storage quota,
-       * 4xx for all malformed requests (e.g. foreign characters in the
-             path), as well as for all PUT and DELETE requests to
+       * 4xx for all malformed requests (e.g. unsupported characters in 
+             the path), as well as for all PUT and DELETE requests to
              folders,
        * 2xx for all successful requests.
 
@@ -358,13 +359,13 @@ Internet-Draft              remoteStorage                  November 2015
 
 6. Versioning
 
-    All successful requests MUST return an 'ETag' header [HTTP] with, in
-    the case of GET, the current version, in the case of PUT, the new
-    version, and in case of DELETE, the version that was deleted. All
-    successful GET requests MUST return an 'Expires: 0' header. PUT and
-    DELETE requests MAY have an 'If-Match' request header [COND], and
-    MUST fail with a 412 response code if that doesn't match the
-    document's current version.
+    All successful GET, HEAD, PUT and DELETE requests MUST return an 
+    'ETag' header [HTTP] with, in the case of GET and HEAD the current 
+    version, in the case of PUT, the new version, and in case of DELETE,
+    the version that was deleted. All successful GET requests MUST return 
+    an 'Cache-Control: no-cache' header. PUT and DELETE requests MAY have 
+    an 'If-Match' request header [COND], and MUST fail with a 412 response 
+    code if that doesn't match the document's current version.
 
     GET requests MAY have a comma-separated list of revisions in an
     'If-None-Match' header [COND], and SHOULD be responded to with a 304
@@ -374,15 +375,15 @@ Internet-Draft              remoteStorage                  November 2015
     already exists.
 
     In all 'ETag', 'If-Match' and 'If-None-Match' headers, revision
-    strings should appear inside double quotes (").
+    strings except '*' should appear inside double quotes (").
 
     A provider MAY offer version rollback functionality to its users,
-    but this specification does not define the user interface for that.
+    but this specification does not define the interface for that.
 
 7. CORS headers
 
     All responses MUST carry CORS headers [CORS]. The server MUST also
-    reply to OPTIONS requests as per CORS.
+    reply to preflight OPTIONS requests as per CORS.
 
 8. Session description
 
@@ -408,11 +409,11 @@ Internet-Draft              remoteStorage                  November 2015
          guess and SHOULD NOT be reused from one client to another. It
          can however be reused in subsequent interactions with the same
          client, as long as that client is still trusted. Example:
-         * 'ofb24f1ac3973e70j6vts19qr9v2eei'
-       * <storage_api>, always 'draft-dejong-remotestorage-05' for this
+         'ofb24f1ac3973e70j6vts19qr9v2eei'
+       * <storage_api>, always 'draft-dejong-remotestorage-06' for this
          alternative version of the specification.
 
-    The client can make its requests using https with CORS and bearer
+    The client can make its requests using HTTPS with CORS and bearer
     tokens, to the URL that is the concatenation of <storage_root> with
     '/' plus one or more <folder> '/' strings indicating a path in the
     folder tree, followed by zero or one <document> strings, indicating
@@ -438,11 +439,15 @@ Internet-Draft              remoteStorage                  November 2015
 
     '*:r') any GET or HEAD request,
 
-    <module> ':rw') any requests to paths that start with
-                    '/' <module> '/' or '/public/' <module> '/',
+    <module> ':rw') any requests to paths relative to <storage_root> 
+    that start with
+    
+        '/' <module> '/' or '/public/' <module> '/',
 
-    <module> ':r') any GET or HEAD requests to paths that start with
-                   '/' <module> '/' or '/public/' <module> '/',
+    <module> ':r') any GET or HEAD requests to paths relative to 
+    <storage_root> that start with
+    
+        '/' <module> '/' or '/public/' <module> '/',
 
     As a special exceptions, GET and HEAD requests to a document (but
     not a folder) whose path starts with '/public/' are always allowed.
@@ -463,7 +468,7 @@ Internet-Draft              remoteStorage                  November 2015
     In addition, providing the access token via a HTTP query parameter
     for GET requests MAY be supported by the server, although its use
     is not recommended, due to its security deficiencies; see [BEARER,
-    section 2.3].
+    section 2.3]. Support MAY be announced (see section 10 below).
 
 10. Application-first bearer token issuance
 
@@ -478,14 +483,14 @@ Internet-Draft              remoteStorage                  November 2015
       "properties": {
         "http://remotestorage.io/spec/version": <storage_api>,
         "http://tools.ietf.org/html/rfc6749#section-4.2": <auth-dialog>,
-        ... : ... ,
+        "...": "...",
       }
     }
 
     A common way of identifying persons as <user> at <host> is through a
-    uri of the format "acct:<user>@<host>". Persons who use a personal
+    URI of the format "acct:<user>@<host>". Persons who use a personal
     domain name, not shared with any other users, can be identified by
-    a uri of the format "http://<host>/" (see [WEBFINGER, section 4.1]).
+    a URI of the format "https://<host>/" (see [WEBFINGER, section 4.1]).
 
     Here <storage_root> and <storage_api> are as per "Session
     description" above, and <auth-dialog> SHOULD be either null or a
@@ -493,10 +498,10 @@ Internet-Draft              remoteStorage                  November 2015
     presented.
 
     If <auth-dialog> is a URL, the user can supply their credentials
-    for accessing the account (how, is out of scope), and allow or
-    reject a request by the connecting application to obtain a bearer
+    for accessing the account there (how, is out of scope), and allow 
+    or reject a request by the connecting application to obtain a bearer
     token for a certain list of access scopes. Note that an account
-    will often belong to just one human user, but may also belong to a
+    will often belong to just one human user, but MAY also belong to a
     group of multiple users (the remoteStorage of <group> at <host>).
 
 
@@ -522,8 +527,7 @@ Internet-Draft              remoteStorage                  November 2015
 
     Another example is "http://tools.ietf.org/html/rfc7233" with a
     string value of "GET" if Content-Range headers are supported for
-    GET requests as per [RANGE], "PUT" if they are supported for PUT
-    requests, and "GET,PUT" if supported for both.
+    GET requests as per [RANGE].
 
     Both these proposals are non-breaking extensions, since the client
     will have a way to work around it if these features are not present
@@ -631,9 +635,6 @@ g.com HTTP/1.1
 
          HTTP/1.1 200 OK
          Access-Control-Allow-Origin: *
-         Access-Control-Allow-Methods: GET
-         Access-Control-Allow-Headers: If-Match, If-None-Match
-         Access-Control-Expose-Headers: ETag, Content-Length
          Content-Type: application/jrd+json
 
          {
@@ -656,7 +657,7 @@ Internet-Draft              remoteStorage                  November 2015
 
 
                "http://remotestorage.io/spec/version": "draft-dejong-re\
-motestorage-05",
+motestorage-06",
                "http://tools.ietf.org/html/rfc6749#section-4.2": "https\
 ://3pp.io:4439/oauth/michiel",
                "http://tools.ietf.org/html/rfc6750#section-2.3": null,
@@ -696,7 +697,6 @@ unhosted.5apps.com&response_type=token HTTP/1.1
 
         POST /oauth HTTP/1.1
         Host: 3pp.io:4439
-        Origin: https://3pp.io:4439
         Content-Type: application/x-www-form-urlencoded
 
 
@@ -711,15 +711,15 @@ id=https%3A%2F%2Fdrinks-unhosted.5apps.com&response_type=token
 
         client_id=https%3A%2F%2Fdrinks-unhosted.5apps.com&redirect_uri=\
 https%3A%2F%2Fdrinks-unhosted.5apps.com%2F&response_type=token&scope=my\
-favoritedrinks%3Arw&state=&username=michiel&password=something&allow=Al\
+favoritedrinks%3Arw&username=michiel&password=something&allow=Al\
 low
 
     To which the server could respond with a 302 redirect, back to the
     origin of the requesting application:
 
         HTTP/1.1 302 Found
-        Location:https://drinks-unhosted.5apps.com/#access_token=j2YnGt\
-XjzzzHNjkd1CJxoQubA1o%3D&token_type=bearer&state=
+        Location: https://drinks-unhosted.5apps.com/#access_token=j2YnG\
+            tXjzzzHNjkd1CJxoQubA1o%3D&token_type=bearer
 
 12.4. OPTIONS preflight
 
@@ -738,7 +738,7 @@ XjzzzHNjkd1CJxoQubA1o%3D&token_type=bearer&state=
 
         HTTP/1.1 200 OK
         Access-Control-Allow-Origin: https://drinks-unhosted.5apps.com
-        Access-Control-Allow-Methods: GET, PUT, DELETE
+        Access-Control-Allow-Methods: GET, HEAD, PUT, DELETE, OPTIONS
         Access-Control-Allow-Headers: Authorization, Content-Length, Co\
 ntent-Type, Origin, X-Requested-With, If-Match, If-None-Match
 
@@ -759,7 +759,7 @@ Internet-Draft              remoteStorage                  November 2015
         Origin: https://drinks-unhosted.5apps.com
         Authorization: Bearer j2YnGtXjzzzHNjkd1CJxoQubA1o=
         Content-Type: application/json; charset=UTF-8
-        Referer: https://drinks-unhosted.5apps.com/?
+        Referer: https://drinks-unhosted.5apps.com/
         If-None-Match: *
 
         {"name":"test","@context":"http://remotestorage.io/spec/modules\
@@ -769,7 +769,7 @@ Internet-Draft              remoteStorage                  November 2015
     status:
 
         HTTP/1.1 201 Created
-        Access-Control-Allow-Origin: https://drinks-unhosted.5apps.com
+        Access-Control-Allow-Origin: *
         ETag: "1382694045000"
 
 12.6. Subsequent PUT
@@ -783,7 +783,7 @@ Internet-Draft              remoteStorage                  November 2015
         Origin: https://drinks-unhosted.5apps.com
         Authorization: Bearer j2YnGtXjzzzHNjkd1CJxoQubA1o=
         Content-Type: application/json; charset=UTF-8
-        Referer: https://drinks-unhosted.5apps.com/?
+        Referer: https://drinks-unhosted.5apps.com/
         If-Match: "1382694045000"
 
         {"name":"test", "updated":true, "@context":"http://remotestorag\
@@ -792,7 +792,7 @@ e.io/spec/modules/myfavoritedrinks/drink"}
     And the server may respond with a 412 Conflict or a 200 OK status:
 
         HTTP/1.1 200 OK
-        Access-Control-Allow-Origin: https://drinks-unhosted.5apps.com
+        Access-Control-Allow-Origin: *
         ETag: "1382694048000"
 
 12.7. GET
@@ -811,23 +811,23 @@ Internet-Draft              remoteStorage                  November 2015
         Host: 3pp.io:4439
         Origin: https://drinks-unhosted.5apps.com
         Authorization: Bearer j2YnGtXjzzzHNjkd1CJxoQubA1o=
-        Referer: https://drinks-unhosted.5apps.com/?
+        Referer: https://drinks-unhosted.5apps.com/
         If-None-Match: "1382694045000", "1382694048000"
 
     And the server may respond with a 304 Not Modified status:
 
         HTTP/1.1 304 Not Modified
-        Access-Control-Allow-Origin: https://drinks-unhosted.5apps.com
+        Access-Control-Allow-Origin: *
         ETag: "1382694048000"
 
     Or a 200 OK status, plus a response body:
 
         HTTP/1.1 200 OK
-        Access-Control-Allow-Origin: https://drinks-unhosted.5apps.com
+        Access-Control-Allow-Origin: *
         Content-Type: application/json; charset=UTF-8
         Content-Length: 106
         ETag: "1382694048000"
-        Expires: 0
+        Cache-Control: no-cache
 
         {"name":"test", "updated":true, "@context":"http://remotestora\
 ge.io/spec/modules/myfavoritedrinks/drink"}
@@ -837,11 +837,11 @@ ge.io/spec/modules/myfavoritedrinks/drink"}
     body:
 
         HTTP/1.1 200 OK
-        Access-Control-Allow-Origin: https://drinks-unhosted.5apps.com
+        Access-Control-Allow-Origin: *
         Content-Type: application/ld+json
         Content-Length: 171
         ETag: "1382694048000"
-        Expires: 0
+        Cache-Control: no-cache
 
         {"@context":"http://remotestorage.io/spec/folder-version","ite\
 ms":{"test":{"ETag":"1382694048000","Content-Type":"application/json; \
@@ -859,7 +859,7 @@ Internet-Draft              remoteStorage                  November 2015
     Not Found status, and no ETag header:
 
         HTTP/1.1 404 Not Found
-        Access-Control-Allow-Origin: https://drinks-unhosted.5apps.com
+        Access-Control-Allow-Origin: *
 
 12.8. DELETE
 
@@ -870,13 +870,13 @@ Internet-Draft              remoteStorage                  November 2015
         Origin: https://drinks-unhosted.5apps.com
         Authorization: Bearer j2YnGtXjzzzHNjkd1CJxoQubA1o=
         Content-Type: application/json; charset=UTF-8
-        Referer: https://drinks-unhosted.5apps.com/?
+        Referer: https://drinks-unhosted.5apps.com/
         If-Match: "1382694045000"
 
     And the server may respond with a 412 Conflict or a 200 OK status:
 
         HTTP/1.1 412 Conflict
-        Access-Control-Allow-Origin: https://drinks-unhosted.5apps.com
+        Access-Control-Allow-Origin: *
         ETag: "1382694048000"
 
 13. Distributed versioning
@@ -943,8 +943,8 @@ Internet-Draft              remoteStorage                  November 2015
 
 14. Security Considerations
 
-    To prevent man-in-the-middle attacks, the use of https instead of
-    http is important for both the interface itself and all end-points
+    To prevent man-in-the-middle attacks, the use of HTTPS instead of
+    HTTP is important for both the interface itself and all end-points
     involved in WebFinger, OAuth, and (if present) the storage-first
     application launch dashboard.
 
@@ -966,13 +966,13 @@ Internet-Draft              remoteStorage                  November 2015
     give access to. The user SHOULD always be prompted to carefully
     review which scopes an application is requesting.
 
-    An application may upload malicious html pages and then trick the
+    An application may upload malicious HTML pages and then trick the
     user into visiting them, or upload malicious client-side scripts,
     that take advantage of being hosted on the user's domain name. The
     origin on which the remoteStorage server has its interface SHOULD
     therefore NOT be used for anything else, and the user SHOULD be
     warned not to visit any web pages on that origin. In particular, the
-    OAuth dialog and launch dashboard or token revokation interface
+    OAuth dialog and launch dashboard or token revocation interface
     SHOULD be on a different origin than the remoteStorage interface.
 
     Where the use of bearer tokens is impractical, a user may choose to
