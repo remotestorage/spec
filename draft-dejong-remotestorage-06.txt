@@ -384,7 +384,7 @@ Internet-Draft              remoteStorage                  November 2015
 7. CORS headers
 
     All responses MUST carry CORS headers [CORS]. The server MUST also
-    reply to OPTIONS requests as per CORS.
+    reply to preflight OPTIONS requests as per CORS.
 
 8. Session description
 
