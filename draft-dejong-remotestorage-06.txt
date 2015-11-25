@@ -492,14 +492,14 @@ Internet-Draft              remoteStorage                  November 2015
       "properties": {
         "http://remotestorage.io/spec/version": <storage_api>,
         "http://tools.ietf.org/html/rfc6749#section-4.2": <auth-dialog>,
-        ... : ... ,
+        "...": "...",
       }
     }
 
     A common way of identifying persons as <user> at <host> is through a
-    uri of the format "acct:<user>@<host>". Persons who use a personal
+    URI of the format "acct:<user>@<host>". Persons who use a personal
     domain name, not shared with any other users, can be identified by
-    a uri of the format "http://<host>/" (see [WEBFINGER, section 4.1]).
+    a URI of the format "http://<host>/" (see [WEBFINGER, section 4.1]).
 
     Here <storage_root> and <storage_api> are as per "Session
     description" above, and <auth-dialog> SHOULD be either null or a
