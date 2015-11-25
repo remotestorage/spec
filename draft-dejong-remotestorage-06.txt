@@ -48,6 +48,13 @@ Copyright Notice
    include Simplified BSD License text as described in Section 4.e of
    the Trust Legal Provisions and are provided without warranty as
    described in the Simplified BSD License.
+
+
+de Jong                                                         [Page 1]
+
+Internet-Draft              remoteStorage                  November 2015
+
+
 Table of Contents
 
    1. Introduction...................................................2
@@ -91,6 +98,13 @@ Table of Contents
 
        *  GET a folder: retrieve the names and current versions of the
           documents and subfolders currently contained by the folder
+
+
+de Jong                                                         [Page 2]
+
+Internet-Draft              remoteStorage                  November 2015
+
+
        *  GET a document: retrieve its content type, current version,
           and contents
 
@@ -135,6 +149,13 @@ Table of Contents
 
     For a document, the server stores, and should be able to produce:
 
+
+de Jong                                                         [Page 3]
+
+Internet-Draft              remoteStorage                  November 2015
+
+
+
        * current version
        * content type
        * content length
@@ -178,6 +199,13 @@ Table of Contents
     that content length is measured in octets (bytes), not in
     characters.
 
+
+de Jong                                                         [Page 4]
+
+Internet-Draft              remoteStorage                  November 2015
+
+
+
     A folder description is a map containing a string-valued 'ETag'
     field, representing the folder's current version.
 
@@ -220,6 +248,13 @@ Table of Contents
     A successful GET request to a document SHOULD be responded to with
     the full document contents in the body, the document's content type
     in a 'Content-Type' header, its content length in octets (not in
+
+
+de Jong                                                         [Page 5]
+
+Internet-Draft              remoteStorage                  November 2015
+
+
     characters) in a 'Content-Length' header, and the document's current
     version as a strong ETag in an 'ETag' header.
 
@@ -264,6 +299,13 @@ Table of Contents
        * the version of its parent folder being updated, as well as that
          of further ancestor folders.
 
+
+de Jong                                                         [Page 6]
+
+Internet-Draft              remoteStorage                  November 2015
+
+
+
     A successful OPTIONS request SHOULD be responded to as described in
     the CORS section below.
 
@@ -307,6 +349,13 @@ Table of Contents
     Clients SHOULD also handle the case where a response takes too long
     to arrive, or where no response is received at all.
 
+
+de Jong                                                         [Page 7]
+
+Internet-Draft              remoteStorage                  November 2015
+
+
+
 6. Versioning
 
     All successful requests MUST return an 'ETag' header [HTTP] with, in
@@ -349,6 +398,13 @@ Table of Contents
          * 'https://example.com/path/to/storage' (host, port and
            path prefix; note there is no trailing slash)
        * <access_token> as per [OAUTH]. The token SHOULD be hard to
+
+
+de Jong                                                         [Page 8]
+
+Internet-Draft              remoteStorage                  November 2015
+
+
          guess and SHOULD NOT be reused from one client to another. It
          can however be reused in subsequent interactions with the same
          client, as long as that client is still trusted. Example:
@@ -392,6 +448,13 @@ Table of Contents
     not a folder) whose path starts with '/public/' are always allowed.
     They, as well as OPTIONS requests, can be made without a bearer
     token.  Unless [KERBEROS] is used (see section 10 below), all other
+
+
+de Jong                                                         [Page 9]
+
+Internet-Draft              remoteStorage                  November 2015
+
+
     requests SHOULD present a bearer token with sufficient access scope,
     using a header of the following form (no double quotes here):
 
@@ -436,6 +499,13 @@ Table of Contents
     will often belong to just one human user, but may also belong to a
     group of multiple users (the remoteStorage of <group> at <host>).
 
+
+de Jong                                                        [Page 10]
+
+Internet-Draft              remoteStorage                  November 2015
+
+
+
     If <auth-dialog> is null, the client will not have a way to obtain
     an access token, and SHOULD send all requests without Authorization
     header, and rely on Kerberos [KERBEROS] instead for requests that
@@ -476,6 +546,13 @@ Table of Contents
     in favor of relying on the origin of the redirect_uri parameter 
     for unique client identification. See section 4 of [ORIGIN] for 
     computing the Origin.
+
+
+
+
+de Jong                                                        [Page 11]
+
+Internet-Draft              remoteStorage                  November 2015
 
 
 11. Storage-first bearer token issuance
@@ -521,6 +598,13 @@ Table of Contents
     SHOULD merge the list of applications there with the list of
     issued access tokens as specified by OAuth into one list. Also,
     the interface for revoking an access token as specified by OAuth
+
+
+de Jong                                                        [Page 12]
+
+Internet-Draft              remoteStorage                  November 2015
+
+
     SHOULD coincide with removing an application from the dashboard.
 
     Servers MAY also provide a way to create access tokens directly from
@@ -564,6 +648,13 @@ g.com HTTP/1.1
              "rel": "http://tools.ietf.org/id/draft-dejong-remotestorag\
 e",
              "properties": {
+
+
+de Jong                                                        [Page 13]
+
+Internet-Draft              remoteStorage                  November 2015
+
+
                "http://remotestorage.io/spec/version": "draft-dejong-re\
 motestorage-05",
                "http://tools.ietf.org/html/rfc6749#section-4.2": "https\
@@ -607,6 +698,13 @@ unhosted.5apps.com&response_type=token HTTP/1.1
         Host: 3pp.io:4439
         Origin: https://3pp.io:4439
         Content-Type: application/x-www-form-urlencoded
+
+
+de Jong                                                        [Page 14]
+
+Internet-Draft              remoteStorage                  November 2015
+
+
         Referer: https://3pp.io:4439/oauth/michiel?redirect_uri=https%3\
 A%2F%2Fdrinks-unhosted.5apps.com%2F&scope=myfavoritedrinks%3Arw&client_\
 id=https%3A%2F%2Fdrinks-unhosted.5apps.com&response_type=token
@@ -650,6 +748,13 @@ ntent-Type, Origin, X-Requested-With, If-Match, If-None-Match
 
         PUT /storage/michiel/myfavoritedrinks/test HTTP/1.1
         Host: 3pp.io:4439
+
+
+de Jong                                                        [Page 15]
+
+Internet-Draft              remoteStorage                  November 2015
+
+
         Content-Length: 91
         Origin: https://drinks-unhosted.5apps.com
         Authorization: Bearer j2YnGtXjzzzHNjkd1CJxoQubA1o=
@@ -693,6 +798,13 @@ e.io/spec/modules/myfavoritedrinks/drink"}
 12.7. GET
 
     A GET request would also include the bearer token, and optionally
+
+
+de Jong                                                        [Page 16]
+
+Internet-Draft              remoteStorage                  November 2015
+
+
     an If-None-Match header:
 
         GET /storage/michiel/myfavoritedrinks/test HTTP/1.1
@@ -736,6 +848,13 @@ ms":{"test":{"ETag":"1382694048000","Content-Type":"application/json; \
 charset=UTF-8","Content-Length":106}}}
 
     If the GET URL would have been a non-existing document like
+
+
+de Jong                                                        [Page 17]
+
+Internet-Draft              remoteStorage                  November 2015
+
+
     "/storage/michiel/myfavoritedrinks/x", the response would have a 404
     Not Found status, and no ETag header:
 
@@ -779,6 +898,13 @@ charset=UTF-8","Content-Length":106}}}
 
     Client B is now aware of the conflict, and may consult the user,
     saying the update to version 3 failed. The user may then choose,
+
+
+de Jong                                                        [Page 18]
+
+Internet-Draft              remoteStorage                  November 2015
+
+
     through the user interface of client B, whether version 2 or
     version 3 should be kept, or maybe the document should be reverted
     on the server to version 1, or a merged version 4 is needed. Client
@@ -821,6 +947,13 @@ charset=UTF-8","Content-Length":106}}}
     http is important for both the interface itself and all end-points
     involved in WebFinger, OAuth, and (if present) the storage-first
     application launch dashboard.
+
+
+
+de Jong                                                        [Page 19]
+
+Internet-Draft              remoteStorage                  November 2015
+
 
     A malicious party could link to an application, but specifying a
     remoteStorage account address that it controls, thus tricking the
@@ -865,6 +998,13 @@ charset=UTF-8","Content-Length":106}}}
 16. Acknowledgements
 
     The authors would like to thank everybody who contributed to the
+
+
+de Jong                                                        [Page 20]
+
+Internet-Draft              remoteStorage                  November 2015
+
+
     development of this protocol, including Kenny Bentley, Javier Diaz,
     Daniel Groeber, Bjarni Runar, Jan Wildeboer, Charles Schultz, Peter
     Svensson, Valer Mischenko, Michiel Leenaars, Jan-Christoph
@@ -907,6 +1047,13 @@ charset=UTF-8","Content-Length":106}}}
 
     [HTTPS]
         Rescorla, E., "HTTP Over TLS", RFC2818, May 2000.
+
+
+
+de Jong                                                        [Page 21]
+
+Internet-Draft              remoteStorage                  November 2015
+
 
     [HTTP]
         Fielding et al., "Hypertext Transfer Protocol (HTTP/1.1):
@@ -951,6 +1098,13 @@ charset=UTF-8","Content-Length":106}}}
         M. Jones, D. Hardt, "The OAuth 2.0 Authorization Framework:
         Bearer Token Usage", RFC6750, October 2012.
 
+
+
+de Jong                                                        [Page 22]
+
+Internet-Draft              remoteStorage                  November 2015
+
+
     [AUTHORING]
         "Using remoteStorage for web authoring", reSite wiki, retrieved
         September 2014. https://github.com/michielbdejong/resite/wiki
@@ -972,3 +1126,28 @@ charset=UTF-8","Content-Length":106}}}
     (independent)
 
     Email: fkooman@tuxed.net
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+de Jong                                                        [Page 23]
