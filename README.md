@@ -10,7 +10,7 @@ authors.
 
 # Versioning
 
-Each six months, the output is checked using idnits, submitted to the IETF
+Each six months (max 185 days), the output is checked using idnits, submitted to the IETF
 as an Internet Draft, and published on the apps-discuss mailing list.
 
 Authors of remoteStorage-based apps are encouraged to use a recent version of

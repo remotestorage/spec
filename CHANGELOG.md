@@ -1,3 +1,22 @@
+# draft-dejong-remotestorage-06.txt
+
+## Breaking for servers as well as clients:
+* The difference between 401 and 403 http response status was clarified to match
+  the way they are defined by the Bearer token spec.
+* In the OAuth dance, client_id should now match the origin of the redirect_uri.
+
+## Breaking for servers:
+* Apart from GET requests, HEAD requests are also allowed without Authorization
+  request header on public folders.
+
+## Breaking for clients:
+* Apart from acct:me@mydomain.com ('me@mydomain.com' in UI), http://mydomain.com/
+  ('mydomain.com' in UI) is now allowed as a user address for WebFinger discovery.
+* Access-Control-Allow-Origin: * is now also allowed on requests with preflight.
+  This was changed in the CORS spec, and has already been implemented by all major
+  browsers.
+* Item names '.' and '..' are no longer allowed.
+
 # draft-dejong-remotestorage-05.txt
 
 ## Breaking for servers as well as clients:
