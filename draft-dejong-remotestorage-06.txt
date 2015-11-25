@@ -722,7 +722,7 @@ id=https%3A%2F%2Fdrinks-unhosted.5apps.com&response_type=token
 
         client_id=https%3A%2F%2Fdrinks-unhosted.5apps.com&redirect_uri=\
 https%3A%2F%2Fdrinks-unhosted.5apps.com%2F&response_type=token&scope=my\
-favoritedrinks%3Arw&state=&username=michiel&password=something&allow=Al\
+favoritedrinks%3Arw&username=michiel&password=something&allow=Al\
 low
 
     To which the server could respond with a 302 redirect, back to the
@@ -730,7 +730,7 @@ low
 
         HTTP/1.1 302 Found
         Location:https://drinks-unhosted.5apps.com/#access_token=j2YnGt\
-XjzzzHNjkd1CJxoQubA1o%3D&token_type=bearer&state=
+XjzzzHNjkd1CJxoQubA1o%3D&token_type=bearer
 
 12.4. OPTIONS preflight
 
