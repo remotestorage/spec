@@ -91,7 +91,7 @@ Table of Contents
 
     Many services for data storage are available over the Internet. This
     specification describes a vendor-independent interface for such
-    services. It is based on https, CORS and bearer tokens. The
+    services. It is based on HTTPS, CORS and bearer tokens. The
     metaphor for addressing data on the storage is that of folders
     containing documents and subfolders. The actions the interface
     exposes are:
@@ -163,7 +163,7 @@ Internet-Draft              remoteStorage                  November 2015
 
 4. Requests
 
-    Client-to-server requests SHOULD be made over https [HTTPS], and
+    Client-to-server requests SHOULD be made over HTTPS [HTTPS], and
     servers MUST comply with HTTP/1.1 [HTTP]. Specifically, they
     MUST support chunked transfer coding on PUT requests. Servers MAY
     also offer an optional switch to HTTP/2 [HTTP/2].
@@ -414,7 +414,7 @@ Internet-Draft              remoteStorage                  November 2015
        * <storage_api>, always 'draft-dejong-remotestorage-06' for this
          alternative version of the specification.
 
-    The client can make its requests using https with CORS and bearer
+    The client can make its requests using HTTPS with CORS and bearer
     tokens, to the URL that is the concatenation of <storage_root> with
     '/' plus one or more <folder> '/' strings indicating a path in the
     folder tree, followed by zero or one <document> strings, indicating
@@ -945,7 +945,7 @@ Internet-Draft              remoteStorage                  November 2015
 
 14. Security Considerations
 
-    To prevent man-in-the-middle attacks, the use of https instead of
+    To prevent man-in-the-middle attacks, the use of HTTPS instead of
     http is important for both the interface itself and all end-points
     involved in WebFinger, OAuth, and (if present) the storage-first
     application launch dashboard.
