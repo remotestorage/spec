@@ -360,12 +360,20 @@ Internet-Draft              remoteStorage                  November 2015
 
 6. Versioning
 
+    All successful GET, HEAD, PUT and DELETE requests MUST return an 
+    'ETag' header [HTTP] with, in the case of GET and HEAD the current 
+    version, in the case of PUT, the new version, and in case of DELETE,
+    the version that was deleted. All successful GET requests MUST return 
+    an 'Cache-Control: no-cache' header. PUT and DELETE requests MAY have 
+    an 'If-Match' request header [COND], and MUST fail with a 412 response 
+    code if that does not match the document's current version.
+
     All successful requests MUST return an 'ETag' header [HTTP] with, in
     the case of GET, the current version, in the case of PUT, the new
     version, and in case of DELETE, the version that was deleted. All
     successful GET requests MUST return an 'Expires: 0' header. PUT and
     DELETE requests MAY have an 'If-Match' request header [COND], and
-    MUST fail with a 412 response code if that doesn't match the
+    MUST fail with a 412 response code if that does not match the
     document's current version.
 
     GET requests MAY have a comma-separated list of revisions in an
@@ -376,10 +384,10 @@ Internet-Draft              remoteStorage                  November 2015
     already exists.
 
     In all 'ETag', 'If-Match' and 'If-None-Match' headers, revision
-    strings should appear inside double quotes (").
+    strings, except '*', should appear inside double quotes (").
 
     A provider MAY offer version rollback functionality to its users,
-    but this specification does not define the user interface for that.
+    but this specification does not define the interface for that.
 
 7. CORS headers
 
