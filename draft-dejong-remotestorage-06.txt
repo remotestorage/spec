@@ -410,7 +410,7 @@ Internet-Draft              remoteStorage                  November 2015
          guess and SHOULD NOT be reused from one client to another. It
          can however be reused in subsequent interactions with the same
          client, as long as that client is still trusted. Example:
-         * 'ofb24f1ac3973e70j6vts19qr9v2eei'
+         'ofb24f1ac3973e70j6vts19qr9v2eei'
        * <storage_api>, always 'draft-dejong-remotestorage-06' for this
          alternative version of the specification.
 
