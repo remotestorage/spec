@@ -339,9 +339,6 @@ Table of Contents
     in which case it MUST fail with a 412 response code if the document
     already exists.
 
-    In all 'ETag', 'If-Match' and 'If-None-Match' headers, revision
-    strings, except '*', should appear inside double quotes (").
-
     A provider MAY offer version rollback functionality to its users,
     but this specification does not define the interface for that.
 
