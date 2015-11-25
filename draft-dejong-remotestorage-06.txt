@@ -633,9 +633,6 @@ g.com HTTP/1.1
 
          HTTP/1.1 200 OK
          Access-Control-Allow-Origin: *
-         Access-Control-Allow-Methods: GET
-         Access-Control-Allow-Headers: If-Match, If-None-Match
-         Access-Control-Expose-Headers: ETag, Content-Length
          Content-Type: application/jrd+json
 
          {
