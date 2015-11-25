@@ -1,5 +1,5 @@
 INTERNET DRAFT                                      Michiel B. de Jong
-Document: draft-dejong-remotestorage-06                   IndieHosters
+Document: draft-dejong-remotestorage-06                        Mozilla
                                                              F. Kooman
 Intended Status: Proposed Standard                       (independent)
 Expires: 3 June 2016                                  30 November 2015
@@ -962,9 +962,9 @@ charset=UTF-8","Content-Length":106}}}
 18. Authors' addresses
 
     Michiel B. de Jong
-    IndieHosters
+    Mozilla
 
-    Email: michiel@michielbdejong.com
+    Email: michiel@mozilla.com
 
 
     F. Kooman
