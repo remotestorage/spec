@@ -89,7 +89,7 @@ Table of Contents
 
 1.  Introduction
 
-    Many services for data storage are available over the internet. This
+    Many services for data storage are available over the Internet. This
     specification describes a vendor-independent interface for such
     services. It is based on https, CORS and bearer tokens. The
     metaphor for addressing data on the storage is that of folders
