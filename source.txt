@@ -204,18 +204,19 @@ Table of Contents
          }
        }
 
-    All folders are treated as existing, and therefore GET requests to
-    untouched folders SHOULD be responded to with a folder description
-    with no items (the items field set to '{}'). However, an empty
-    folder MUST NOT be listed as an item in its parent folder.
+    GET requests to empty folders SHOULD be responded to with a folder
+    description with no items (the items field set to '{}'). However, an
+    empty folder MUST NOT be listed as an item in its parent folder.
 
-    Also, since folders exist automatically, PUT and DELETE requests
-    only need to be made to documents, and never to folders. A document
-    PUT will make all ancestor folders along its path become non-empty;
-    deleting the last document from a subtree will make that whole
-    subtree become empty. Folders will therefore show up in their parent
-    folder descriptions if and only if their subtree contains at least
-    one document.
+    PUT and DELETE requests only need to be made to documents, and never
+    to folders. A document PUT will make all ancestor folders along its
+    path become non-empty; deleting the last document from a subtree
+    will make that whole subtree become empty. Folders will therefore
+    show up in their parent folder descriptions if and only if their
+    subtree contains at least one document.
+
+    In contexts outside of this document, non-empty folders may be
+    called 'existent', while empty folders may be called 'non-existent'.
 
     A successful GET request to a document SHOULD be responded to with
     the full document contents in the body, the document's content type
@@ -295,7 +296,7 @@ Table of Contents
        * 409 for a PUT request where any folder name in the path
              clashes with an existing document's name at the same
              level, or where the document name coincides with an
-             existing folder's name at the same level.
+             non-empty folder's name at the same level.
        * 412 for a conditional PUT or DELETE request whose pre-condition
              fails (see "Versioning" below),
        * 507 in case the account is over its storage quota,
