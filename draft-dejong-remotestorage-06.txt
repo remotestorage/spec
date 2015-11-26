@@ -109,10 +109,9 @@ Internet-Draft              remoteStorage                  November 2015
           and contents
 
        *  PUT a document: store a new version, its content type, and
-          contents, conditional on the current version
+          contents
 
-       *  DELETE a document: remove it from the storage, conditional on
-          the current version
+       *  DELETE a document: remove it from the storage
 
        *  HEAD a folder or document: like GET, but omitting the response
           body
@@ -267,8 +266,9 @@ Internet-Draft              remoteStorage                  November 2015
     would not be identical byte-for-byte.
 
     Servers MAY support Content-Range headers [RANGE] on GET requests,
-    but whether or not they do SHOULD be announced through the <ranges>
-    variable mentioned below in section 10.
+    but whether or not they do SHOULD be announced both through the 
+    <ranges> variable mentioned below in section 10 and the HTTP 
+    'Accept-Ranges' response header.
 
     A successful PUT request to a document MUST result in:
 
@@ -286,8 +286,8 @@ Internet-Draft              remoteStorage                  November 2015
     If not exactly one Content-Type header was received as part of a
     PUT request, the Content-Type header value contains non-ASCII
     characters, or it is unreasonably long, the server MAY refuse to
-    process the request, and instead respond with a descriptive error
-    message in the body, and a http response code from the 4xx range.
+    process the request, and instead respond with a HTTP response code
+    from the 4xx range.
 
     The response MUST contain a strong ETag header, with the document's
     new version (for instance a hash of its contents) as its value.
@@ -299,7 +299,7 @@ Internet-Draft              remoteStorage                  November 2015
        * silent deletion of the parent folder if it is left empty by
          this, and so on for further ancestor folders,
        * the version of its parent folder being updated, as well as that
-         of further ancestor folders.
+         of further ancestor folders if they are not deleted.
 
 
 de Jong                                                         [Page 6]
@@ -360,13 +360,21 @@ Internet-Draft              remoteStorage                  November 2015
 
 6. Versioning
 
+    All successful GET, HEAD, PUT and DELETE requests MUST return an 
+    'ETag' header [HTTP] with, in the case of GET and HEAD the current 
+    version, in the case of PUT, the new version, and in case of DELETE,
+    the version that was deleted. All successful GET requests MUST return 
+    an 'Cache-Control: no-cache' header. PUT and DELETE requests MAY have 
+    an 'If-Match' request header [COND], and MUST fail with a 412 response 
+    code if that does not match the document's current version.
+
     All successful requests MUST return an 'ETag' header [HTTP] with, in
     the case of GET, the current version, in the case of PUT, the new
     version, and in case of DELETE, the version that was deleted. All
-    successful GET requests MUST return an 'Expires: 0' header. PUT and
-    DELETE requests MAY have an 'If-Match' request header [COND], and
-    MUST fail with a 412 response code if that doesn't match the
-    document's current version.
+    successful GET requests MUST return an 'Cache-Control: no-cache' 
+    header. PUT and DELETE requests MAY have an 'If-Match' request header 
+    [COND], and MUST fail with a 412 response code if that does not match 
+    the document's current version.
 
     GET requests MAY have a comma-separated list of revisions in an
     'If-None-Match' header [COND], and SHOULD be responded to with a 304
@@ -376,10 +384,10 @@ Internet-Draft              remoteStorage                  November 2015
     already exists.
 
     In all 'ETag', 'If-Match' and 'If-None-Match' headers, revision
-    strings should appear inside double quotes (").
+    strings, except '*', should appear inside double quotes (").
 
     A provider MAY offer version rollback functionality to its users,
-    but this specification does not define the user interface for that.
+    but this specification does not define the interface for that.
 
 7. CORS headers
 
@@ -440,11 +448,15 @@ Internet-Draft              remoteStorage                  November 2015
 
     '*:r') any GET or HEAD request,
 
-    <module> ':rw') any requests to paths that start with
-                    '/' <module> '/' or '/public/' <module> '/',
+    <module> ':rw') any requests to paths relative to <storage_root> 
+    that start with
 
-    <module> ':r') any GET or HEAD requests to paths that start with
-                   '/' <module> '/' or '/public/' <module> '/',
+        '/' <module> '/' or '/public/' <module> '/',
+
+    <module> ':r') any GET or HEAD requests to paths relative to 
+    <storage_root> that start with
+
+       '/' <module> '/' or '/public/' <module> '/',
 
     As a special exceptions, GET and HEAD requests to a document (but
     not a folder) whose path starts with '/public/' are always allowed.
@@ -465,7 +477,7 @@ Internet-Draft              remoteStorage                  November 2015
     In addition, providing the access token via a HTTP query parameter
     for GET requests MAY be supported by the server, although its use
     is not recommended, due to its security deficiencies; see [BEARER,
-    section 2.3].
+    section 2.3]. Support MAY be announced (see section 10 below).
 
 10. Application-first bearer token issuance
 
@@ -736,8 +748,8 @@ low
     To which the server can for instance respond:
 
         HTTP/1.1 200 OK
-        Access-Control-Allow-Origin: https://drinks-unhosted.5apps.com
-        Access-Control-Allow-Methods: GET, PUT, DELETE
+        Access-Control-Allow-Origin: *
+        Access-Control-Allow-Methods: GET, HEAD, PUT, DELETE, OPTIONS 
         Access-Control-Allow-Headers: Authorization, Content-Length, Co\
 ntent-Type, Origin, X-Requested-With, If-Match, If-None-Match
 
@@ -768,7 +780,7 @@ Internet-Draft              remoteStorage                  November 2015
     status:
 
         HTTP/1.1 201 Created
-        Access-Control-Allow-Origin: https://drinks-unhosted.5apps.com
+        Access-Control-Allow-Origin: *
         ETag: "1382694045000"
 
 12.6. Subsequent PUT
@@ -791,7 +803,7 @@ e.io/spec/modules/myfavoritedrinks/drink"}
     And the server may respond with a 412 Conflict or a 200 OK status:
 
         HTTP/1.1 200 OK
-        Access-Control-Allow-Origin: https://drinks-unhosted.5apps.com
+        Access-Control-Allow-Origin: *
         ETag: "1382694048000"
 
 12.7. GET
@@ -816,17 +828,17 @@ Internet-Draft              remoteStorage                  November 2015
     And the server may respond with a 304 Not Modified status:
 
         HTTP/1.1 304 Not Modified
-        Access-Control-Allow-Origin: https://drinks-unhosted.5apps.com
+        Access-Control-Allow-Origin: *
         ETag: "1382694048000"
 
     Or a 200 OK status, plus a response body:
 
         HTTP/1.1 200 OK
-        Access-Control-Allow-Origin: https://drinks-unhosted.5apps.com
+        Access-Control-Allow-Origin: *
         Content-Type: application/json; charset=UTF-8
         Content-Length: 106
         ETag: "1382694048000"
-        Expires: 0
+        Cache-Control: no-cache
 
         {"name":"test", "updated":true, "@context":"http://remotestora\
 ge.io/spec/modules/myfavoritedrinks/drink"}
@@ -836,11 +848,11 @@ ge.io/spec/modules/myfavoritedrinks/drink"}
     body:
 
         HTTP/1.1 200 OK
-        Access-Control-Allow-Origin: https://drinks-unhosted.5apps.com
+        Access-Control-Allow-Origin: *
         Content-Type: application/ld+json
         Content-Length: 171
         ETag: "1382694048000"
-        Expires: 0
+        Cache-Control: no-cache
 
         {"@context":"http://remotestorage.io/spec/folder-version","ite\
 ms":{"test":{"ETag":"1382694048000","Content-Type":"application/json; \
@@ -858,7 +870,7 @@ Internet-Draft              remoteStorage                  November 2015
     Not Found status, and no ETag header:
 
         HTTP/1.1 404 Not Found
-        Access-Control-Allow-Origin: https://drinks-unhosted.5apps.com
+        Access-Control-Allow-Origin: *
 
 12.8. DELETE
 
@@ -875,7 +887,7 @@ Internet-Draft              remoteStorage                  November 2015
     And the server may respond with a 412 Conflict or a 200 OK status:
 
         HTTP/1.1 412 Conflict
-        Access-Control-Allow-Origin: https://drinks-unhosted.5apps.com
+        Access-Control-Allow-Origin: *
         ETag: "1382694048000"
 
 13. Distributed versioning
