@@ -5,6 +5,7 @@
   the way they are defined by the Bearer token spec.
 * In the OAuth dance, client_id should now match the origin of the redirect_uri.
 * Content-Range headers are no longer allowed on PUT requests.
+* The Expires: 0 header was replaced by Cache-Control: no-cache.
 
 ## Breaking for servers:
 * Apart from GET requests, HEAD requests are also allowed without Authorization

@@ -365,10 +365,10 @@ Internet-Draft              remoteStorage                  November 2015
     All successful requests MUST return an 'ETag' header [HTTP] with, in
     the case of GET, the current version, in the case of PUT, the new
     version, and in case of DELETE, the version that was deleted. All
-    successful GET requests MUST return an 'Expires: 0' header. PUT and
-    DELETE requests MAY have an 'If-Match' request header [COND], and
-    MUST fail with a 412 response code if that doesn't match the
-    document's current version.
+    successful GET requests MUST return an 'Cache-Control: no-cache'
+    header. PUT and DELETE requests MAY have an 'If-Match' request
+    header [COND], and MUST fail with a 412 response code if that
+    doesn't match the document's current version.
 
     GET requests MAY have a comma-separated list of revisions in an
     'If-None-Match' header [COND], and SHOULD be responded to with a 304
@@ -826,7 +826,7 @@ Internet-Draft              remoteStorage                  November 2015
         Content-Type: application/json; charset=UTF-8
         Content-Length: 106
         ETag: "1382694048000"
-        Expires: 0
+        Cache-Control: no-cache
 
         {"name":"test", "updated":true, "@context":"http://remotestora\
 ge.io/spec/modules/myfavoritedrinks/drink"}
@@ -840,7 +840,7 @@ ge.io/spec/modules/myfavoritedrinks/drink"}
         Content-Type: application/ld+json
         Content-Length: 171
         ETag: "1382694048000"
-        Expires: 0
+        Cache-Control: no-cache
 
         {"@context":"http://remotestorage.io/spec/folder-version","ite\
 ms":{"test":{"ETag":"1382694048000","Content-Type":"application/json; \
