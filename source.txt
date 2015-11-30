@@ -82,9 +82,9 @@ Table of Contents
 
 1.  Introduction
 
-    Many services for data storage are available over the internet. This
+    Many services for data storage are available over the Internet. This
     specification describes a vendor-independent interface for such
-    services. It is based on https, CORS and bearer tokens. The
+    services. It is based on HTTPS, CORS and bearer tokens. The
     metaphor for addressing data on the storage is that of folders
     containing documents and subfolders. The actions the interface
     exposes are:
@@ -103,7 +103,7 @@ Table of Contents
        *  HEAD a folder or document: like GET, but omitting the response
           body
 
-    The exact details of these four actions are described in this
+    The exact details of these five actions are described in this
     specification.
 
 2. Terminology
@@ -142,23 +142,23 @@ Table of Contents
 
 4. Requests
 
-    Client-to-server requests SHOULD be made over https [HTTPS], and
+    Client-to-server requests SHOULD be made over HTTPS [HTTPS], and
     servers MUST comply with HTTP/1.1 [HTTP]. Specifically, they
     MUST support chunked transfer coding on PUT requests. Servers MAY
     also offer an optional switch to HTTP/2 [HTTP/2].
 
     A request is considered successful if the HTTP response code is in
     the 2xx range (e.g. 200 OK, 201 Created), and unsuccessful if an
-    error occurred or a condition was not met (response code e.g. 404
-    Not Found, 304 Not Modified).
+    error occurred or a condition was not met, e.g. response code 404
+    Not Found, 304 Not Modified.
 
     The root folder of the storage tree is represented by the following
     URL:
 
         URI_ENCODE( <storage_root> '/' )
 
-    Subsequently, if <parent_folder> is the URL of a folder, then the
-    URL of an item contained in it is:
+    Subsequently, let <parent_folder> be the URL of a folder, i.e. ends
+    with a '/', then the URL of an item contained in it is:
 
         URI_ENCODE( <parent_folder> <document_name> )
 
@@ -166,10 +166,12 @@ Table of Contents
 
         URI_ENCODE( <parent_folder> <folder_name> '/' )
 
-    for a folder. Item names MAY contain all characters except '/' and
-    the null character, and MUST NOT have zero length. Item names MUST
-    NOT be equal to '.' or to '..', as those have special semantics
-    in URIs (Section 5.2.4 of [URI]).
+    for a folder.
+
+    Item names MAY contain all characters, before URI_ENCODE, except '/'
+    and the null character '\0' and MUST NOT have zero length. Item
+    names MUST NOT be equal to '.' or to '..', as those have a special
+    semantic in URIs (Section 5.2.4 of [URI]).
 
     A document description is a map containing one string-valued 'ETag'
     field, one string-valued 'Content-Type' and one integer-valued
@@ -226,8 +228,8 @@ Table of Contents
     Note that the use of strong ETags prohibits changing the response
     body based on request headers; in particular, the server will not be
     able to serve the same document uncompressed to some clients and
-    gzipped when requested by the client, since the two bodies would not
-    be identical byte-for-byte.
+    compressed to other clients when requested, since the two bodies
+    would not be identical byte-for-byte.
 
     Servers MAY support Content-Range headers [RANGE] on GET requests,
     but whether or not they do SHOULD be announced through the <ranges>
@@ -264,19 +266,19 @@ Table of Contents
        * the version of its parent folder being updated, as well as that
          of further ancestor folders.
 
-    A successful OPTIONS request SHOULD be responded to as described in
-    the CORS section below.
-
     A successful HEAD request SHOULD be responded to like to the
     equivalent GET request, but omitting the response body.
+
+    A successful OPTIONS request SHOULD be responded to as described in
+    the CORS section below.
 
 5. Response codes
 
     Response codes SHOULD be given as defined by [HTTP, section 6] and
-    [BEARER, section 3.1]. The following is a non-normative checklist
-    of status codes that are likely to occur in practice:
+    [BEARER, section 3.1]. The following is a non-normative list of
+    status codes that are likely to occur in practice:
 
-       * 500 if an internal server error occurs,
+       * 500 if an internal server error occurred,
        * 429 if the client makes too frequent requests or is suspected
              of malicious activity,
        * 414 if the request URI is too long,
@@ -288,20 +290,20 @@ Table of Contents
        * 403 for all requests that have insufficient scope, e.g.
              accessing a <module> for which no scope was obtained, or
              accessing data outside the user's <storage_root>,
-       * 404 for all DELETE and GET requests to documents that do not
-             exist on the storage,
-       * 304 for a conditional GET request whose pre-condition
+       * 404 for all DELETE, GET and HEAD requests to documents that do
+             not exist on the storage,
+       * 304 for a conditional GET request whose precondition
              fails (see "Versioning" below),
        * 409 for a PUT request where any folder name in the path
              clashes with an existing document's name at the same
              level, or where the document name coincides with an
              existing folder's name at the same level.
-       * 412 for a conditional PUT or DELETE request whose pre-condition
+       * 412 for a conditional PUT or DELETE request whose precondition
              fails (see "Versioning" below),
        * 507 in case the account is over its storage quota,
-       * 4xx for all malformed requests (e.g. foreign characters in the
-             path), as well as for all PUT and DELETE requests to
-             folders,
+       * 4xx for all malformed requests, e.g. reserved characters in the
+             path [URI, section 2.2], as well as for all PUT and DELETE
+             requests to folders,
        * 2xx for all successful requests.
 
     Clients SHOULD also handle the case where a response takes too long
@@ -333,7 +335,7 @@ Table of Contents
 7. CORS headers
 
     All responses MUST carry CORS headers [CORS]. The server MUST also
-    reply to OPTIONS requests as per CORS.
+    reply to preflight OPTIONS requests as per CORS.
 
 8. Session description
 
@@ -352,11 +354,11 @@ Table of Contents
          guess and SHOULD NOT be reused from one client to another. It
          can however be reused in subsequent interactions with the same
          client, as long as that client is still trusted. Example:
-         * 'ofb24f1ac3973e70j6vts19qr9v2eei'
-       * <storage_api>, always 'draft-dejong-remotestorage-05' for this
+         'ofb24f1ac3973e70j6vts19qr9v2eei'
+       * <storage_api>, always 'draft-dejong-remotestorage-06' for this
          alternative version of the specification.
 
-    The client can make its requests using https with CORS and bearer
+    The client can make its requests using HTTPS with CORS and bearer
     tokens, to the URL that is the concatenation of <storage_root> with
     '/' plus one or more <folder> '/' strings indicating a path in the
     folder tree, followed by zero or one <document> strings, indicating
@@ -415,14 +417,14 @@ Table of Contents
       "properties": {
         "http://remotestorage.io/spec/version": <storage_api>,
         "http://tools.ietf.org/html/rfc6749#section-4.2": <auth-dialog>,
-        ... : ... ,
+        "...": "...",
       }
     }
 
     A common way of identifying persons as <user> at <host> is through a
-    uri of the format "acct:<user>@<host>". Persons who use a personal
+    URI of the format "acct:<user>@<host>". Persons who use a personal
     domain name, not shared with any other users, can be identified by
-    a uri of the format "http://<host>/" (see [WEBFINGER, section 4.1]).
+    a URI of the format "http://<host>/" (see [WEBFINGER, section 4.1]).
 
     Here <storage_root> and <storage_api> are as per "Session
     description" above, and <auth-dialog> SHOULD be either null or a
@@ -472,11 +474,10 @@ Table of Contents
     The server MAY expire bearer tokens, and MAY require the user to
     register applications as OAuth clients before first use; if no
     client registration is required, then the server MAY ignore the
-    value of the client_id parameter in favor of relying on the origin
-    of the redirect_uri parameter for unique client identification. See
-    section 4 of [ORIGIN] for computing the Origin.
-
-
+    value of the client_id parameter, it MUST still be sent and valid,
+    in favor of relying on the origin of the redirect_uri parameter
+    for unique client identification. See section 4 of [ORIGIN] for
+    computing the Origin.
 11. Storage-first bearer token issuance
 
     The provider MAY also present a dashboard to the user, where they
@@ -546,9 +547,6 @@ g.com HTTP/1.1
 
          HTTP/1.1 200 OK
          Access-Control-Allow-Origin: *
-         Access-Control-Allow-Methods: GET
-         Access-Control-Allow-Headers: If-Match, If-None-Match
-         Access-Control-Expose-Headers: ETag, Content-Length
          Content-Type: application/jrd+json
 
          {
@@ -564,7 +562,7 @@ g.com HTTP/1.1
 e",
              "properties": {
                "http://remotestorage.io/spec/version": "draft-dejong-re\
-motestorage-05",
+motestorage-06",
                "http://tools.ietf.org/html/rfc6749#section-4.2": "https\
 ://3pp.io:4439/oauth/michiel",
                "http://tools.ietf.org/html/rfc6750#section-2.3": null,
@@ -612,15 +610,15 @@ id=https%3A%2F%2Fdrinks-unhosted.5apps.com&response_type=token
 
         client_id=https%3A%2F%2Fdrinks-unhosted.5apps.com&redirect_uri=\
 https%3A%2F%2Fdrinks-unhosted.5apps.com%2F&response_type=token&scope=my\
-favoritedrinks%3Arw&state=&username=michiel&password=something&allow=Al\
+favoritedrinks%3Arw&username=michiel&password=something&allow=Al\
 low
 
     To which the server could respond with a 302 redirect, back to the
     origin of the requesting application:
 
         HTTP/1.1 302 Found
-        Location:https://drinks-unhosted.5apps.com/#access_token=j2YnGt\
-XjzzzHNjkd1CJxoQubA1o%3D&token_type=bearer&state=
+        Location: https://drinks-unhosted.5apps.com/#access_token=j2YnG\
+            tXjzzzHNjkd1CJxoQubA1o%3D&token_type=bearer
 
 12.4. OPTIONS preflight
 
@@ -677,7 +675,7 @@ ntent-Type, Origin, X-Requested-With, If-Match, If-None-Match
         Origin: https://drinks-unhosted.5apps.com
         Authorization: Bearer j2YnGtXjzzzHNjkd1CJxoQubA1o=
         Content-Type: application/json; charset=UTF-8
-        Referer: https://drinks-unhosted.5apps.com/?
+        Referer: https://drinks-unhosted.5apps.com/
         If-Match: "1382694045000"
 
         {"name":"test", "updated":true, "@context":"http://remotestorag\
@@ -698,7 +696,7 @@ e.io/spec/modules/myfavoritedrinks/drink"}
         Host: 3pp.io:4439
         Origin: https://drinks-unhosted.5apps.com
         Authorization: Bearer j2YnGtXjzzzHNjkd1CJxoQubA1o=
-        Referer: https://drinks-unhosted.5apps.com/?
+        Referer: https://drinks-unhosted.5apps.com/
         If-None-Match: "1382694045000", "1382694048000"
 
     And the server may respond with a 304 Not Modified status:
@@ -750,7 +748,7 @@ charset=UTF-8","Content-Length":106}}}
         Origin: https://drinks-unhosted.5apps.com
         Authorization: Bearer j2YnGtXjzzzHNjkd1CJxoQubA1o=
         Content-Type: application/json; charset=UTF-8
-        Referer: https://drinks-unhosted.5apps.com/?
+        Referer: https://drinks-unhosted.5apps.com/
         If-Match: "1382694045000"
 
     And the server may respond with a 412 Conflict or a 200 OK status:
@@ -816,7 +814,7 @@ charset=UTF-8","Content-Length":106}}}
 
 14. Security Considerations
 
-    To prevent man-in-the-middle attacks, the use of https instead of
+    To prevent man-in-the-middle attacks, the use of HTTPS instead of
     http is important for both the interface itself and all end-points
     involved in WebFinger, OAuth, and (if present) the storage-first
     application launch dashboard.
@@ -832,13 +830,13 @@ charset=UTF-8","Content-Length":106}}}
     give access to. The user SHOULD always be prompted to carefully
     review which scopes an application is requesting.
 
-    An application may upload malicious html pages and then trick the
+    An application may upload malicious HTML pages and then trick the
     user into visiting them, or upload malicious client-side scripts,
     that take advantage of being hosted on the user's domain name. The
     origin on which the remoteStorage server has its interface SHOULD
     therefore NOT be used for anything else, and the user SHOULD be
     warned not to visit any web pages on that origin. In particular, the
-    OAuth dialog and launch dashboard or token revokation interface
+    OAuth dialog and launch dashboard or token revocation interface
     SHOULD be on a different origin than the remoteStorage interface.
 
     Where the use of bearer tokens is impractical, a user may choose to

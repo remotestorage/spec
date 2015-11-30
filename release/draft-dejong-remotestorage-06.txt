@@ -178,7 +178,7 @@ Internet-Draft              remoteStorage                  November 2015
 
         URI_ENCODE( <storage_root> '/' )
 
-    Subsequently, let <parent_folder> be the URL of a folder, i.e. ends 
+    Subsequently, let <parent_folder> be the URL of a folder, i.e. ends
     with a '/', then the URL of an item contained in it is:
 
         URI_ENCODE( <parent_folder> <document_name> )
@@ -187,19 +187,17 @@ Internet-Draft              remoteStorage                  November 2015
 
         URI_ENCODE( <parent_folder> <folder_name> '/' )
 
-    for a folder. 
+    for a folder.
 
-    Item names MAY contain all characters, before URI_ENCODE, except '/' 
-    and the null character '\0' and MUST NOT have zero length. Item 
-    names MUST NOT be equal to '.' or to '..', as those have a special 
+    Item names MAY contain all characters, before URI_ENCODE, except '/'
+    and the null character '\0' and MUST NOT have zero length. Item
+    names MUST NOT be equal to '.' or to '..', as those have a special
     semantic in URIs (Section 5.2.4 of [URI]).
 
     A document description is a map containing one string-valued 'ETag'
     field, one string-valued 'Content-Type' and one integer-valued
     'Content-Length' field. They represent the document's current
     version, its content type, and its content length respectively. Note
-    that content length is measured in octets (bytes), not in
-    characters.
 
 
 de Jong                                                         [Page 4]
@@ -207,6 +205,8 @@ de Jong                                                         [Page 4]
 Internet-Draft              remoteStorage                  November 2015
 
 
+    that content length is measured in octets (bytes), not in
+    characters.
 
     A folder description is a map containing a string-valued 'ETag'
     field, representing the folder's current version.
@@ -248,8 +248,6 @@ Internet-Draft              remoteStorage                  November 2015
     one document.
 
     A successful GET request to a document SHOULD be responded to with
-    the full document contents in the body, the document's content type
-    in a 'Content-Type' header, its content length in octets (not in
 
 
 de Jong                                                         [Page 5]
@@ -257,13 +255,15 @@ de Jong                                                         [Page 5]
 Internet-Draft              remoteStorage                  November 2015
 
 
+    the full document contents in the body, the document's content type
+    in a 'Content-Type' header, its content length in octets (not in
     characters) in a 'Content-Length' header, and the document's current
     version as a strong ETag in an 'ETag' header.
 
     Note that the use of strong ETags prohibits changing the response
     body based on request headers; in particular, the server will not be
     able to serve the same document uncompressed to some clients and
-    compressed to other clients when requested, since the two bodies 
+    compressed to other clients when requested, since the two bodies
     would not be identical byte-for-byte.
 
     Servers MAY support Content-Range headers [RANGE] on GET requests,
@@ -298,8 +298,6 @@ Internet-Draft              remoteStorage                  November 2015
          parent folder,
        * silent deletion of the parent folder if it is left empty by
          this, and so on for further ancestor folders,
-       * the version of its parent folder being updated, as well as that
-         of further ancestor folders.
 
 
 de Jong                                                         [Page 6]
@@ -307,6 +305,8 @@ de Jong                                                         [Page 6]
 Internet-Draft              remoteStorage                  November 2015
 
 
+       * the version of its parent folder being updated, as well as that
+         of further ancestor folders.
 
     A successful HEAD request SHOULD be responded to like to the
     equivalent GET request, but omitting the response body.
@@ -332,7 +332,7 @@ Internet-Draft              remoteStorage                  November 2015
        * 403 for all requests that have insufficient scope, e.g.
              accessing a <module> for which no scope was obtained, or
              accessing data outside the user's <storage_root>,
-       * 404 for all DELETE, GET and HEAD requests to documents that do 
+       * 404 for all DELETE, GET and HEAD requests to documents that do
              not exist on the storage,
        * 304 for a conditional GET request whose precondition
              fails (see "Versioning" below),
@@ -344,12 +344,10 @@ Internet-Draft              remoteStorage                  November 2015
              fails (see "Versioning" below),
        * 507 in case the account is over its storage quota,
        * 4xx for all malformed requests, e.g. reserved characters in the
-             path [URI, section 2.2], as well as for all PUT and DELETE 
+             path [URI, section 2.2], as well as for all PUT and DELETE
              requests to folders,
        * 2xx for all successful requests.
 
-    Clients SHOULD also handle the case where a response takes too long
-    to arrive, or where no response is received at all.
 
 
 de Jong                                                         [Page 7]
@@ -357,6 +355,8 @@ de Jong                                                         [Page 7]
 Internet-Draft              remoteStorage                  November 2015
 
 
+    Clients SHOULD also handle the case where a response takes too long
+    to arrive, or where no response is received at all.
 
 6. Versioning
 
@@ -398,8 +398,6 @@ Internet-Draft              remoteStorage                  November 2015
          * 'https://example.com' (host only)
          * 'https://example.com:8080' (host and port)
          * 'https://example.com/path/to/storage' (host, port and
-           path prefix; note there is no trailing slash)
-       * <access_token> as per [OAUTH]. The token SHOULD be hard to
 
 
 de Jong                                                         [Page 8]
@@ -407,6 +405,8 @@ de Jong                                                         [Page 8]
 Internet-Draft              remoteStorage                  November 2015
 
 
+           path prefix; note there is no trailing slash)
+       * <access_token> as per [OAUTH]. The token SHOULD be hard to
          guess and SHOULD NOT be reused from one client to another. It
          can however be reused in subsequent interactions with the same
          client, as long as that client is still trusted. Example:
@@ -448,8 +448,6 @@ Internet-Draft              remoteStorage                  November 2015
 
     As a special exceptions, GET and HEAD requests to a document (but
     not a folder) whose path starts with '/public/' are always allowed.
-    They, as well as OPTIONS requests, can be made without a bearer
-    token.  Unless [KERBEROS] is used (see section 10 below), all other
 
 
 de Jong                                                         [Page 9]
@@ -457,6 +455,8 @@ de Jong                                                         [Page 9]
 Internet-Draft              remoteStorage                  November 2015
 
 
+    They, as well as OPTIONS requests, can be made without a bearer
+    token.  Unless [KERBEROS] is used (see section 10 below), all other
     requests SHOULD present a bearer token with sufficient access scope,
     using a header of the following form (no double quotes here):
 
@@ -498,8 +498,6 @@ Internet-Draft              remoteStorage                  November 2015
     for accessing the account (how, is out of scope), and allow or
     reject a request by the connecting application to obtain a bearer
     token for a certain list of access scopes. Note that an account
-    will often belong to just one human user, but may also belong to a
-    group of multiple users (the remoteStorage of <group> at <host>).
 
 
 de Jong                                                        [Page 10]
@@ -507,6 +505,8 @@ de Jong                                                        [Page 10]
 Internet-Draft              remoteStorage                  November 2015
 
 
+    will often belong to just one human user, but may also belong to a
+    group of multiple users (the remoteStorage of <group> at <host>).
 
     If <auth-dialog> is null, the client will not have a way to obtain
     an access token, and SHOULD send all requests without Authorization
@@ -544,12 +544,10 @@ Internet-Draft              remoteStorage                  November 2015
     The server MAY expire bearer tokens, and MAY require the user to
     register applications as OAuth clients before first use; if no
     client registration is required, then the server MAY ignore the
-    value of the client_id parameter, it MUST still be sent and valid, 
-    in favor of relying on the origin of the redirect_uri parameter 
-    for unique client identification. See section 4 of [ORIGIN] for 
+    value of the client_id parameter, it MUST still be sent and valid,
+    in favor of relying on the origin of the redirect_uri parameter
+    for unique client identification. See section 4 of [ORIGIN] for
     computing the Origin.
-
-
 
 
 de Jong                                                        [Page 11]
@@ -647,6 +645,9 @@ g.com HTTP/1.1
              "rel": "http://tools.ietf.org/id/draft-dejong-remotestorag\
 e",
              "properties": {
+               "http://remotestorage.io/spec/version": "draft-dejong-re\
+motestorage-06",
+               "http://tools.ietf.org/html/rfc6749#section-4.2": "https\
 
 
 de Jong                                                        [Page 13]
@@ -654,9 +655,6 @@ de Jong                                                        [Page 13]
 Internet-Draft              remoteStorage                  November 2015
 
 
-               "http://remotestorage.io/spec/version": "draft-dejong-re\
-motestorage-06",
-               "http://tools.ietf.org/html/rfc6749#section-4.2": "https\
 ://3pp.io:4439/oauth/michiel",
                "http://tools.ietf.org/html/rfc6750#section-2.3": null,
                "http://tools.ietf.org/html/rfc7233": null,
@@ -697,6 +695,9 @@ unhosted.5apps.com&response_type=token HTTP/1.1
         Host: 3pp.io:4439
         Origin: https://3pp.io:4439
         Content-Type: application/x-www-form-urlencoded
+        Referer: https://3pp.io:4439/oauth/michiel?redirect_uri=https%3\
+A%2F%2Fdrinks-unhosted.5apps.com%2F&scope=myfavoritedrinks%3Arw&client_\
+id=https%3A%2F%2Fdrinks-unhosted.5apps.com&response_type=token
 
 
 de Jong                                                        [Page 14]
@@ -704,9 +705,6 @@ de Jong                                                        [Page 14]
 Internet-Draft              remoteStorage                  November 2015
 
 
-        Referer: https://3pp.io:4439/oauth/michiel?redirect_uri=https%3\
-A%2F%2Fdrinks-unhosted.5apps.com%2F&scope=myfavoritedrinks%3Arw&client_\
-id=https%3A%2F%2Fdrinks-unhosted.5apps.com&response_type=token
 
         client_id=https%3A%2F%2Fdrinks-unhosted.5apps.com&redirect_uri=\
 https%3A%2F%2Fdrinks-unhosted.5apps.com%2F&response_type=token&scope=my\
@@ -747,6 +745,9 @@ ntent-Type, Origin, X-Requested-With, If-Match, If-None-Match
 
         PUT /storage/michiel/myfavoritedrinks/test HTTP/1.1
         Host: 3pp.io:4439
+        Content-Length: 91
+        Origin: https://drinks-unhosted.5apps.com
+        Authorization: Bearer j2YnGtXjzzzHNjkd1CJxoQubA1o=
 
 
 de Jong                                                        [Page 15]
@@ -754,9 +755,6 @@ de Jong                                                        [Page 15]
 Internet-Draft              remoteStorage                  November 2015
 
 
-        Content-Length: 91
-        Origin: https://drinks-unhosted.5apps.com
-        Authorization: Bearer j2YnGtXjzzzHNjkd1CJxoQubA1o=
         Content-Type: application/json; charset=UTF-8
         Referer: https://drinks-unhosted.5apps.com/?
         If-None-Match: *
@@ -797,6 +795,9 @@ e.io/spec/modules/myfavoritedrinks/drink"}
 12.7. GET
 
     A GET request would also include the bearer token, and optionally
+    an If-None-Match header:
+
+        GET /storage/michiel/myfavoritedrinks/test HTTP/1.1
 
 
 de Jong                                                        [Page 16]
@@ -804,9 +805,6 @@ de Jong                                                        [Page 16]
 Internet-Draft              remoteStorage                  November 2015
 
 
-    an If-None-Match header:
-
-        GET /storage/michiel/myfavoritedrinks/test HTTP/1.1
         Host: 3pp.io:4439
         Origin: https://drinks-unhosted.5apps.com
         Authorization: Bearer j2YnGtXjzzzHNjkd1CJxoQubA1o=
@@ -847,15 +845,15 @@ ms":{"test":{"ETag":"1382694048000","Content-Type":"application/json; \
 charset=UTF-8","Content-Length":106}}}
 
     If the GET URL would have been a non-existing document like
+    "/storage/michiel/myfavoritedrinks/x", the response would have a 404
+    Not Found status, and no ETag header:
+
 
 
 de Jong                                                        [Page 17]
 
 Internet-Draft              remoteStorage                  November 2015
 
-
-    "/storage/michiel/myfavoritedrinks/x", the response would have a 404
-    Not Found status, and no ETag header:
 
         HTTP/1.1 404 Not Found
         Access-Control-Allow-Origin: https://drinks-unhosted.5apps.com
@@ -897,6 +895,9 @@ Internet-Draft              remoteStorage                  November 2015
 
     Client B is now aware of the conflict, and may consult the user,
     saying the update to version 3 failed. The user may then choose,
+    through the user interface of client B, whether version 2 or
+    version 3 should be kept, or maybe the document should be reverted
+    on the server to version 1, or a merged version 4 is needed. Client
 
 
 de Jong                                                        [Page 18]
@@ -904,9 +905,6 @@ de Jong                                                        [Page 18]
 Internet-Draft              remoteStorage                  November 2015
 
 
-    through the user interface of client B, whether version 2 or
-    version 3 should be kept, or maybe the document should be reverted
-    on the server to version 1, or a merged version 4 is needed. Client
     B may then make a request that puts the document to the version the
     user wishes; this time setting an 'If-Match: "2"' header instead.
 
@@ -947,6 +945,9 @@ Internet-Draft              remoteStorage                  November 2015
     involved in WebFinger, OAuth, and (if present) the storage-first
     application launch dashboard.
 
+    A malicious party could link to an application, but specifying a
+    remoteStorage account address that it controls, thus tricking the
+    user into using a trusted application to send sensitive data to the
 
 
 de Jong                                                        [Page 19]
@@ -954,9 +955,6 @@ de Jong                                                        [Page 19]
 Internet-Draft              remoteStorage                  November 2015
 
 
-    A malicious party could link to an application, but specifying a
-    remoteStorage account address that it controls, thus tricking the
-    user into using a trusted application to send sensitive data to the
     wrong remoteStorage server. To mitigate this, applications SHOULD
     clearly display to which remoteStorage server they are sending the
     user's data.
@@ -997,6 +995,9 @@ Internet-Draft              remoteStorage                  November 2015
 16. Acknowledgements
 
     The authors would like to thank everybody who contributed to the
+    development of this protocol, including Kenny Bentley, Javier Diaz,
+    Daniel Groeber, Bjarni Runar, Jan Wildeboer, Charles Schultz, Peter
+    Svensson, Valer Mischenko, Michiel Leenaars, Jan-Christoph
 
 
 de Jong                                                        [Page 20]
@@ -1004,9 +1005,6 @@ de Jong                                                        [Page 20]
 Internet-Draft              remoteStorage                  November 2015
 
 
-    development of this protocol, including Kenny Bentley, Javier Diaz,
-    Daniel Groeber, Bjarni Runar, Jan Wildeboer, Charles Schultz, Peter
-    Svensson, Valer Mischenko, Michiel Leenaars, Jan-Christoph
     Borchardt, Garret Alfert, Sebastian Kippe, Max Wiehle, Melvin
     Carvalho, Martin Stadler, Geoffroy Couprie, Niklas Cathor, Marco
     Stahl, James Coglan, Ken Eucker, Daniel Brolund, elf Pavlik, Nick
@@ -1039,7 +1037,7 @@ Internet-Draft              remoteStorage                  November 2015
         2.0 Authorization Framework", RFC6749, October 2012.
 
     [ORIGIN]
-        "Section 4: Origin of a URI", in: Barth, A., "The Web Origin 
+        "Section 4: Origin of a URI", in: Barth, A., "The Web Origin
         Concept", RFC6454, December 2011.
 
 17.2. Informative References
@@ -1047,6 +1045,9 @@ Internet-Draft              remoteStorage                  November 2015
     [HTTPS]
         Rescorla, E., "HTTP Over TLS", RFC2818, May 2000.
 
+    [HTTP]
+        Fielding et al., "Hypertext Transfer Protocol (HTTP/1.1):
+        Semantics and Content", RFC7231, June 2014.
 
 
 de Jong                                                        [Page 21]
@@ -1054,9 +1055,6 @@ de Jong                                                        [Page 21]
 Internet-Draft              remoteStorage                  November 2015
 
 
-    [HTTP]
-        Fielding et al., "Hypertext Transfer Protocol (HTTP/1.1):
-        Semantics and Content", RFC7231, June 2014.
 
     [COND]
         Fielding et al., "Hypertext Transfer Protocol (HTTP/1.1):
@@ -1097,6 +1095,9 @@ Internet-Draft              remoteStorage                  November 2015
         M. Jones, D. Hardt, "The OAuth 2.0 Authorization Framework:
         Bearer Token Usage", RFC6750, October 2012.
 
+    [AUTHORING]
+        "Using remoteStorage for web authoring", reSite wiki, retrieved
+        September 2014. https://github.com/michielbdejong/resite/wiki
 
 
 de Jong                                                        [Page 22]
@@ -1104,9 +1105,6 @@ de Jong                                                        [Page 22]
 Internet-Draft              remoteStorage                  November 2015
 
 
-    [AUTHORING]
-        "Using remoteStorage for web authoring", reSite wiki, retrieved
-        September 2014. https://github.com/michielbdejong/resite/wiki
         /Using-remoteStorage-for-web-authoring
 
     [CAPABILITIES]
@@ -1125,6 +1123,9 @@ Internet-Draft              remoteStorage                  November 2015
     (independent)
 
     Email: fkooman@tuxed.net
+
+
+
 
 
 
