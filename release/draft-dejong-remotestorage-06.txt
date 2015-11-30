@@ -442,18 +442,20 @@ Internet-Draft              remoteStorage                  November 2015
 
     '*:r') any GET or HEAD request,
 
-    <module> ':rw') any requests to paths that start with
-                    '/' <module> '/' or '/public/' <module> '/',
+    <module> ':rw') any requests to paths relative to <storage_root>
+                    that start with '/' <module> '/' or
+                    '/public/' <module> '/',
 
-    <module> ':r') any GET or HEAD requests to paths that start with
-                   '/' <module> '/' or '/public/' <module> '/',
-
+    <module> ':r') any GET or HEAD requests to paths relative to
+                   <storage_root> that start with
 
 
 de Jong                                                         [Page 9]
 
 Internet-Draft              remoteStorage                  November 2015
 
+
+                   '/' <module> '/' or '/public/' <module> '/',
 
     As a special exceptions, GET and HEAD requests to a document (but
     not a folder) whose path starts with '/public/' are always allowed.
@@ -467,7 +469,9 @@ Internet-Draft              remoteStorage                  November 2015
     In addition, providing the access token via a HTTP query parameter
     for GET requests MAY be supported by the server, although its use
     is not recommended, due to its security deficiencies; see [BEARER,
-    section 2.3].
+    section 2.3]. If supported, this SHOULD be announce through the
+    "http://tools.ietf.org/html/rfc6750#section-2.3" WebFinger property
+    as per section 10 below.
 
 10. Application-first bearer token issuance
 
@@ -494,10 +498,6 @@ Internet-Draft              remoteStorage                  November 2015
     Here <storage_root> and <storage_api> are as per "Session
     description" above, and <auth-dialog> SHOULD be either null or a
     URL where an OAuth 2.0 implicit-grant flow dialog [OAUTH] is
-    presented.
-
-    If <auth-dialog> is a URL, the user can supply their credentials
-    for accessing the account (how, is out of scope), and allow or
 
 
 de Jong                                                        [Page 10]
@@ -505,6 +505,10 @@ de Jong                                                        [Page 10]
 Internet-Draft              remoteStorage                  November 2015
 
 
+    presented.
+
+    If <auth-dialog> is a URL, the user can supply their credentials
+    for accessing the account (how, is out of scope), and allow or
     reject a request by the connecting application to obtain a bearer
     token for a certain list of access scopes. Note that an account
     will often belong to just one human user, but may also belong to a
@@ -544,10 +548,6 @@ Internet-Draft              remoteStorage                  November 2015
 
     The server MAY expire bearer tokens, and MAY require the user to
     register applications as OAuth clients before first use; if no
-    client registration is required, then the server MAY ignore the
-    value of the client_id parameter, it MUST still be sent and valid,
-    in favor of relying on the origin of the redirect_uri parameter
-    for unique client identification. See section 4 of [ORIGIN] for
 
 
 de Jong                                                        [Page 11]
@@ -555,6 +555,10 @@ de Jong                                                        [Page 11]
 Internet-Draft              remoteStorage                  November 2015
 
 
+    client registration is required, then the server MAY ignore the
+    value of the client_id parameter, it MUST still be sent and valid,
+    in favor of relying on the origin of the redirect_uri parameter
+    for unique client identification. See section 4 of [ORIGIN] for
     computing the Origin.
 
 11. Storage-first bearer token issuance
@@ -594,10 +598,6 @@ Internet-Draft              remoteStorage                  November 2015
     easily remember their <account> '@' <host> WebFinger address at that
     provider. Applications SHOULD, however, support both flows, which
     means checking the URL for a 'remotestorage' parameter, but giving
-    the user a way to specify the WebFinger address if there is none.
-
-    If a server provides an application manifest dashboard, then it
-    SHOULD merge the list of applications there with the list of
 
 
 de Jong                                                        [Page 12]
@@ -605,6 +605,10 @@ de Jong                                                        [Page 12]
 Internet-Draft              remoteStorage                  November 2015
 
 
+    the user a way to specify the WebFinger address if there is none.
+
+    If a server provides an application manifest dashboard, then it
+    SHOULD merge the list of applications there with the list of
     issued access tokens as specified by OAuth into one list. Also,
     the interface for revoking an access token as specified by OAuth
     SHOULD coincide with removing an application from the dashboard.
@@ -644,10 +648,6 @@ g.com HTTP/1.1
              "rel": "avatar"
            }, {
              "href": "https://3pp.io:4439/storage/michiel",
-             "rel": "http://tools.ietf.org/id/draft-dejong-remotestorag\
-e",
-             "properties": {
-               "http://remotestorage.io/spec/version": "draft-dejong-re\
 
 
 de Jong                                                        [Page 13]
@@ -655,6 +655,10 @@ de Jong                                                        [Page 13]
 Internet-Draft              remoteStorage                  November 2015
 
 
+             "rel": "http://tools.ietf.org/id/draft-dejong-remotestorag\
+e",
+             "properties": {
+               "http://remotestorage.io/spec/version": "draft-dejong-re\
 motestorage-06",
                "http://tools.ietf.org/html/rfc6749#section-4.2": "https\
 ://3pp.io:4439/oauth/michiel",
@@ -694,10 +698,6 @@ unhosted.5apps.com&response_type=token HTTP/1.1
     like this:
 
         POST /oauth HTTP/1.1
-        Host: 3pp.io:4439
-        Origin: https://3pp.io:4439
-        Content-Type: application/x-www-form-urlencoded
-        Referer: https://3pp.io:4439/oauth/michiel?redirect_uri=https%3\
 
 
 de Jong                                                        [Page 14]
@@ -705,6 +705,10 @@ de Jong                                                        [Page 14]
 Internet-Draft              remoteStorage                  November 2015
 
 
+        Host: 3pp.io:4439
+        Origin: https://3pp.io:4439
+        Content-Type: application/x-www-form-urlencoded
+        Referer: https://3pp.io:4439/oauth/michiel?redirect_uri=https%3\
 A%2F%2Fdrinks-unhosted.5apps.com%2F&scope=myfavoritedrinks%3Arw&client_\
 id=https%3A%2F%2Fdrinks-unhosted.5apps.com&response_type=token
 
@@ -745,16 +749,16 @@ ntent-Type, Origin, X-Requested-With, If-Match, If-None-Match
 
     An initial PUT may contain an 'If-None-Match: *' header, like this:
 
-        PUT /storage/michiel/myfavoritedrinks/test HTTP/1.1
-        Host: 3pp.io:4439
-        Content-Length: 91
-
 
 de Jong                                                        [Page 15]
 
 Internet-Draft              remoteStorage                  November 2015
 
 
+
+        PUT /storage/michiel/myfavoritedrinks/test HTTP/1.1
+        Host: 3pp.io:4439
+        Content-Length: 91
         Origin: https://drinks-unhosted.5apps.com
         Authorization: Bearer j2YnGtXjzzzHNjkd1CJxoQubA1o=
         Content-Type: application/json; charset=UTF-8
@@ -794,10 +798,6 @@ e.io/spec/modules/myfavoritedrinks/drink"}
         Access-Control-Allow-Origin: https://drinks-unhosted.5apps.com
         ETag: "1382694048000"
 
-12.7. GET
-
-    A GET request would also include the bearer token, and optionally
-    an If-None-Match header:
 
 
 de Jong                                                        [Page 16]
@@ -805,6 +805,10 @@ de Jong                                                        [Page 16]
 Internet-Draft              remoteStorage                  November 2015
 
 
+12.7. GET
+
+    A GET request would also include the bearer token, and optionally
+    an If-None-Match header:
 
         GET /storage/michiel/myfavoritedrinks/test HTTP/1.1
         Host: 3pp.io:4439
@@ -844,10 +848,6 @@ ge.io/spec/modules/myfavoritedrinks/drink"}
 
         {"@context":"http://remotestorage.io/spec/folder-version","ite\
 ms":{"test":{"ETag":"1382694048000","Content-Type":"application/json; \
-charset=UTF-8","Content-Length":106}}}
-
-    If the GET URL would have been a non-existing document like
-    "/storage/michiel/myfavoritedrinks/x", the response would have a 404
 
 
 de Jong                                                        [Page 17]
@@ -855,6 +855,10 @@ de Jong                                                        [Page 17]
 Internet-Draft              remoteStorage                  November 2015
 
 
+charset=UTF-8","Content-Length":106}}}
+
+    If the GET URL would have been a non-existing document like
+    "/storage/michiel/myfavoritedrinks/x", the response would have a 404
     Not Found status, and no ETag header:
 
         HTTP/1.1 404 Not Found
@@ -895,16 +899,16 @@ Internet-Draft              remoteStorage                  November 2015
     version ("2") does not match the version required as a condition by
     the header If-Match header ("1").
 
-    Client B is now aware of the conflict, and may consult the user,
-    saying the update to version 3 failed. The user may then choose,
-    through the user interface of client B, whether version 2 or
-
 
 de Jong                                                        [Page 18]
 
 Internet-Draft              remoteStorage                  November 2015
 
 
+
+    Client B is now aware of the conflict, and may consult the user,
+    saying the update to version 3 failed. The user may then choose,
+    through the user interface of client B, whether version 2 or
     version 3 should be kept, or maybe the document should be reverted
     on the server to version 1, or a merged version 4 is needed. Client
     B may then make a request that puts the document to the version the
@@ -944,10 +948,6 @@ Internet-Draft              remoteStorage                  November 2015
 
     To prevent man-in-the-middle attacks, the use of HTTPS instead of
     http is important for both the interface itself and all end-points
-    involved in WebFinger, OAuth, and (if present) the storage-first
-    application launch dashboard.
-
-    A malicious party could link to an application, but specifying a
 
 
 de Jong                                                        [Page 19]
@@ -955,6 +955,10 @@ de Jong                                                        [Page 19]
 Internet-Draft              remoteStorage                  November 2015
 
 
+    involved in WebFinger, OAuth, and (if present) the storage-first
+    application launch dashboard.
+
+    A malicious party could link to an application, but specifying a
     remoteStorage account address that it controls, thus tricking the
     user into using a trusted application to send sensitive data to the
     wrong remoteStorage server. To mitigate this, applications SHOULD
@@ -994,10 +998,6 @@ Internet-Draft              remoteStorage                  November 2015
       * "http://tools.ietf.org/html/rfc7233"
       * "http://remotestorage.io/spec/web-authoring"
 
-16. Acknowledgements
-
-    The authors would like to thank everybody who contributed to the
-    development of this protocol, including Kenny Bentley, Javier Diaz,
 
 
 de Jong                                                        [Page 20]
@@ -1005,6 +1005,10 @@ de Jong                                                        [Page 20]
 Internet-Draft              remoteStorage                  November 2015
 
 
+16. Acknowledgements
+
+    The authors would like to thank everybody who contributed to the
+    development of this protocol, including Kenny Bentley, Javier Diaz,
     Daniel Groeber, Bjarni Runar, Jan Wildeboer, Charles Schultz, Peter
     Svensson, Valer Mischenko, Michiel Leenaars, Jan-Christoph
     Borchardt, Garret Alfert, Sebastian Kippe, Max Wiehle, Melvin
@@ -1044,10 +1048,6 @@ Internet-Draft              remoteStorage                  November 2015
 
 17.2. Informative References
 
-    [HTTPS]
-        Rescorla, E., "HTTP Over TLS", RFC2818, May 2000.
-
-    [HTTP]
 
 
 de Jong                                                        [Page 21]
@@ -1055,6 +1055,10 @@ de Jong                                                        [Page 21]
 Internet-Draft              remoteStorage                  November 2015
 
 
+    [HTTPS]
+        Rescorla, E., "HTTP Over TLS", RFC2818, May 2000.
+
+    [HTTP]
         Fielding et al., "Hypertext Transfer Protocol (HTTP/1.1):
         Semantics and Content", RFC7231, June 2014.
 
@@ -1094,10 +1098,6 @@ Internet-Draft              remoteStorage                  November 2015
         (V5)", RFC4120, July 2005.
 
     [BEARER]
-        M. Jones, D. Hardt, "The OAuth 2.0 Authorization Framework:
-        Bearer Token Usage", RFC6750, October 2012.
-
-    [AUTHORING]
 
 
 de Jong                                                        [Page 22]
@@ -1105,6 +1105,10 @@ de Jong                                                        [Page 22]
 Internet-Draft              remoteStorage                  November 2015
 
 
+        M. Jones, D. Hardt, "The OAuth 2.0 Authorization Framework:
+        Bearer Token Usage", RFC6750, October 2012.
+
+    [AUTHORING]
         "Using remoteStorage for web authoring", reSite wiki, retrieved
         September 2014. https://github.com/michielbdejong/resite/wiki
         /Using-remoteStorage-for-web-authoring
@@ -1125,10 +1129,6 @@ Internet-Draft              remoteStorage                  November 2015
     (independent)
 
     Email: fkooman@tuxed.net
-
-
-
-
 
 
 

@@ -386,10 +386,12 @@ Table of Contents
 
     '*:r') any GET or HEAD request,
 
-    <module> ':rw') any requests to paths that start with
-                    '/' <module> '/' or '/public/' <module> '/',
+    <module> ':rw') any requests to paths relative to <storage_root>
+                    that start with '/' <module> '/' or
+                    '/public/' <module> '/',
 
-    <module> ':r') any GET or HEAD requests to paths that start with
+    <module> ':r') any GET or HEAD requests to paths relative to
+                   <storage_root> that start with
                    '/' <module> '/' or '/public/' <module> '/',
 
     As a special exceptions, GET and HEAD requests to a document (but
@@ -404,7 +406,9 @@ Table of Contents
     In addition, providing the access token via a HTTP query parameter
     for GET requests MAY be supported by the server, although its use
     is not recommended, due to its security deficiencies; see [BEARER,
-    section 2.3].
+    section 2.3]. If supported, this SHOULD be announce through the
+    "http://tools.ietf.org/html/rfc6750#section-2.3" WebFinger property
+    as per section 10 below.
 
 10. Application-first bearer token issuance
 
