@@ -4,6 +4,7 @@
 * The difference between 401 and 403 http response status was clarified to match
   the way they are defined by the Bearer token spec.
 * In the OAuth dance, client_id should now match the origin of the redirect_uri.
+* Content-Range headers are no longer allowed on PUT requests.
 
 ## Breaking for servers:
 * Apart from GET requests, HEAD requests are also allowed without Authorization
