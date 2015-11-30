@@ -269,8 +269,9 @@ Internet-Draft              remoteStorage                  November 2015
     would not be identical byte-for-byte.
 
     Servers MAY support Content-Range headers [RANGE] on GET requests,
-    but whether or not they do SHOULD be announced through the <ranges>
-    variable mentioned below in section 10.
+    but whether or not they do SHOULD be announced both through the
+    "http://tools.ietf.org/html/rfc7233" option mentioned below in
+    section 10 and through the HTTP 'Accept-Ranges' response header.
 
     A successful PUT request to a document MUST result in:
 
@@ -297,7 +298,6 @@ Internet-Draft              remoteStorage                  November 2015
     A successful DELETE request to a document MUST result in:
 
        * the deletion of that document from the storage, and from its
-         parent folder,
 
 
 de Jong                                                         [Page 6]
@@ -305,6 +305,7 @@ de Jong                                                         [Page 6]
 Internet-Draft              remoteStorage                  November 2015
 
 
+         parent folder,
        * silent deletion of the parent folder if it is left empty by
          this, and so on for further ancestor folders,
        * the version of its parent folder being updated, as well as that
@@ -347,7 +348,6 @@ Internet-Draft              remoteStorage                  November 2015
        * 507 in case the account is over its storage quota,
        * 4xx for all malformed requests, e.g. reserved characters in the
              path [URI, section 2.2], as well as for all PUT and DELETE
-             requests to folders,
 
 
 de Jong                                                         [Page 7]
@@ -355,6 +355,7 @@ de Jong                                                         [Page 7]
 Internet-Draft              remoteStorage                  November 2015
 
 
+             requests to folders,
        * 2xx for all successful requests.
 
     Clients SHOULD also handle the case where a response takes too long
@@ -399,10 +400,10 @@ Internet-Draft              remoteStorage                  November 2015
     reply to preflight OPTIONS requests as per CORS.
 
 
-
 de Jong                                                         [Page 8]
 
 Internet-Draft              remoteStorage                  November 2015
+
 
 
 8. Session description
@@ -449,10 +450,10 @@ Internet-Draft              remoteStorage                  November 2015
     with each access scope representing the following permissions:
 
 
-
 de Jong                                                         [Page 9]
 
 Internet-Draft              remoteStorage                  November 2015
+
 
 
     '*:rw') any request,
@@ -497,7 +498,6 @@ Internet-Draft              remoteStorage                  November 2015
         "http://remotestorage.io/spec/version": <storage_api>,
         "http://tools.ietf.org/html/rfc6749#section-4.2": <auth-dialog>,
         "...": "...",
-      }
 
 
 de Jong                                                        [Page 10]
@@ -505,6 +505,7 @@ de Jong                                                        [Page 10]
 Internet-Draft              remoteStorage                  November 2015
 
 
+      }
     }
 
     A common way of identifying persons as <user> at <host> is through a
@@ -547,7 +548,6 @@ Internet-Draft              remoteStorage                  November 2015
     (e.g. retrieve the protected resource asynchronously in the first
     case, or request the entire resource in the second case).
 
-    A "http://remotestorage.io/spec/web-authoring" property has been
 
 
 de Jong                                                        [Page 11]
@@ -555,6 +555,7 @@ de Jong                                                        [Page 11]
 Internet-Draft              remoteStorage                  November 2015
 
 
+    A "http://remotestorage.io/spec/web-authoring" property has been
     proposed with a string value of the fully qualified domain name to
     which web authoring content is published if the server supports web
     authoring as per [AUTHORING]. Note that this extension is a breaking
@@ -599,10 +600,10 @@ Internet-Draft              remoteStorage                  November 2015
     information.
 
 
-
 de Jong                                                        [Page 12]
 
 Internet-Draft              remoteStorage                  November 2015
+
 
 
     If no access_token was given, then the application SHOULD also
@@ -647,7 +648,6 @@ g.com HTTP/1.1
 
          HTTP/1.1 200 OK
          Access-Control-Allow-Origin: *
-         Content-Type: application/jrd+json
 
 
 de Jong                                                        [Page 13]
@@ -655,6 +655,7 @@ de Jong                                                        [Page 13]
 Internet-Draft              remoteStorage                  November 2015
 
 
+         Content-Type: application/jrd+json
 
          {
            "links":[{
@@ -697,7 +698,6 @@ unhosted.5apps.com&response_type=token HTTP/1.1
         HTTP/1.1 200 OK
 
         <!DOCTYPE html>
-        <html lang="en">
 
 
 de Jong                                                        [Page 14]
@@ -705,6 +705,7 @@ de Jong                                                        [Page 14]
 Internet-Draft              remoteStorage                  November 2015
 
 
+        <html lang="en">
           <head>
             <title>Allow access?</title>
         ...
@@ -747,7 +748,6 @@ low
         Access-Control-Request-Headers: Authorization
         Referer: https://drinks-unhosted.5apps.com/
 
-    To which the server can for instance respond:
 
 
 de Jong                                                        [Page 15]
@@ -755,6 +755,7 @@ de Jong                                                        [Page 15]
 Internet-Draft              remoteStorage                  November 2015
 
 
+    To which the server can for instance respond:
 
         HTTP/1.1 200 OK
         Access-Control-Allow-Origin: https://drinks-unhosted.5apps.com
@@ -797,7 +798,6 @@ ntent-Type, Origin, X-Requested-With, If-Match, If-None-Match
         Authorization: Bearer j2YnGtXjzzzHNjkd1CJxoQubA1o=
         Content-Type: application/json; charset=UTF-8
         Referer: https://drinks-unhosted.5apps.com/
-        If-Match: "1382694045000"
 
 
 de Jong                                                        [Page 16]
@@ -805,6 +805,7 @@ de Jong                                                        [Page 16]
 Internet-Draft              remoteStorage                  November 2015
 
 
+        If-Match: "1382694045000"
 
         {"name":"test", "updated":true, "@context":"http://remotestorag\
 e.io/spec/modules/myfavoritedrinks/drink"}
@@ -847,7 +848,6 @@ ge.io/spec/modules/myfavoritedrinks/drink"}
 
     If the GET URL would have been "/storage/michiel/myfavoritedrinks/",
     a 200 OK response would have a folder description as the response
-    body:
 
 
 de Jong                                                        [Page 17]
@@ -855,6 +855,7 @@ de Jong                                                        [Page 17]
 Internet-Draft              remoteStorage                  November 2015
 
 
+    body:
 
         HTTP/1.1 200 OK
         Access-Control-Allow-Origin: https://drinks-unhosted.5apps.com
@@ -897,7 +898,6 @@ charset=UTF-8","Content-Length":106}}}
     This section is non-normative, and is intended to explain some of
     the design choices concerning ETags and folder listings. At the
     same time it will hopefully help readers who intend to develop an
-    application that uses remoteStorage as its per-user data storage.
 
 
 de Jong                                                        [Page 18]
@@ -905,6 +905,7 @@ de Jong                                                        [Page 18]
 Internet-Draft              remoteStorage                  November 2015
 
 
+    application that uses remoteStorage as its per-user data storage.
     When multiple clients have read/write access to the same document,
     versioning conflicts may occur. For instance, client A may make
     a PUT request that changes the document from version 1 to version
@@ -949,10 +950,10 @@ Internet-Draft              remoteStorage                  November 2015
     caused the root folder's ETag to change.
 
 
-
 de Jong                                                        [Page 19]
 
 Internet-Draft              remoteStorage                  November 2015
+
 
 
     Note that the remoteStorage server does not get involved in the
@@ -997,7 +998,6 @@ Internet-Draft              remoteStorage                  November 2015
     attempt to guess the location of such documents.
 
     The server SHOULD also detect and stop denial-of-service attacks
-    that aim to overwhelm its interface with too much traffic.
 
 
 de Jong                                                        [Page 20]
@@ -1005,6 +1005,7 @@ de Jong                                                        [Page 20]
 Internet-Draft              remoteStorage                  November 2015
 
 
+    that aim to overwhelm its interface with too much traffic.
 
 15. IANA Considerations
 
@@ -1049,10 +1050,10 @@ Internet-Draft              remoteStorage                  November 2015
         "WebFinger", RFC7033, September 2013.
 
 
-
 de Jong                                                        [Page 21]
 
 Internet-Draft              remoteStorage                  November 2015
+
 
 
     [OAUTH]
@@ -1097,7 +1098,6 @@ Internet-Draft              remoteStorage                  November 2015
     [MANIFEST]
         Mozilla Developer Network (ed), "App manifest -- Revision
         330541", https://developer.mozilla.org/en-
-        US/Apps/Build/Manifest$revision/566677, April 2014.
 
 
 de Jong                                                        [Page 22]
@@ -1105,6 +1105,7 @@ de Jong                                                        [Page 22]
 Internet-Draft              remoteStorage                  November 2015
 
 
+        US/Apps/Build/Manifest$revision/566677, April 2014.
 
     [DATASTORE]
         "WebAPI/DataStore", MozillaWiki, retrieved May 2014.
@@ -1139,7 +1140,6 @@ Internet-Draft              remoteStorage                  November 2015
     (independent)
 
     Email: fkooman@tuxed.net
-
 
 
 
