@@ -57,7 +57,7 @@ Table of Contents
    5. Response codes.................................................7
    6. Versioning.....................................................8
    7. CORS headers...................................................8
-   8. Session description............................................8
+   8. Session description............................................9
    9. Bearer tokens and access control...............................9
   10. Application-first bearer token issuance.......................10
   11. Storage-first bearer token issuance...........................11
@@ -68,12 +68,12 @@ Table of Contents
      12.4. OPTIONS preflight........................................15
      12.5. Initial PUT..............................................15
      12.6. Subsequent PUT...........................................16
-     12.7. GET......................................................16
+     12.7. GET......................................................17
      12.8. DELETE...................................................17
   13. Distributed versioning........................................17
   14. Security Considerations.......................................19
   15. IANA Considerations...........................................20
-  16. Acknowledgments...............................................20
+  16. Acknowledgments...............................................21
   17. References....................................................21
      17.1. Normative References.....................................21
      17.2. Informative References...................................21
@@ -313,13 +313,23 @@ Table of Contents
 
 6. Versioning
 
+
+    All successful GET, HEAD, PUT and DELETE requests MUST return an
+    'ETag' header [HTTP] with, in the case of GET and HEAD the current
+    version, in the case of PUT, the new version, and in case of DELETE,
+    the version that was deleted. All successful GET requests MUST
+    return a 'Cache-Control: no-cache' header. PUT and DELETE requests
+    MAY have an 'If-Match' request header [COND], and MUST fail with a
+    412 response code if that does not match the document's current
+    version.
+
     All successful requests MUST return an 'ETag' header [HTTP] with, in
     the case of GET, the current version, in the case of PUT, the new
     version, and in case of DELETE, the version that was deleted. All
     successful GET requests MUST return an 'Cache-Control: no-cache'
     header. PUT and DELETE requests MAY have an 'If-Match' request
     header [COND], and MUST fail with a 412 response code if that
-    doesn't match the document's current version.
+    does not match the document's current version.
 
     GET requests MAY have a comma-separated list of revisions in an
     'If-None-Match' header [COND], and SHOULD be responded to with a 304
@@ -329,10 +339,10 @@ Table of Contents
     already exists.
 
     In all 'ETag', 'If-Match' and 'If-None-Match' headers, revision
-    strings should appear inside double quotes (").
+    strings, except '*', should appear inside double quotes (").
 
     A provider MAY offer version rollback functionality to its users,
-    but this specification does not define the user interface for that.
+    but this specification does not define the interface for that.
 
 7. CORS headers
 
