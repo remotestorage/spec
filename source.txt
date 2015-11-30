@@ -869,8 +869,8 @@ charset=UTF-8","Content-Length":106}}}
     Carvalho, Martin Stadler, Geoffroy Couprie, Niklas Cathor, Marco
     Stahl, James Coglan, Ken Eucker, Daniel Brolund, elf Pavlik, Nick
     Jennings, Markus Sabadello, Steven te Brinke, Matthias Treydte,
-    Rick van Rein, Mark Nottingham, Julian Reschke, and Markus
-    Lanthaler, among many others.
+    Rick van Rein, Mark Nottingham, Julian Reschke, Markus Lanthaler,
+    and Markus Unterwaditzer, among many others.
 
 17. References
 
