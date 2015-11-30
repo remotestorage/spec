@@ -9,7 +9,7 @@
 
 ## Breaking for servers:
 * Apart from GET requests, HEAD requests are also allowed without Authorization
-  request header on public folders.
+  request header on public documents.
 * Servers that support range requests should now announce this not only through
   WebFinger, but also through the HTTP 'Accept-Ranges' header.
 
