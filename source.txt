@@ -486,7 +486,7 @@ Table of Contents
 
     The server MAY expire bearer tokens, and MAY require the user to
     register applications as OAuth clients before first use; if no
-    client registration is required, then the server MAY ignore the
+    client registration is required, then the server MUST ignore the
     value of the client_id parameter in favor of relying on the origin
     of the redirect_uri parameter for unique client identification. See
     section 4 of [ORIGIN] for computing the Origin.
