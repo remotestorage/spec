@@ -48,6 +48,13 @@ Copyright Notice
    include Simplified BSD License text as described in Section 4.e of
    the Trust Legal Provisions and are provided without warranty as
    described in the Simplified BSD License.
+
+
+de Jong                                                         [Page 1]
+
+Internet-Draft              remoteStorage                      June 2016
+
+
 Table of Contents
 
    1. Introduction...................................................2
@@ -73,9 +80,9 @@ Table of Contents
   13. Distributed versioning........................................18
   14. Security Considerations.......................................19
   15. IANA Considerations...........................................20
-  16. Acknowledgments...............................................20
-  17. References....................................................20
-     17.1. Normative References.....................................20
+  16. Acknowledgments...............................................21
+  17. References....................................................21
+     17.1. Normative References.....................................21
      17.2. Informative References...................................21
   18. Authors' addresses............................................22
 
@@ -91,6 +98,13 @@ Table of Contents
 
        *  GET a folder: retrieve the names and current versions of the
           documents and subfolders currently contained by the folder
+
+
+de Jong                                                         [Page 2]
+
+Internet-Draft              remoteStorage                      June 2016
+
+
        *  GET a document: retrieve its content type, current version,
           and contents
 
@@ -135,6 +149,13 @@ Table of Contents
 
     For a document, the server stores, and should be able to produce:
 
+
+de Jong                                                         [Page 3]
+
+Internet-Draft              remoteStorage                      June 2016
+
+
+
        * current version
        * content type
        * content length
@@ -177,6 +198,13 @@ Table of Contents
     field, one string-valued 'Content-Type' and one integer-valued
     'Content-Length' field. They represent the document's current
     version, its content type, and its content length respectively. Note
+
+
+de Jong                                                         [Page 4]
+
+Internet-Draft              remoteStorage                      June 2016
+
+
     that content length is measured in octets (bytes), not in
     characters.
 
@@ -221,6 +249,13 @@ Table of Contents
     In contexts outside of this document, non-empty folders may be
     called 'existent', while empty folders may be called 'non-existent'.
 
+
+de Jong                                                         [Page 5]
+
+Internet-Draft              remoteStorage                      June 2016
+
+
+
     A successful GET request to a document SHOULD be responded to with
     the full document contents in the body, the document's content type
     in a 'Content-Type' header, its content length in octets (not in
@@ -263,6 +298,13 @@ Table of Contents
     A successful DELETE request to a document MUST result in:
 
        * the deletion of that document from the storage, and from its
+
+
+de Jong                                                         [Page 6]
+
+Internet-Draft              remoteStorage                      June 2016
+
+
          parent folder,
        * silent deletion of the parent folder if it is left empty by
          this, and so on for further ancestor folders,
@@ -306,6 +348,13 @@ Table of Contents
        * 507 in case the account is over its storage quota,
        * 4xx for all malformed requests, e.g. reserved characters in the
              path [URI, section 2.2], as well as for all PUT and DELETE
+
+
+de Jong                                                         [Page 7]
+
+Internet-Draft              remoteStorage                      June 2016
+
+
              requests to folders,
        * 2xx for all successful requests.
 
@@ -347,6 +396,13 @@ Table of Contents
     All responses MUST carry CORS headers [CORS]. The server MUST also
     reply to preflight OPTIONS requests as per CORS.
 
+
+
+
+
+de Jong                                                         [Page 8]
+
+Internet-Draft              remoteStorage                      June 2016
 
 
 8. Session description
@@ -392,6 +448,13 @@ Table of Contents
     The access the bearer token gives is the sum of its access scopes,
     with each access scope representing the following permissions:
 
+
+
+de Jong                                                         [Page 9]
+
+Internet-Draft              remoteStorage                      June 2016
+
+
     '*:rw') any request,
 
     '*:r') any GET or HEAD request,
@@ -435,6 +498,13 @@ Table of Contents
         "http://tools.ietf.org/html/rfc6749#section-4.2": <auth-dialog>,
         "...": "...",
       }
+
+
+de Jong                                                        [Page 10]
+
+Internet-Draft              remoteStorage                      June 2016
+
+
     }
 
     A common way of identifying persons as <user> at <host> is through a
@@ -478,6 +548,13 @@ Table of Contents
     case, or request the entire resource in the second case).
 
     A "http://remotestorage.io/spec/web-authoring" property has been
+
+
+de Jong                                                        [Page 11]
+
+Internet-Draft              remoteStorage                      June 2016
+
+
     proposed with a string value of the fully qualified domain name to
     which web authoring content is published if the server supports web
     authoring as per [AUTHORING]. Note that this extension is a breaking
@@ -522,6 +599,13 @@ g.com HTTP/1.1
 
     and the server's response might look like this:
 
+
+de Jong                                                        [Page 12]
+
+Internet-Draft              remoteStorage                      June 2016
+
+
+
          HTTP/1.1 200 OK
          Access-Control-Allow-Origin: *
          Content-Type: application/jrd+json
@@ -563,6 +647,13 @@ unhosted.5apps.com&response_type=token HTTP/1.1
         Host: 3pp.io
 
     The server's response might look like this (truncated for brevity):
+
+
+
+de Jong                                                        [Page 13]
+
+Internet-Draft              remoteStorage                      June 2016
+
 
         HTTP/1.1 200 OK
 
@@ -607,6 +698,13 @@ low
         Host: 3pp.io:4439
         Access-Control-Request-Method: GET
         Origin: https://drinks-unhosted.5apps.com
+
+
+de Jong                                                        [Page 14]
+
+Internet-Draft              remoteStorage                      June 2016
+
+
         Access-Control-Request-Headers: Authorization
         Referer: https://drinks-unhosted.5apps.com/
 
@@ -650,6 +748,13 @@ ntent-Type, Origin, X-Requested-With, If-Match, If-None-Match
         Host: 3pp.io:4439
         Content-Length: 91
         Origin: https://drinks-unhosted.5apps.com
+
+
+de Jong                                                        [Page 15]
+
+Internet-Draft              remoteStorage                      June 2016
+
+
         Authorization: Bearer j2YnGtXjzzzHNjkd1CJxoQubA1o=
         Content-Type: application/json; charset=UTF-8
         Referer: https://drinks-unhosted.5apps.com/
@@ -694,6 +799,13 @@ e.io/spec/modules/myfavoritedrinks/drink"}
         {"name":"test", "updated":true, "@context":"http://remotestora\
 ge.io/spec/modules/myfavoritedrinks/drink"}
 
+
+de Jong                                                        [Page 16]
+
+Internet-Draft              remoteStorage                      June 2016
+
+
+
     If the GET URL would have been "/storage/michiel/myfavoritedrinks/",
     a 200 OK response would have a folder description as the response
     body:
@@ -734,6 +846,13 @@ charset=UTF-8","Content-Length":106}}}
         Access-Control-Allow-Origin: https://drinks-unhosted.5apps.com
         ETag: "1382694048000"
 
+
+
+
+
+de Jong                                                        [Page 17]
+
+Internet-Draft              remoteStorage                      June 2016
 
 
 13. Distributed versioning
@@ -779,6 +898,13 @@ charset=UTF-8","Content-Length":106}}}
     etcetera. Then one GET request to the root folder '/' will be
     enough to know if any of these 1000 documents has changed.
 
+
+
+de Jong                                                        [Page 18]
+
+Internet-Draft              remoteStorage                      June 2016
+
+
     Say document '/7/9/2' has changed; then the GET request to '/' will
     come back with a different ETag, and entry '7/' will have a
     different value in its JSON content. The client could then request
@@ -822,6 +948,13 @@ charset=UTF-8","Content-Length":106}}}
     store documents on hard-to-guess URLs [CAPABILITIES] whose path
     after <storage_root> starts with '/public/', while sharing this URL
     only with the intended audience. That way, only parties who know the
+
+
+de Jong                                                        [Page 19]
+
+Internet-Draft              remoteStorage                      June 2016
+
+
     document's hard-to-guess URL, can access it. The server SHOULD
     therefore make an effort to detect and stop brute-force attacks that
     attempt to guess the location of such documents.
@@ -865,6 +998,13 @@ charset=UTF-8","Content-Length":106}}}
 
     [URI]
         Fielding, R., "Uniform Resource Identifier (URI): Generic
+
+
+de Jong                                                        [Page 20]
+
+Internet-Draft              remoteStorage                      June 2016
+
+
         Syntax", RFC 3986, January 2005.
 
     [WEBFINGER]
@@ -908,6 +1048,13 @@ charset=UTF-8","Content-Length":106}}}
     [CORS]
         van Kesteren, Anne (ed), "Cross-Origin Resource Sharing --
         W3C Candidate Recommendation 29 January 2013",
+
+
+de Jong                                                        [Page 21]
+
+Internet-Draft              remoteStorage                      June 2016
+
+
         http://www.w3.org/TR/cors/, January 2013.
 
     [DATASTORE]
@@ -943,3 +1090,14 @@ charset=UTF-8","Content-Length":106}}}
     (independent)
 
     Email: fkooman@tuxed.net
+
+
+
+
+
+
+
+
+
+
+de Jong                                                        [Page 22]
