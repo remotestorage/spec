@@ -80,9 +80,9 @@ Table of Contents
   13. Distributed versioning........................................18
   14. Security Considerations.......................................19
   15. IANA Considerations...........................................20
-  16. Acknowledgments...............................................21
-  17. References....................................................21
-     17.1. Normative References.....................................21
+  16. Acknowledgments...............................................20
+  17. References....................................................20
+     17.1. Normative References.....................................20
      17.2. Informative References...................................21
   18. Authors' addresses............................................22
 
@@ -1057,10 +1057,6 @@ Internet-Draft              remoteStorage                      June 2016
 
         http://www.w3.org/TR/cors/, January 2013.
 
-    [DATASTORE]
-        "WebAPI/DataStore", MozillaWiki, retrieved May 2014.
-        https://wiki.mozilla.org/WebAPI/DataStore#Manifest
-
     [KERBEROS]
         C. Neuman et al., "The Kerberos Network Authentication Service
         (V5)", RFC4120, July 2005.
@@ -1090,6 +1086,10 @@ Internet-Draft              remoteStorage                      June 2016
     (independent)
 
     Email: fkooman@tuxed.net
+
+
+
+
 
 
 
