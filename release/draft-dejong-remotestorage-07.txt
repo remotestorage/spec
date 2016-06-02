@@ -1,5 +1,5 @@
 INTERNET DRAFT                                      Michiel B. de Jong
-Document: draft-dejong-remotestorage-07                        Mozilla
+Document: draft-dejong-remotestorage-07                  (independent)
                                                              F. Kooman
 Intended Status: Proposed Standard                       (independent)
 Expires: 29 November 2016                                  2 June 2016
@@ -1082,9 +1082,9 @@ Internet-Draft              remoteStorage                      June 2016
 18. Authors' addresses
 
     Michiel B. de Jong
-    Mozilla
+    (independent)
 
-    Email: michiel@mozilla.com
+    Email: michiel@unhosted.org
 
 
     F. Kooman
