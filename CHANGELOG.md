@@ -1,3 +1,16 @@
+# draft-dejong-remotestorage-07.txt
+
+## Breaking for servers:
+* The app manifest is no longer guaranteed to contain a 'datastores-access'
+  field.
+
+## Breaking for clients:
+* Zero-click login when the app is opened through the `remotestorage=` URL
+  fragment parameter (the storage-first flow) is no longer allowed, the app
+  should now ask for user confirmation before proceeding to connect. Also, if a
+  `remotestorage=` parameter is present, the `access_token=` and `scope=`
+  parameters should be ignored.
+
 # draft-dejong-remotestorage-06.txt
 
 ## Breaking for servers as well as clients:
