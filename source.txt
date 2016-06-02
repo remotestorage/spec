@@ -506,10 +506,10 @@ Table of Contents
     SHOULD connect to the given provider account, as defined in Section
     10.
 
-    If the 'remotestorage' field exists in the URL fragment, the application
-    SHOULD ignore any other parameters such as 'access_token' or 'state', to
-    ensure compatibility with servers that implement older versions of this
-    specification.
+    If the 'remotestorage' field exists in the URL fragment, the
+    application SHOULD ignore any other parameters such as
+    'access_token' or 'state', to ensure compatibility with servers
+    that implement older versions of this specification.
 
 12. Example wire transcripts
 

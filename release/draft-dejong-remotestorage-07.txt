@@ -565,16 +565,16 @@ Internet-Draft              remoteStorage                      June 2016
 
     The server MAY expire bearer tokens, and MAY require the user to
     register applications as OAuth clients before first use; if no
-    client registration is required, then the server MAY ignore the
-    value of the client_id parameter in favor of relying on the origin
-    of the redirect_uri parameter for unique client identification. See
-    section 4 of [ORIGIN] for computing the Origin.
+    client registration is required, the server MUST ignore the value of
+    the client_id parameter in favor of relying on the origin of the
+    redirect_uri parameter for unique client identification. See section
+    4 of [ORIGIN] for computing the origin.
 
 11. Storage-first bearer token issuance
 
     To request that the application connects to the user account
     <account> ' ' <host>, providers MAY redirect to applications with a
-    `remotestorage` field in the URL fragment, with the user account as
+    'remotestorage' field in the URL fragment, with the user account as
     value.
 
     The appplication MUST make sure this request is intended by the
@@ -582,6 +582,11 @@ Internet-Draft              remoteStorage                      June 2016
     to connect to the given provider account. After confirmation, it
     SHOULD connect to the given provider account, as defined in Section
     10.
+
+    If the 'remotestorage' field exists in the URL fragment, the
+    application SHOULD ignore any other parameters such as
+    'access_token' or 'state', to ensure compatibility with servers
+    that implement older versions of this specification.
 
 12. Example wire transcripts
 
@@ -593,11 +598,6 @@ Internet-Draft              remoteStorage                      June 2016
     In application-first, an in-browser application might issue the
     following request, using XMLHttpRequest and CORS:
 
-         GET /.well-known/webfinger?resource=acct:michiel@michielbdejon\
-g.com HTTP/1.1
-         Host: michielbdejong.com
-
-    and the server's response might look like this:
 
 
 de Jong                                                        [Page 12]
@@ -605,6 +605,11 @@ de Jong                                                        [Page 12]
 Internet-Draft              remoteStorage                      June 2016
 
 
+         GET /.well-known/webfinger?resource=acct:michiel@michielbdejon\
+g.com HTTP/1.1
+         Host: michielbdejong.com
+
+    and the server's response might look like this:
 
          HTTP/1.1 200 OK
          Access-Control-Allow-Origin: *
@@ -643,17 +648,17 @@ motestorage-06",
 
         GET /oauth/michiel?redirect_uri=https%3A%2F%2Fdrinks-unhosted.5\
 apps.com%2F&scope=myfavoritedrinks%3Arw&client_id=https%3A%2F%2Fdrinks-\
-unhosted.5apps.com&response_type=token HTTP/1.1
-        Host: 3pp.io
-
-    The server's response might look like this (truncated for brevity):
-
 
 
 de Jong                                                        [Page 13]
 
 Internet-Draft              remoteStorage                      June 2016
 
+
+unhosted.5apps.com&response_type=token HTTP/1.1
+        Host: 3pp.io
+
+    The server's response might look like this (truncated for brevity):
 
         HTTP/1.1 200 OK
 
@@ -694,17 +699,17 @@ low
     may affect the server-state, the browser will make a preflight
     request first, with the OPTIONS verb, for instance:
 
-        OPTIONS /storage/michiel/myfavoritedrinks/ HTTP/1.1
-        Host: 3pp.io:4439
-        Access-Control-Request-Method: GET
-        Origin: https://drinks-unhosted.5apps.com
-
 
 de Jong                                                        [Page 14]
 
 Internet-Draft              remoteStorage                      June 2016
 
 
+
+        OPTIONS /storage/michiel/myfavoritedrinks/ HTTP/1.1
+        Host: 3pp.io:4439
+        Access-Control-Request-Method: GET
+        Origin: https://drinks-unhosted.5apps.com
         Access-Control-Request-Headers: Authorization
         Referer: https://drinks-unhosted.5apps.com/
 
@@ -744,17 +749,17 @@ ntent-Type, Origin, X-Requested-With, If-Match, If-None-Match
     A subsequent PUT may contain an 'If-Match' header referring to the
     ETag previously returned, like this:
 
-        PUT /storage/michiel/myfavoritedrinks/test HTTP/1.1
-        Host: 3pp.io:4439
-        Content-Length: 91
-        Origin: https://drinks-unhosted.5apps.com
-
 
 de Jong                                                        [Page 15]
 
 Internet-Draft              remoteStorage                      June 2016
 
 
+
+        PUT /storage/michiel/myfavoritedrinks/test HTTP/1.1
+        Host: 3pp.io:4439
+        Content-Length: 91
+        Origin: https://drinks-unhosted.5apps.com
         Authorization: Bearer j2YnGtXjzzzHNjkd1CJxoQubA1o=
         Content-Type: application/json; charset=UTF-8
         Referer: https://drinks-unhosted.5apps.com/
@@ -793,11 +798,6 @@ e.io/spec/modules/myfavoritedrinks/drink"}
         Access-Control-Allow-Origin: https://drinks-unhosted.5apps.com
         Content-Type: application/json; charset=UTF-8
         Content-Length: 106
-        ETag: "1382694048000"
-        Cache-Control: no-cache
-
-        {"name":"test", "updated":true, "@context":"http://remotestora\
-ge.io/spec/modules/myfavoritedrinks/drink"}
 
 
 de Jong                                                        [Page 16]
@@ -805,6 +805,11 @@ de Jong                                                        [Page 16]
 Internet-Draft              remoteStorage                      June 2016
 
 
+        ETag: "1382694048000"
+        Cache-Control: no-cache
+
+        {"name":"test", "updated":true, "@context":"http://remotestora\
+ge.io/spec/modules/myfavoritedrinks/drink"}
 
     If the GET URL would have been "/storage/michiel/myfavoritedrinks/",
     a 200 OK response would have a folder description as the response
@@ -843,16 +848,16 @@ charset=UTF-8","Content-Length":106}}}
     And the server may respond with a 412 Conflict or a 200 OK status:
 
         HTTP/1.1 412 Conflict
-        Access-Control-Allow-Origin: https://drinks-unhosted.5apps.com
-        ETag: "1382694048000"
-
-
-
 
 
 de Jong                                                        [Page 17]
 
 Internet-Draft              remoteStorage                      June 2016
+
+
+        Access-Control-Allow-Origin: https://drinks-unhosted.5apps.com
+        ETag: "1382694048000"
+
 
 
 13. Distributed versioning
@@ -893,17 +898,17 @@ Internet-Draft              remoteStorage                      June 2016
     changes individually.
 
     As an example, the root folder may contain 10 directories,
-    each of which contain 10 directories, which each contain 10
-    documents, so their paths would be for instance '/0/0/1', '/0/0/2',
-    etcetera. Then one GET request to the root folder '/' will be
-    enough to know if any of these 1000 documents has changed.
-
 
 
 de Jong                                                        [Page 18]
 
 Internet-Draft              remoteStorage                      June 2016
 
+
+    each of which contain 10 directories, which each contain 10
+    documents, so their paths would be for instance '/0/0/1', '/0/0/2',
+    etcetera. Then one GET request to the root folder '/' will be
+    enough to know if any of these 1000 documents has changed.
 
     Say document '/7/9/2' has changed; then the GET request to '/' will
     come back with a different ETag, and entry '7/' will have a
@@ -944,17 +949,17 @@ Internet-Draft              remoteStorage                      June 2016
     OAuth dialog and launch dashboard or token revocation interface
     SHOULD be on a different origin than the remoteStorage interface.
 
-    Where the use of bearer tokens is impractical, a user may choose to
-    store documents on hard-to-guess URLs [CAPABILITIES] whose path
-    after <storage_root> starts with '/public/', while sharing this URL
-    only with the intended audience. That way, only parties who know the
-
 
 de Jong                                                        [Page 19]
 
 Internet-Draft              remoteStorage                      June 2016
 
 
+
+    Where the use of bearer tokens is impractical, a user may choose to
+    store documents on hard-to-guess URLs [CAPABILITIES] whose path
+    after <storage_root> starts with '/public/', while sharing this URL
+    only with the intended audience. That way, only parties who know the
     document's hard-to-guess URL, can access it. The server SHOULD
     therefore make an effort to detect and stop brute-force attacks that
     attempt to guess the location of such documents.
@@ -993,11 +998,6 @@ Internet-Draft              remoteStorage                      June 2016
         Levels", BCP 14, RFC 2119, March 1997.
 
     [IRI]
-        Duerst, M., "Internationalized Resource Identifiers (IRIs)",
-        RFC 3987, January 2005.
-
-    [URI]
-        Fielding, R., "Uniform Resource Identifier (URI): Generic
 
 
 de Jong                                                        [Page 20]
@@ -1005,6 +1005,11 @@ de Jong                                                        [Page 20]
 Internet-Draft              remoteStorage                      June 2016
 
 
+        Duerst, M., "Internationalized Resource Identifiers (IRIs)",
+        RFC 3987, January 2005.
+
+    [URI]
+        Fielding, R., "Uniform Resource Identifier (URI): Generic
         Syntax", RFC 3986, January 2005.
 
     [WEBFINGER]
@@ -1043,11 +1048,6 @@ Internet-Draft              remoteStorage                      June 2016
     [JSON-LD]
         M. Sporny, G. Kellogg, M. Lanthaler, "JSON-LD 1.0", W3C
         Proposed Recommendation,
-        http://www.w3.org/TR/2014/REC-json-ld-20140116/, January 2014.
-
-    [CORS]
-        van Kesteren, Anne (ed), "Cross-Origin Resource Sharing --
-        W3C Candidate Recommendation 29 January 2013",
 
 
 de Jong                                                        [Page 21]
@@ -1055,6 +1055,11 @@ de Jong                                                        [Page 21]
 Internet-Draft              remoteStorage                      June 2016
 
 
+        http://www.w3.org/TR/2014/REC-json-ld-20140116/, January 2014.
+
+    [CORS]
+        van Kesteren, Anne (ed), "Cross-Origin Resource Sharing --
+        W3C Candidate Recommendation 29 January 2013",
         http://www.w3.org/TR/cors/, January 2013.
 
     [KERBEROS]
@@ -1086,11 +1091,6 @@ Internet-Draft              remoteStorage                      June 2016
     (independent)
 
     Email: fkooman@tuxed.net
-
-
-
-
-
 
 
 
