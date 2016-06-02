@@ -497,7 +497,7 @@ Table of Contents
 
     To request that the application connects to the user account
     <account> ' ' <host>, providers MAY redirect to applications with a
-    `remotestorage` field in the URL fragment, with the user account as
+    'remotestorage' field in the URL fragment, with the user account as
     value.
 
     The appplication MUST make sure this request is intended by the
@@ -505,6 +505,11 @@ Table of Contents
     to connect to the given provider account. After confirmation, it
     SHOULD connect to the given provider account, as defined in Section
     10.
+
+    If the 'remotestorage' field exists in the URL fragment, the application
+    SHOULD ignore any other parameters such as 'access_token' or 'state', to
+    ensure compatibility with servers that implement older versions of this
+    specification.
 
 12. Example wire transcripts
 
