@@ -1,8 +1,8 @@
 INTERNET DRAFT                                      Michiel B. de Jong
-Document: draft-dejong-remotestorage-07                  (independent)
+Document: draft-dejong-remotestorage-08                  (independent)
                                                              F. Kooman
 Intended Status: Proposed Standard                       (independent)
-Expires: 29 November 2016                                  2 June 2016
+Expires: 28 May 2017                                  29 November 2016
 
 
                             remoteStorage
@@ -32,7 +32,7 @@ Status of this Memo
    time.  It is inappropriate to use Internet-Drafts as reference
    material or to cite them other than as "work in progress."
 
-   This Internet-Draft will expire on 29 November 2016.
+   This Internet-Draft will expire on 28 May 2017.
 
 Copyright Notice
 
@@ -367,7 +367,7 @@ Table of Contents
          can however be reused in subsequent interactions with the same
          client, as long as that client is still trusted. Example:
          'ofb24f1ac3973e70j6vts19qr9v2eei'
-       * <storage_api>, always 'draft-dejong-remotestorage-06' for this
+       * <storage_api>, always 'draft-dejong-remotestorage-08' for this
          alternative version of the specification.
 
     The client can make its requests using HTTPS with CORS and bearer
@@ -544,7 +544,7 @@ g.com HTTP/1.1
 e",
              "properties": {
                "http://remotestorage.io/spec/version": "draft-dejong-re\
-motestorage-06",
+motestorage-08",
                "http://tools.ietf.org/html/rfc6749#section-4.2": "https\
 ://3pp.io:4439/oauth/michiel",
                "http://tools.ietf.org/html/rfc6750#section-2.3": null,
