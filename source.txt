@@ -251,11 +251,10 @@ Table of Contents
          and further ancestor folders, using a strong validator [HTTP,
          section 7.2].
 
-    If not exactly one Content-Type header was received as part of a
-    PUT request, the Content-Type header value contains non-ASCII
-    characters, or it is unreasonably long, the server MAY refuse to
-    process the request, and instead respond with a descriptive error
-    message in the body, and a http response code from the 4xx range.
+    If no valid Content-Type header was received as part of a PUT
+    request, the server MAY refuse to process the request, and instead
+    respond with a descriptive error message in the body, as well as a
+    http response code from the 4xx range.
 
     The response MUST contain a strong ETag header, with the document's
     new version (for instance a hash of its contents) as its value.
