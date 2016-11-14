@@ -256,6 +256,9 @@ Table of Contents
     respond with a descriptive error message in the body, as well as a
     http response code from the 4xx range.
 
+    RemoteStorage does not place any restrictions on the value of
+    Content-Type other than what is defined in [HTTP, section 3.1.1.5].
+
     The response MUST contain a strong ETag header, with the document's
     new version (for instance a hash of its contents) as its value.
 
