@@ -2,7 +2,7 @@
 
 ## Breaking for clients:
 * The content-type header value on a PUT request is now explicitly required
-  to be a valid Content-Type. This is only to align with the http spec, and
+  to be a valid Content-Type. This is only to align with the HTTP spec, and
   server implementations are encouraged to still just treat it as an opaque
   ASCII string, rather than comparing it to some whitelist of valid values.
 
