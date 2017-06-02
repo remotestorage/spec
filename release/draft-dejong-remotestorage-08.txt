@@ -286,18 +286,18 @@ Internet-Draft              remoteStorage                  November 2016
          and further ancestor folders, using a strong validator [HTTP,
          section 7.2].
 
-    If not exactly one Content-Type header was received as part of a
-    PUT request, the Content-Type header value contains non-ASCII
-    characters, or it is unreasonably long, the server MAY refuse to
-    process the request, and instead respond with a descriptive error
-    message in the body, and a http response code from the 4xx range.
+    If no valid Content-Type header was received as part of a PUT
+    request, the server MAY refuse to process the request, and instead
+    respond with a descriptive error message in the body, as well as a
+    http response code from the 4xx range.
+
+    RemoteStorage does not place any restrictions on the value of
+    Content-Type other than what is defined in [HTTP, section 3.1.1.5].
 
     The response MUST contain a strong ETag header, with the document's
     new version (for instance a hash of its contents) as its value.
 
     A successful DELETE request to a document MUST result in:
-
-       * the deletion of that document from the storage, and from its
 
 
 de Jong                                                         [Page 6]
@@ -305,6 +305,8 @@ de Jong                                                         [Page 6]
 Internet-Draft              remoteStorage                  November 2016
 
 
+
+       * the deletion of that document from the storage, and from its
          parent folder,
        * silent deletion of the parent folder if it is left empty by
          this, and so on for further ancestor folders,
@@ -346,8 +348,6 @@ Internet-Draft              remoteStorage                  November 2016
        * 412 for a conditional PUT or DELETE request whose precondition
              fails (see "Versioning" below),
        * 507 in case the account is over its storage quota,
-       * 4xx for all malformed requests, e.g. reserved characters in the
-             path [URI, section 2.2], as well as for all PUT and DELETE
 
 
 de Jong                                                         [Page 7]
@@ -355,6 +355,8 @@ de Jong                                                         [Page 7]
 Internet-Draft              remoteStorage                  November 2016
 
 
+       * 4xx for all malformed requests, e.g. reserved characters in the
+             path [URI, section 2.2], as well as for all PUT and DELETE
              requests to folders,
        * 2xx for all successful requests.
 
@@ -398,11 +400,11 @@ Internet-Draft              remoteStorage                  November 2016
 
 
 
-
-
 de Jong                                                         [Page 8]
 
 Internet-Draft              remoteStorage                  November 2016
+
+
 
 
 8. Session description
@@ -446,14 +448,14 @@ Internet-Draft              remoteStorage                  November 2016
     where the <module> string SHOULD be lower-case alphanumerical, other
     than the reserved word 'public', and <level> can be ':r' or ':rw'.
     The access the bearer token gives is the sum of its access scopes,
-    with each access scope representing the following permissions:
-
 
 
 de Jong                                                         [Page 9]
 
 Internet-Draft              remoteStorage                  November 2016
 
+
+    with each access scope representing the following permissions:
 
     '*:rw') any request,
 
@@ -496,8 +498,6 @@ Internet-Draft              remoteStorage                  November 2016
       "properties": {
         "http://remotestorage.io/spec/version": <storage_api>,
         "http://tools.ietf.org/html/rfc6749#section-4.2": <auth-dialog>,
-        "...": "...",
-      }
 
 
 de Jong                                                        [Page 10]
@@ -505,6 +505,8 @@ de Jong                                                        [Page 10]
 Internet-Draft              remoteStorage                  November 2016
 
 
+        "...": "...",
+      }
     }
 
     A common way of identifying persons as <user> at <host> is through a
@@ -547,14 +549,14 @@ Internet-Draft              remoteStorage                  November 2016
     (e.g. retrieve the protected resource asynchronously in the first
     case, or request the entire resource in the second case).
 
-    A "http://remotestorage.io/spec/web-authoring" property has been
-
 
 de Jong                                                        [Page 11]
 
 Internet-Draft              remoteStorage                  November 2016
 
 
+
+    A "http://remotestorage.io/spec/web-authoring" property has been
     proposed with a string value of the fully qualified domain name to
     which web authoring content is published if the server supports web
     authoring as per [AUTHORING]. Note that this extension is a breaking
@@ -596,14 +598,14 @@ Internet-Draft              remoteStorage                  November 2016
 12.1. WebFinger
 
     In application-first, an in-browser application might issue the
-    following request, using XMLHttpRequest and CORS:
-
 
 
 de Jong                                                        [Page 12]
 
 Internet-Draft              remoteStorage                  November 2016
 
+
+    following request, using XMLHttpRequest and CORS:
 
          GET /.well-known/webfinger?resource=acct:michiel@michielbdejon\
 g.com HTTP/1.1
@@ -646,8 +648,6 @@ motestorage-08",
     https://drinks-unhosted.5apps.com/ and wants read-write access to
     the account's "myfavoritedrinks" scope:
 
-        GET /oauth/michiel?redirect_uri=https%3A%2F%2Fdrinks-unhosted.5\
-apps.com%2F&scope=myfavoritedrinks%3Arw&client_id=https%3A%2F%2Fdrinks-\
 
 
 de Jong                                                        [Page 13]
@@ -655,6 +655,8 @@ de Jong                                                        [Page 13]
 Internet-Draft              remoteStorage                  November 2016
 
 
+        GET /oauth/michiel?redirect_uri=https%3A%2F%2Fdrinks-unhosted.5\
+apps.com%2F&scope=myfavoritedrinks%3Arw&client_id=https%3A%2F%2Fdrinks-\
 unhosted.5apps.com&response_type=token HTTP/1.1
         Host: 3pp.io
 
@@ -696,8 +698,6 @@ low
 12.4. OPTIONS preflight
 
     When an in-browser application makes a cross-origin request which
-    may affect the server-state, the browser will make a preflight
-    request first, with the OPTIONS verb, for instance:
 
 
 de Jong                                                        [Page 14]
@@ -705,6 +705,8 @@ de Jong                                                        [Page 14]
 Internet-Draft              remoteStorage                  November 2016
 
 
+    may affect the server-state, the browser will make a preflight
+    request first, with the OPTIONS verb, for instance:
 
         OPTIONS /storage/michiel/myfavoritedrinks/ HTTP/1.1
         Host: 3pp.io:4439
@@ -746,8 +748,6 @@ ntent-Type, Origin, X-Requested-With, If-Match, If-None-Match
 
 12.6. Subsequent PUT
 
-    A subsequent PUT may contain an 'If-Match' header referring to the
-    ETag previously returned, like this:
 
 
 de Jong                                                        [Page 15]
@@ -755,6 +755,8 @@ de Jong                                                        [Page 15]
 Internet-Draft              remoteStorage                  November 2016
 
 
+    A subsequent PUT may contain an 'If-Match' header referring to the
+    ETag previously returned, like this:
 
         PUT /storage/michiel/myfavoritedrinks/test HTTP/1.1
         Host: 3pp.io:4439
@@ -796,8 +798,6 @@ e.io/spec/modules/myfavoritedrinks/drink"}
 
         HTTP/1.1 200 OK
         Access-Control-Allow-Origin: https://drinks-unhosted.5apps.com
-        Content-Type: application/json; charset=UTF-8
-        Content-Length: 106
 
 
 de Jong                                                        [Page 16]
@@ -805,6 +805,8 @@ de Jong                                                        [Page 16]
 Internet-Draft              remoteStorage                  November 2016
 
 
+        Content-Type: application/json; charset=UTF-8
+        Content-Length: 106
         ETag: "1382694048000"
         Cache-Control: no-cache
 
@@ -847,14 +849,14 @@ charset=UTF-8","Content-Length":106}}}
 
     And the server may respond with a 412 Conflict or a 200 OK status:
 
-        HTTP/1.1 412 Conflict
-
 
 de Jong                                                        [Page 17]
 
 Internet-Draft              remoteStorage                  November 2016
 
 
+
+        HTTP/1.1 412 Conflict
         Access-Control-Allow-Origin: https://drinks-unhosted.5apps.com
         ETag: "1382694048000"
 
@@ -897,14 +899,14 @@ Internet-Draft              remoteStorage                  November 2016
     to the root folder, it is not necessary to poll each document for
     changes individually.
 
-    As an example, the root folder may contain 10 directories,
-
 
 de Jong                                                        [Page 18]
 
 Internet-Draft              remoteStorage                  November 2016
 
 
+
+    As an example, the root folder may contain 10 directories,
     each of which contain 10 directories, which each contain 10
     documents, so their paths would be for instance '/0/0/1', '/0/0/2',
     etcetera. Then one GET request to the root folder '/' will be
@@ -946,8 +948,6 @@ Internet-Draft              remoteStorage                  November 2016
     origin on which the remoteStorage server has its interface SHOULD
     therefore NOT be used for anything else, and the user SHOULD be
     warned not to visit any web pages on that origin. In particular, the
-    OAuth dialog and launch dashboard or token revocation interface
-    SHOULD be on a different origin than the remoteStorage interface.
 
 
 de Jong                                                        [Page 19]
@@ -955,6 +955,8 @@ de Jong                                                        [Page 19]
 Internet-Draft              remoteStorage                  November 2016
 
 
+    OAuth dialog and launch dashboard or token revocation interface
+    SHOULD be on a different origin than the remoteStorage interface.
 
     Where the use of bearer tokens is impractical, a user may choose to
     store documents on hard-to-guess URLs [CAPABILITIES] whose path
@@ -997,14 +999,14 @@ Internet-Draft              remoteStorage                  November 2016
         Bradner, S., "Key words for use in RFCs to Indicate Requirement
         Levels", BCP 14, RFC 2119, March 1997.
 
-    [IRI]
-
 
 de Jong                                                        [Page 20]
 
 Internet-Draft              remoteStorage                  November 2016
 
 
+
+    [IRI]
         Duerst, M., "Internationalized Resource Identifiers (IRIs)",
         RFC 3987, January 2005.
 
@@ -1046,8 +1048,6 @@ Internet-Draft              remoteStorage                  November 2016
         Version 2 (HTTP/2)", RFC7540, May 2015.
 
     [JSON-LD]
-        M. Sporny, G. Kellogg, M. Lanthaler, "JSON-LD 1.0", W3C
-        Proposed Recommendation,
 
 
 de Jong                                                        [Page 21]
@@ -1055,6 +1055,8 @@ de Jong                                                        [Page 21]
 Internet-Draft              remoteStorage                  November 2016
 
 
+        M. Sporny, G. Kellogg, M. Lanthaler, "JSON-LD 1.0", W3C
+        Proposed Recommendation,
         http://www.w3.org/TR/2014/REC-json-ld-20140116/, January 2014.
 
     [CORS]
@@ -1091,8 +1093,6 @@ Internet-Draft              remoteStorage                  November 2016
     (independent)
 
     Email: fkooman@tuxed.net
-
-
 
 
 
