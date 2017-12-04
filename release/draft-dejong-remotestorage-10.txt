@@ -1,8 +1,8 @@
 INTERNET DRAFT                                      Michiel B. de Jong
-Document: draft-dejong-remotestorage-08                  (independent)
+Document: draft-dejong-remotestorage-10                  (independent)
                                                              F. Kooman
 Intended Status: Proposed Standard                       (independent)
-Expires: 2 June 2017                                  29 November 2016
+Expires: 7 June 2018                                   4 December 2017
 
 
                             remoteStorage
@@ -32,11 +32,11 @@ Status of this Memo
    time.  It is inappropriate to use Internet-Drafts as reference
    material or to cite them other than as "work in progress."
 
-   This Internet-Draft will expire on 2 June 2017.
+   This Internet-Draft will expire on 7 June 2018.
 
 Copyright Notice
 
-   Copyright (c) 2016 IETF Trust and the persons identified as the
+   Copyright (c) 2017 IETF Trust and the persons identified as the
    document authors. All rights reserved.
 
    This document is subject to BCP 78 and the IETF Trust's Legal
@@ -52,7 +52,7 @@ Copyright Notice
 
 de Jong                                                         [Page 1]
 
-Internet-Draft              remoteStorage                  November 2016
+Internet-Draft              remoteStorage                  December 2017
 
 
 Table of Contents
@@ -102,7 +102,7 @@ Table of Contents
 
 de Jong                                                         [Page 2]
 
-Internet-Draft              remoteStorage                  November 2016
+Internet-Draft              remoteStorage                  December 2017
 
 
        *  GET a document: retrieve its content type, current version,
@@ -152,7 +152,7 @@ Internet-Draft              remoteStorage                  November 2016
 
 de Jong                                                         [Page 3]
 
-Internet-Draft              remoteStorage                  November 2016
+Internet-Draft              remoteStorage                  December 2017
 
 
 
@@ -202,7 +202,7 @@ Internet-Draft              remoteStorage                  November 2016
 
 de Jong                                                         [Page 4]
 
-Internet-Draft              remoteStorage                  November 2016
+Internet-Draft              remoteStorage                  December 2017
 
 
     that content length is measured in octets (bytes), not in
@@ -252,7 +252,7 @@ Internet-Draft              remoteStorage                  November 2016
 
 de Jong                                                         [Page 5]
 
-Internet-Draft              remoteStorage                  November 2016
+Internet-Draft              remoteStorage                  December 2017
 
 
 
@@ -302,7 +302,7 @@ Internet-Draft              remoteStorage                  November 2016
 
 de Jong                                                         [Page 6]
 
-Internet-Draft              remoteStorage                  November 2016
+Internet-Draft              remoteStorage                  December 2017
 
 
 
@@ -352,7 +352,7 @@ Internet-Draft              remoteStorage                  November 2016
 
 de Jong                                                         [Page 7]
 
-Internet-Draft              remoteStorage                  November 2016
+Internet-Draft              remoteStorage                  December 2017
 
 
        * 4xx for all malformed requests, e.g. reserved characters in the
@@ -402,7 +402,7 @@ Internet-Draft              remoteStorage                  November 2016
 
 de Jong                                                         [Page 8]
 
-Internet-Draft              remoteStorage                  November 2016
+Internet-Draft              remoteStorage                  December 2017
 
 
 
@@ -425,7 +425,7 @@ Internet-Draft              remoteStorage                  November 2016
          can however be reused in subsequent interactions with the same
          client, as long as that client is still trusted. Example:
          'ofb24f1ac3973e70j6vts19qr9v2eei'
-       * <storage_api>, always 'draft-dejong-remotestorage-08' for this
+       * <storage_api>, always 'draft-dejong-remotestorage-10' for this
          alternative version of the specification.
 
     The client can make its requests using HTTPS with CORS and bearer
@@ -452,7 +452,7 @@ Internet-Draft              remoteStorage                  November 2016
 
 de Jong                                                         [Page 9]
 
-Internet-Draft              remoteStorage                  November 2016
+Internet-Draft              remoteStorage                  December 2017
 
 
     with each access scope representing the following permissions:
@@ -502,7 +502,7 @@ Internet-Draft              remoteStorage                  November 2016
 
 de Jong                                                        [Page 10]
 
-Internet-Draft              remoteStorage                  November 2016
+Internet-Draft              remoteStorage                  December 2017
 
 
         "...": "...",
@@ -552,7 +552,7 @@ Internet-Draft              remoteStorage                  November 2016
 
 de Jong                                                        [Page 11]
 
-Internet-Draft              remoteStorage                  November 2016
+Internet-Draft              remoteStorage                  December 2017
 
 
 
@@ -602,7 +602,7 @@ Internet-Draft              remoteStorage                  November 2016
 
 de Jong                                                        [Page 12]
 
-Internet-Draft              remoteStorage                  November 2016
+Internet-Draft              remoteStorage                  December 2017
 
 
     following request, using XMLHttpRequest and CORS:
@@ -630,7 +630,7 @@ g.com HTTP/1.1
 e",
              "properties": {
                "http://remotestorage.io/spec/version": "draft-dejong-re\
-motestorage-08",
+motestorage-10",
                "http://tools.ietf.org/html/rfc6749#section-4.2": "https\
 ://3pp.io:4439/oauth/michiel",
                "http://tools.ietf.org/html/rfc6750#section-2.3": null,
@@ -652,7 +652,7 @@ motestorage-08",
 
 de Jong                                                        [Page 13]
 
-Internet-Draft              remoteStorage                  November 2016
+Internet-Draft              remoteStorage                  December 2017
 
 
         GET /oauth/michiel?redirect_uri=https%3A%2F%2Fdrinks-unhosted.5\
@@ -702,7 +702,7 @@ low
 
 de Jong                                                        [Page 14]
 
-Internet-Draft              remoteStorage                  November 2016
+Internet-Draft              remoteStorage                  December 2017
 
 
     may affect the server-state, the browser will make a preflight
@@ -752,7 +752,7 @@ ntent-Type, Origin, X-Requested-With, If-Match, If-None-Match
 
 de Jong                                                        [Page 15]
 
-Internet-Draft              remoteStorage                  November 2016
+Internet-Draft              remoteStorage                  December 2017
 
 
     A subsequent PUT may contain an 'If-Match' header referring to the
@@ -802,7 +802,7 @@ e.io/spec/modules/myfavoritedrinks/drink"}
 
 de Jong                                                        [Page 16]
 
-Internet-Draft              remoteStorage                  November 2016
+Internet-Draft              remoteStorage                  December 2017
 
 
         Content-Type: application/json; charset=UTF-8
@@ -852,7 +852,7 @@ charset=UTF-8","Content-Length":106}}}
 
 de Jong                                                        [Page 17]
 
-Internet-Draft              remoteStorage                  November 2016
+Internet-Draft              remoteStorage                  December 2017
 
 
 
@@ -902,7 +902,7 @@ Internet-Draft              remoteStorage                  November 2016
 
 de Jong                                                        [Page 18]
 
-Internet-Draft              remoteStorage                  November 2016
+Internet-Draft              remoteStorage                  December 2017
 
 
 
@@ -952,7 +952,7 @@ Internet-Draft              remoteStorage                  November 2016
 
 de Jong                                                        [Page 19]
 
-Internet-Draft              remoteStorage                  November 2016
+Internet-Draft              remoteStorage                  December 2017
 
 
     OAuth dialog and launch dashboard or token revocation interface
@@ -1002,7 +1002,7 @@ Internet-Draft              remoteStorage                  November 2016
 
 de Jong                                                        [Page 20]
 
-Internet-Draft              remoteStorage                  November 2016
+Internet-Draft              remoteStorage                  December 2017
 
 
 
@@ -1052,7 +1052,7 @@ Internet-Draft              remoteStorage                  November 2016
 
 de Jong                                                        [Page 21]
 
-Internet-Draft              remoteStorage                  November 2016
+Internet-Draft              remoteStorage                  December 2017
 
 
         M. Sporny, G. Kellogg, M. Lanthaler, "JSON-LD 1.0", W3C
