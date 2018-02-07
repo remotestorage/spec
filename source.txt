@@ -300,6 +300,8 @@ Table of Contents
              existing folder's name at the same level.
        * 412 for a conditional PUT or DELETE request whose precondition
              fails (see "Versioning" below),
+       * 413 if the payload is too large, e.g. when the server has a
+             maximum upload size for documents
        * 414 if the request URI is too long,
        * 416 if Range requests are supported by the server and the Range
              request can not be satisfied,
