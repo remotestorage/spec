@@ -283,12 +283,9 @@ Table of Contents
     [BEARER, section 3.1]. The following is a non-normative list of
     status codes that are likely to occur in practice:
 
-       * 500 if an internal server error occurred,
-       * 429 if the client makes too frequent requests or is suspected
-             of malicious activity,
-       * 414 if the request URI is too long,
-       * 416 if Range requests are supported by the server and the Range
-             request can not be satisfied,
+       * 2xx for all successful requests.
+       * 304 for a conditional GET request whose precondition
+             fails (see "Versioning" below),
        * 401 for all requests that require a valid bearer token and
              where no valid one was sent (see also [BEARER, section
              3.1]),
@@ -297,19 +294,22 @@ Table of Contents
              accessing data outside the user's <storage_root>,
        * 404 for all DELETE, GET and HEAD requests to documents that do
              not exist on the storage,
-       * 304 for a conditional GET request whose precondition
-             fails (see "Versioning" below),
        * 409 for a PUT request where any folder name in the path
              clashes with an existing document's name at the same
              level, or where the document name coincides with an
              existing folder's name at the same level.
        * 412 for a conditional PUT or DELETE request whose precondition
              fails (see "Versioning" below),
-       * 507 in case the account is over its storage quota,
+       * 414 if the request URI is too long,
+       * 416 if Range requests are supported by the server and the Range
+             request can not be satisfied,
+       * 429 if the client makes too frequent requests or is suspected
+             of malicious activity,
        * 4xx for all malformed requests, e.g. reserved characters in the
              path [URI, section 2.2], as well as for all PUT and DELETE
              requests to folders,
-       * 2xx for all successful requests.
+       * 500 if an internal server error occurred,
+       * 507 in case the account is over its storage quota,
 
     Clients SHOULD also handle the case where a response takes too long
     to arrive, or where no response is received at all.
