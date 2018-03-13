@@ -669,7 +669,7 @@ e.io/spec/modules/myfavoritedrinks/drink"}
 
         HTTP/1.1 200 OK
         Access-Control-Allow-Origin: https://drinks-unhosted.5apps.com
-        ETag: "1382694048000"
+        ETag: "2182694048000"
 
 12.7. GET
 
@@ -739,7 +739,7 @@ charset=UTF-8","Content-Length":106}}}
 
         HTTP/1.1 412 Conflict
         Access-Control-Allow-Origin: https://drinks-unhosted.5apps.com
-        ETag: "1382694048000"
+        ETag: "2182694048000"
 
 
 
