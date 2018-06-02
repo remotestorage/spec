@@ -132,6 +132,7 @@ Table of Contents
        * current version
        * content type
        * content length
+       * last-modified date
 
     For a document, the server stores, and should be able to produce:
 
@@ -174,11 +175,13 @@ Table of Contents
     semantic in URIs (Section 5.2.4 of [URI]).
 
     A document description is a map containing one string-valued 'ETag'
-    field, one string-valued 'Content-Type' and one integer-valued
-    'Content-Length' field. They represent the document's current
-    version, its content type, and its content length respectively. Note
-    that content length is measured in octets (bytes), not in
-    characters.
+    field, one string-valued 'Content-Type', one integer-valued
+    'Content-Length' field, and one string-valued 'Last-Modified' field.
+    They represent the document's current version, its content type, its
+    content length, and last-modfied date respectively. The
+    last-modified date MUST be formatted as HTTP-date (Section 7.1.1.1
+    of [HTTP]). Note that content length is measured in octets (bytes),
+    not in characters.
 
     A folder description is a map containing a string-valued 'ETag'
     field, representing the folder's current version.
@@ -198,7 +201,8 @@ Table of Contents
            "abc": {
              "ETag": "DEADBEEFDEADBEEFDEADBEEF",
              "Content-Type": "image/jpeg",
-             "Content-Length": 82352
+             "Content-Length": 82352,
+             "Last-Modified": "Sat, 2 Jun 2018 15:58:23 GMT"
            },
            "def/": {
              "ETag": "1337ABCD1337ABCD1337ABCD"
@@ -714,7 +718,8 @@ ge.io/spec/modules/myfavoritedrinks/drink"}
 
         {"@context":"http://remotestorage.io/spec/folder-version","ite\
 ms":{"test":{"ETag":"1382694048000","Content-Type":"application/json; \
-charset=UTF-8","Content-Length":106}}}
+charset=UTF-8","Content-Length":106,"Last-Modified":"Sat, 2 Jun 2018 1\
+5:58:23 GMT"}}}
 
     If the GET URL would have been a non-existing document like
     "/storage/michiel/myfavoritedrinks/x", the response would have a 404
@@ -946,3 +951,4 @@ charset=UTF-8","Content-Length":106}}}
     (independent)
 
     Email: fkooman@tuxed.net
+
