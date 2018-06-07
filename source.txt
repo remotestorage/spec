@@ -669,8 +669,8 @@ ntent-Type, Origin, X-Requested-With, If-Match, If-None-Match
         {"name":"test", "updated":true, "@context":"http://remotestorag\
 e.io/spec/modules/myfavoritedrinks/drink"}
 
-    And the server may respond with a 412 Precondition Failed or a 200 OK
-    status:
+    And the server may respond with a 412 Precondition Failed or a
+    200 OK status:
 
         HTTP/1.1 200 OK
         Access-Control-Allow-Origin: https://drinks-unhosted.5apps.com
