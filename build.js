@@ -3,7 +3,7 @@ var fs = require('fs'),
   breaker1a = '\n\nde Jong                                                         [Page ',
   breaker1b = '\n\nde Jong                                                        [Page ',
   breaker2 = ']',
-  breaker3 = '\n\nInternet-Draft              remoteStorage                  December 2017\n\n',
+  breaker3 = '\n\nInternet-Draft              remoteStorage                      June 2018\n\n',
   page = 1, line = 0;
 
 while (line < lines.length) {

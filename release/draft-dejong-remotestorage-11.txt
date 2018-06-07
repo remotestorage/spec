@@ -48,6 +48,13 @@ Copyright Notice
    include Simplified BSD License text as described in Section 4.e of
    the Trust Legal Provisions and are provided without warranty as
    described in the Simplified BSD License.
+
+
+de Jong                                                         [Page 1]
+
+Internet-Draft              remoteStorage                      June 2018
+
+
 Table of Contents
 
    1. Introduction...................................................2
@@ -91,6 +98,13 @@ Table of Contents
 
        *  GET a folder: retrieve the names and current versions of the
           documents and subfolders currently contained by the folder
+
+
+de Jong                                                         [Page 2]
+
+Internet-Draft              remoteStorage                      June 2018
+
+
        *  GET a document: retrieve its content type, current version,
           and contents
 
@@ -133,6 +147,13 @@ Table of Contents
        * content type
        * content length
        * last-modified date
+
+
+
+de Jong                                                         [Page 3]
+
+Internet-Draft              remoteStorage                      June 2018
+
 
     For a document, the server stores, and should be able to produce:
 
@@ -177,6 +198,13 @@ Table of Contents
     A document description is a map containing one string-valued 'ETag'
     field, one string-valued 'Content-Type', one integer-valued
     'Content-Length' field, and one string-valued 'Last-Modified' field.
+
+
+de Jong                                                         [Page 4]
+
+Internet-Draft              remoteStorage                      June 2018
+
+
     They represent the document's current version, its content type, its
     content length, and last-modfied date respectively. The
     last-modified date MUST be formatted as HTTP-date (Section 7.1.1.1
@@ -220,6 +248,13 @@ Table of Contents
     path become non-empty; deleting the last document from a subtree
     will make that whole subtree become empty. Folders will therefore
     show up in their parent folder descriptions if and only if their
+
+
+de Jong                                                         [Page 5]
+
+Internet-Draft              remoteStorage                      June 2018
+
+
     subtree contains at least one document.
 
     In contexts outside of this document, non-empty folders may be
@@ -262,6 +297,13 @@ Table of Contents
 
     RemoteStorage does not place any restrictions on the value of
     Content-Type other than what is defined in [HTTP, section 3.1.1.5].
+
+
+
+de Jong                                                         [Page 6]
+
+Internet-Draft              remoteStorage                      June 2018
+
 
     The response MUST contain a strong ETag header, with the document's
     new version (for instance a hash of its contents) as its value.
@@ -306,6 +348,13 @@ Table of Contents
              fails (see "Versioning" below),
        * 413 if the payload is too large, e.g. when the server has a
              maximum upload size for documents
+
+
+de Jong                                                         [Page 7]
+
+Internet-Draft              remoteStorage                      June 2018
+
+
        * 414 if the request URI is too long,
        * 416 if Range requests are supported by the server and the Range
              request can not be satisfied,
@@ -350,6 +399,13 @@ Table of Contents
 
 8. Session description
 
+
+de Jong                                                         [Page 8]
+
+Internet-Draft              remoteStorage                      June 2018
+
+
+
     The information that a client needs to receive in order to be able
     to connect to a server SHOULD reach the client as described in the
     'bearer token issuance' sections below. It consists of:
@@ -392,6 +448,13 @@ Table of Contents
     with each access scope representing the following permissions:
 
     '*:rw') any request,
+
+
+de Jong                                                         [Page 9]
+
+Internet-Draft              remoteStorage                      June 2018
+
+
 
     '*:r') any GET or HEAD request,
 
@@ -436,6 +499,13 @@ Table of Contents
       }
     }
 
+
+de Jong                                                        [Page 10]
+
+Internet-Draft              remoteStorage                      June 2018
+
+
+
     A common way of identifying persons as <user> at <host> is through a
     URI of the format "acct:<user>@<host>". Persons who use a personal
     domain name, not shared with any other users, can be identified by
@@ -478,6 +548,13 @@ Table of Contents
 
     A "http://remotestorage.io/spec/web-authoring" property has been
     proposed with a string value of the fully qualified domain name to
+
+
+de Jong                                                        [Page 11]
+
+Internet-Draft              remoteStorage                      June 2018
+
+
     which web authoring content is published if the server supports web
     authoring as per [AUTHORING]. Note that this extension is a breaking
     extension in the sense that it divides users into "haves", whose
@@ -521,6 +598,13 @@ Table of Contents
     following request, using XMLHttpRequest and CORS:
 
          GET /.well-known/webfinger?resource=acct:michiel@michielbdejon\
+
+
+de Jong                                                        [Page 12]
+
+Internet-Draft              remoteStorage                      June 2018
+
+
 g.com HTTP/1.1
          Host: michielbdejong.com
 
@@ -564,6 +648,13 @@ motestorage-10",
         GET /oauth/michiel?redirect_uri=https%3A%2F%2Fdrinks-unhosted.5\
 apps.com%2F&scope=myfavoritedrinks%3Arw&client_id=https%3A%2F%2Fdrinks-\
 unhosted.5apps.com&response_type=token HTTP/1.1
+
+
+de Jong                                                        [Page 13]
+
+Internet-Draft              remoteStorage                      June 2018
+
+
         Host: 3pp.io
 
     The server's response might look like this (truncated for brevity):
@@ -606,6 +697,13 @@ low
     When an in-browser application makes a cross-origin request which
     may affect the server-state, the browser will make a preflight
     request first, with the OPTIONS verb, for instance:
+
+
+
+de Jong                                                        [Page 14]
+
+Internet-Draft              remoteStorage                      June 2018
+
 
         OPTIONS /storage/michiel/myfavoritedrinks/ HTTP/1.1
         Host: 3pp.io:4439
@@ -650,6 +748,13 @@ ntent-Type, Origin, X-Requested-With, If-Match, If-None-Match
 
         HTTP/1.1 412 Precondition Failed
         Access-Control-Allow-Origin: https://drinks-unhosted.5apps.com
+
+
+de Jong                                                        [Page 15]
+
+Internet-Draft              remoteStorage                      June 2018
+
+
         ETag: "2182694048000"
 
 12.6. Subsequent PUT
@@ -670,287 +775,35 @@ ntent-Type, Origin, X-Requested-With, If-Match, If-None-Match
 e.io/spec/modules/myfavoritedrinks/drink"}
 
     And the server may respond with a 412 Precondition Failed or a 200 OK
-    status:
-
-        HTTP/1.1 200 OK
-        Access-Control-Allow-Origin: https://drinks-unhosted.5apps.com
-        ETag: "2182694048000"
-
-12.7. GET
-
-    A GET request would also include the bearer token, and optionally
-    an If-None-Match header:
-
-        GET /storage/michiel/myfavoritedrinks/test HTTP/1.1
-        Host: 3pp.io:4439
-        Origin: https://drinks-unhosted.5apps.com
-        Authorization: Bearer j2YnGtXjzzzHNjkd1CJxoQubA1o=
-        Referer: https://drinks-unhosted.5apps.com/
-        If-None-Match: "1382694045000", "1382694048000"
-
-    And the server may respond with a 304 Not Modified status:
-
-        HTTP/1.1 304 Not Modified
-        Access-Control-Allow-Origin: https://drinks-unhosted.5apps.com
-        ETag: "1382694048000"
-
-    Or a 200 OK status, plus a response body:
-
-        HTTP/1.1 200 OK
-        Access-Control-Allow-Origin: https://drinks-unhosted.5apps.com
-        Content-Type: application/json; charset=UTF-8
-        Content-Length: 106
-        ETag: "1382694048000"
-        Cache-Control: no-cache
-
-        {"name":"test", "updated":true, "@context":"http://remotestora\
-ge.io/spec/modules/myfavoritedrinks/drink"}
-
-    If the GET URL would have been "/storage/michiel/myfavoritedrinks/",
-    a 200 OK response would have a folder description as the response
-    body:
-
-        HTTP/1.1 200 OK
-        Access-Control-Allow-Origin: https://drinks-unhosted.5apps.com
-        Content-Type: application/ld+json
-        Content-Length: 171
-        ETag: "1382694048000"
-        Cache-Control: no-cache
-
-        {"@context":"http://remotestorage.io/spec/folder-version","ite\
-ms":{"test":{"ETag":"1382694048000","Content-Type":"application/json; \
-charset=UTF-8","Content-Length":106,"Last-Modified":"Sat, 2 Jun 2018 1\
-5:58:23 GMT"}}}
-
-    If the GET URL would have been a non-existing document like
-    "/storage/michiel/myfavoritedrinks/x", the response would have a 404
-    Not Found status, and no ETag header:
-
-        HTTP/1.1 404 Not Found
-        Access-Control-Allow-Origin: https://drinks-unhosted.5apps.com
-
-12.8. DELETE
-
-    A DELETE request may look like this:
-
-        DELETE /storage/michiel/myfavoritedrinks/test HTTP/1.1
-        Host: 3pp.io:4439
-        Origin: https://drinks-unhosted.5apps.com
-        Authorization: Bearer j2YnGtXjzzzHNjkd1CJxoQubA1o=
-        Content-Type: application/json; charset=UTF-8
-        Referer: https://drinks-unhosted.5apps.com/
-        If-Match: "1382694045000"
-
-    And the server may respond with a 412 Precondition Failed or a 200
-    OK status:
-
-        HTTP/1.1 412 Precondition Failed
-        Access-Control-Allow-Origin: https://drinks-unhosted.5apps.com
-        ETag: "2182694048000"
-
-
-
-13. Distributed versioning
-
-    This section is non-normative, and is intended to explain some of
-    the design choices concerning ETags and folder listings. At the
-    same time it will hopefully help readers who intend to develop an
-    application that uses remoteStorage as its per-user data storage.
-    When multiple clients have read/write access to the same document,
-    versioning conflicts may occur. For instance, client A may make
-    a PUT request that changes the document from version 1 to version
-    2, after which client B may make a PUT request attempting to change
-    the same document from version 1 to version 3.
-
-    In this case, client B can add an 'If-Match: "1"' header, which
-    would trigger a 412 Precondition Failed response code, since the
-    current version ("2") does not match the version required as a
-    condition by the header If-Match header ("1").
-
-    Client B is now aware of the conflict, and may consult the user,
-    saying the update to version 3 failed. The user may then choose,
-    through the user interface of client B, whether version 2 or
-    version 3 should be kept, or maybe the document should be reverted
-    on the server to version 1, or a merged version 4 is needed. Client
-    B may then make a request that puts the document to the version the
-    user wishes; this time setting an 'If-Match: "2"' header instead.
-
-    Both client A and client B would periodically poll the root
-    folder of each scope they have access to, to see if the version
-    of the root folder changed. If it did, then one of the versions
-    listed in there will necessarily have changed, and the client can
-    make a GET request to that child folder or document, to obtain
-    its latest version.
-
-    Because an update in a document will result in a version change of
-    its containing folder, and that change will propagate all the way
-    to the root folder, it is not necessary to poll each document for
-    changes individually.
-
-    As an example, the root folder may contain 10 directories,
-    each of which contain 10 directories, which each contain 10
-    documents, so their paths would be for instance '/0/0/1', '/0/0/2',
-    etcetera. Then one GET request to the root folder '/' will be
-    enough to know if any of these 1000 documents has changed.
-
-    Say document '/7/9/2' has changed; then the GET request to '/' will
-    come back with a different ETag, and entry '7/' will have a
-    different value in its JSON content. The client could then request
-    '/7/', '/7/9/', and '/7/9/2' to narrow down the one document that
-    caused the root folder's ETag to change.
-
-    Note that the remoteStorage server does not get involved in the
-    conflict resolution. It keeps the canonical current version at all
-    times, and allows clients to make conditional GET and PUT requests,
-    but it is up to whichever client discovers a given version
-    conflict, to resolve it.
-
-14. Security Considerations
-
-    To prevent man-in-the-middle attacks, the use of HTTPS instead of
-    http is important for both the interface itself and all end-points
-    involved in WebFinger, OAuth, and (if present) the storage-first
-    application launch dashboard.
-
-    A malicious party could link to an application, but specifying a
-    remoteStorage account address that it controls, thus tricking the
-    user into using a trusted application to send sensitive data to the
-    wrong remoteStorage server. To mitigate this, applications SHOULD
-    clearly display to which remoteStorage server they are sending the
-    user's data.
-
-    Applications could request scopes that the user did not intend to
-    give access to. The user SHOULD always be prompted to carefully
-    review which scopes an application is requesting.
-
-    An application may upload malicious HTML pages and then trick the
-    user into visiting them, or upload malicious client-side scripts,
-    that take advantage of being hosted on the user's domain name. The
-    origin on which the remoteStorage server has its interface SHOULD
-    therefore NOT be used for anything else, and the user SHOULD be
-    warned not to visit any web pages on that origin. In particular, the
-    OAuth dialog and launch dashboard or token revocation interface
-    SHOULD be on a different origin than the remoteStorage interface.
-
-    Where the use of bearer tokens is impractical, a user may choose to
-    store documents on hard-to-guess URLs [CAPABILITIES] whose path
-    after <storage_root> starts with '/public/', while sharing this URL
-    only with the intended audience. That way, only parties who know the
-    document's hard-to-guess URL, can access it. The server SHOULD
-    therefore make an effort to detect and stop brute-force attacks that
-    attempt to guess the location of such documents.
-
-    The server SHOULD also detect and stop denial-of-service attacks
-    that aim to overwhelm its interface with too much traffic.
-
-15. IANA Considerations
-
-    This document registers the following WebFinger properties:
-      * "http://remotestorage.io/spec/version"
-      * "http://tools.ietf.org/html/rfc6749#section-4.2"
-      * "http://tools.ietf.org/html/rfc6750#section-2.3"
-      * "http://tools.ietf.org/html/rfc7233"
-      * "http://remotestorage.io/spec/web-authoring"
-
-16. Acknowledgements
-
-    The authors would like to thank everybody who contributed to the
-    development of this protocol, including Kenny Bentley, Javier Diaz,
-    Daniel Groeber, Bjarni Runar, Jan Wildeboer, Charles Schultz, Peter
-    Svensson, Valer Mischenko, Michiel Leenaars, Jan-Christoph
-    Borchardt, Garret Alfert, Sebastian Kippe, Max Wiehle, Melvin
-    Carvalho, Martin Stadler, Geoffroy Couprie, Niklas Cathor, Marco
-    Stahl, James Coglan, Ken Eucker, Daniel Brolund, elf Pavlik, Nick
-    Jennings, Markus Sabadello, Steven te Brinke, Matthias Treydte,
-    Rick van Rein, Mark Nottingham, Julian Reschke, Markus Lanthaler,
-    and Markus Unterwaditzer, among many others.
-
-17. References
-
-17.1. Normative References
-
-    [WORDS]
-        Bradner, S., "Key words for use in RFCs to Indicate Requirement
-        Levels", BCP 14, RFC 2119, March 1997.
-
-    [IRI]
-        Duerst, M., "Internationalized Resource Identifiers (IRIs)",
-        RFC 3987, January 2005.
-
-    [URI]
-        Fielding, R., "Uniform Resource Identifier (URI): Generic
-        Syntax", RFC 3986, January 2005.
-
-    [WEBFINGER]
-        Jones, P., Salguerio, G., Jones, M, and Smarr, J.,
-        "WebFinger", RFC7033, September 2013.
-
-    [OAUTH]
-        "Section 4.2: Implicit Grant", in: Hardt, D. (ed), "The OAuth
-        2.0 Authorization Framework", RFC6749, October 2012.
-
-    [ORIGIN]
-        "Section 4: Origin of a URI", in: Barth, A., "The Web Origin
-        Concept", RFC6454, December 2011.
-
-17.2. Informative References
-
-    [HTTPS]
-        Rescorla, E., "HTTP Over TLS", RFC2818, May 2000.
-
-    [HTTP]
-        Fielding et al., "Hypertext Transfer Protocol (HTTP/1.1):
-        Semantics and Content", RFC7231, June 2014.
-
-    [COND]
-        Fielding et al., "Hypertext Transfer Protocol (HTTP/1.1):
-        Conditional Requests", RFC7232, June 2014.
-
-    [RANGE]
-        Fielding et al., "Hypertext Transfer Protocol (HTTP/1.1):
-        Conditional Requests", RFC7233, June 2014.
-
-    [HTTP/2]
-        M. Belshe, R. Peon, M. Thomson, Ed. "Hypertext Transfer Protocol
-        Version 2 (HTTP/2)", RFC7540, May 2015.
-
-    [JSON-LD]
-        M. Sporny, G. Kellogg, M. Lanthaler, "JSON-LD 1.0", W3C
-        Proposed Recommendation,
-        http://www.w3.org/TR/2014/REC-json-ld-20140116/, January 2014.
-
-    [CORS]
-        van Kesteren, Anne (ed), "Cross-Origin Resource Sharing --
-        W3C Candidate Recommendation 29 January 2013",
-        http://www.w3.org/TR/cors/, January 2013.
-
-    [KERBEROS]
-        C. Neuman et al., "The Kerberos Network Authentication Service
-        (V5)", RFC4120, July 2005.
-
-    [BEARER]
-        M. Jones, D. Hardt, "The OAuth 2.0 Authorization Framework:
-        Bearer Token Usage", RFC6750, October 2012.
-
-    [AUTHORING]
-        "Using remoteStorage for web authoring", reSite wiki, retrieved
-        September 2014. https://github.com/michielbdejong/resite/wiki
-        /Using-remoteStorage-for-web-authoring
-
-    [CAPABILITIES]
-        J. Tennison (ed.), "Good Practices for Capability URLs",
-        http://www.w3.org/TR/capability-urls/, February 2014.
-
-18. Authors' addresses
-
-    Michiel B. de Jong
-    (independent)
-
-    Email: michiel@unhosted.org
-
-
-    F. Kooman
-    (independent)
-
-    Email: fkooman@tuxed.net
+123456789012345678901234567890123456789012345678901234567890123456789012*****
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+de Jong                                                        [Page 16]
+
+Internet-Draft              remoteStorage                      June 2018
+
 
