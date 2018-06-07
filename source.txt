@@ -652,6 +652,13 @@ ntent-Type, Origin, X-Requested-With, If-Match, If-None-Match
         Access-Control-Allow-Origin: https://drinks-unhosted.5apps.com
         ETag: "1382694045000"
 
+    In case the document already exists on the server, it would respond
+    with something like:
+
+        HTTP/1.1 412 Precondition Failed
+        Access-Control-Allow-Origin: https://drinks-unhosted.5apps.com
+        ETag: "2182694048000"
+
 12.6. Subsequent PUT
 
     A subsequent PUT may contain an 'If-Match' header referring to the
@@ -669,11 +676,12 @@ ntent-Type, Origin, X-Requested-With, If-Match, If-None-Match
         {"name":"test", "updated":true, "@context":"http://remotestorag\
 e.io/spec/modules/myfavoritedrinks/drink"}
 
-    And the server may respond with a 412 Conflict or a 200 OK status:
+    And the server may respond with a 412 Precondition Failed or a 200 OK
+    status:
 
         HTTP/1.1 200 OK
         Access-Control-Allow-Origin: https://drinks-unhosted.5apps.com
-        ETag: "1382694048000"
+        ETag: "2182694048000"
 
 12.7. GET
 
@@ -740,11 +748,12 @@ charset=UTF-8","Content-Length":106,"Last-Modified":"Sat, 2 Jun 2018 1\
         Referer: https://drinks-unhosted.5apps.com/
         If-Match: "1382694045000"
 
-    And the server may respond with a 412 Conflict or a 200 OK status:
+    And the server may respond with a 412 Precondition Failed or a 200
+    OK status:
 
-        HTTP/1.1 412 Conflict
+        HTTP/1.1 412 Precondition Failed
         Access-Control-Allow-Origin: https://drinks-unhosted.5apps.com
-        ETag: "1382694048000"
+        ETag: "2182694048000"
 
 
 
@@ -761,9 +770,9 @@ charset=UTF-8","Content-Length":106,"Last-Modified":"Sat, 2 Jun 2018 1\
     the same document from version 1 to version 3.
 
     In this case, client B can add an 'If-Match: "1"' header, which
-    would trigger a 412 Conflict response code, since the current
-    version ("2") does not match the version required as a condition by
-    the header If-Match header ("1").
+    would trigger a 412 Precondition Failed response code, since the
+    current version ("2") does not match the version required as a
+    condition by the header If-Match header ("1").
 
     Client B is now aware of the conflict, and may consult the user,
     saying the update to version 3 failed. The user may then choose,
