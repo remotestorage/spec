@@ -1,3 +1,18 @@
+# draft-dejong-remotestorage-11.txt
+
+## Breaking for servers:
+* last-modified date should now be included for document items in a folder
+  description.
+
+## Non-breaking:
+* The list of http response codes was ordered by code, increasing.
+* A duplicate paragraph was removed.
+* The use of the 412 Precondition Failed response code was  clarified.
+
+# draft-dejong-remotestorage-10.txt
+
+No changes, just extended the expiry date by 6 months.
+
 # draft-dejong-remotestorage-09.txt
 
 ## Breaking for clients:
