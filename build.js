@@ -1,6 +1,6 @@
-const version = 11;
-const day = 7;
-const expiresDay = 8;
+const version = 12;
+const day = 8;
+const expiresDay = 1;
 
 if (version % 2 === 0) {
   month = 'December';
