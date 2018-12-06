@@ -1,8 +1,8 @@
 INTERNET DRAFT                                      Michiel B. de Jong
-Document: draft-dejong-remotestorage-11                  (independent)
+Document: draft-dejong-remotestorage-${VERSION}                  (independent)
                                                              F. Kooman
 Intended Status: Proposed Standard                       (independent)
-Expires: 8 December 2018                                   7 June 2018
+Expires: ${EXPIRES}                                   ${DATE}
 
 
                             remoteStorage
@@ -32,11 +32,11 @@ Status of this Memo
    time.  It is inappropriate to use Internet-Drafts as reference
    material or to cite them other than as "work in progress."
 
-   This Internet-Draft will expire on 8 December 2018.
+   This Internet-Draft will expire on ${EXPIRES}.
 
 Copyright Notice
 
-   Copyright (c) 2018 IETF Trust and the persons identified as the
+   Copyright (c) ${YEAR} IETF Trust and the persons identified as the
    document authors. All rights reserved.
 
    This document is subject to BCP 78 and the IETF Trust's Legal
