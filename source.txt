@@ -169,6 +169,9 @@ Table of Contents
 
     for a folder.
 
+    If a document with document_name <x> exists, then no folder with
+    folder_name <x> can exist in the same parent folder, and vice versa.
+
     Item names MAY contain all characters, before URI_ENCODE, except '/'
     and the null character '\0' and MUST NOT have zero length. Item
     names MUST NOT be equal to '.' or to '..', as those have a special

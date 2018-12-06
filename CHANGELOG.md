@@ -1,3 +1,9 @@
+# draft-dejong-remotestorage-12.txt
+
+## Breaking for clients and servers:
+* a document and a subfolder within the same folder cannot have the same
+  name
+
 # draft-dejong-remotestorage-11.txt
 
 ## Breaking for servers:
