@@ -1,6 +1,7 @@
 const version = 12;
 const day = 8;
 const expiresDay = 1;
+const fileName =  `./release/draft-dejong-remotestorage-${version}.txt`;
 
 if (version % 2 === 0) {
   month = 'December';
@@ -23,24 +24,27 @@ var fs = require('fs'),
   breaker3 = '\n\nInternet-Draft              remoteStorage                  '+ monthYear + '\n\n',
   page = 1, line = 0;
 
+let outStream = fs.createWriteStream(fileName);
+
 while (line < lines.length) {
   lines[line] = lines[line].split('${EXPIRES}').join(expires);
   lines[line] = lines[line].split('${DATE}').join(date);
   lines[line] = lines[line].split('${YEAR}').join(year);
   lines[line] = lines[line].split('${VERSION}').join(version);
-  console.log(lines[line]);
+  outStream.write(lines[line] + '\n');
   if (lines[line].length > 72) {
-    console.log('123456789012345678901234567890123456789012345678901234567890123456789012*****');
+    outStream.write('123456789012345678901234567890123456789012345678901234567890123456789012*****\n');
     break;
   }
   line++;
   if (line > 7 && line%43 === 7) {
-    console.log((page < 10 ? breaker1a : breaker1b) + page + breaker2 + (line < lines.length ? breaker3 : ''));
+    outStream.write((page < 10 ? breaker1a : breaker1b) + page + breaker2 + (line < lines.length ? breaker3 : '') +  '\n');
     page++;
   }
 }
 while (line%43 !== 7) {
-  console.log('');
+  outStream.write('\n');
   line++;
 }
-console.log((page < 10 ? breaker1a : breaker1b) + page + breaker2 + (line < lines.length ? breaker3 : ''));
+outStream.write((page < 10 ? breaker1a : breaker1b) + page + breaker2 + (line < lines.length ? breaker3 : '') + '\n');
+outStream.close();
