@@ -2,7 +2,7 @@ INTERNET DRAFT                                      Michiel B. de Jong
 Document: draft-dejong-remotestorage-${VERSION}                  (independent)
                                                              F. Kooman
 Intended Status: Proposed Standard                       (independent)
-Expires: ${EXPIRES}                                   ${DATE}
+Expires: ${EXPIRES}                                  ${DATE}
 
 
                             remoteStorage
