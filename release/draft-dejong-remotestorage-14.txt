@@ -1,8 +1,8 @@
 INTERNET DRAFT                                      Michiel B. de Jong
-Document: draft-dejong-remotestorage-${VERSION}                  (independent)
+Document: draft-dejong-remotestorage-14                  (independent)
                                                              F. Kooman
 Intended Status: Proposed Standard                       (independent)
-Expires: ${EXPIRES}                                   ${DATE}
+Expires: 1 June 2020                                   1 December 2019
 
 
                             remoteStorage
@@ -32,11 +32,11 @@ Status of this Memo
    time.  It is inappropriate to use Internet-Drafts as reference
    material or to cite them other than as "work in progress."
 
-   This Internet-Draft will expire on ${EXPIRES}.
+   This Internet-Draft will expire on 1 June 2020.
 
 Copyright Notice
 
-   Copyright (c) ${YEAR} IETF Trust and the persons identified as the
+   Copyright (c) 2019 IETF Trust and the persons identified as the
    document authors. All rights reserved.
 
    This document is subject to BCP 78 and the IETF Trust's Legal
@@ -48,6 +48,13 @@ Copyright Notice
    include Simplified BSD License text as described in Section 4.e of
    the Trust Legal Provisions and are provided without warranty as
    described in the Simplified BSD License.
+
+
+de Jong                                                         [Page 1]
+
+Internet-Draft              remoteStorage                  December 2019
+
+
 Table of Contents
 
    1. Introduction...................................................2
@@ -91,6 +98,13 @@ Table of Contents
 
        *  GET a folder: retrieve the names and current versions of the
           documents and subfolders currently contained by the folder
+
+
+de Jong                                                         [Page 2]
+
+Internet-Draft              remoteStorage                  December 2019
+
+
        *  GET a document: retrieve its content type, current version,
           and contents
 
@@ -133,6 +147,13 @@ Table of Contents
        * content type
        * content length
        * last-modified date
+
+
+
+de Jong                                                         [Page 3]
+
+Internet-Draft              remoteStorage                  December 2019
+
 
     For a document, the server stores, and should be able to produce:
 
@@ -177,6 +198,13 @@ Table of Contents
     names MUST NOT be equal to '.' or to '..', as those have a special
     semantic in URIs (Section 5.2.4 of [URI]).
 
+
+
+de Jong                                                         [Page 4]
+
+Internet-Draft              remoteStorage                  December 2019
+
+
     A document description is a map containing one string-valued 'ETag'
     field, one string-valued 'Content-Type', one integer-valued
     'Content-Length' field, and one string-valued 'Last-Modified' field.
@@ -220,6 +248,13 @@ Table of Contents
 
     PUT and DELETE requests only need to be made to documents, and never
     to folders. A document PUT will make all ancestor folders along its
+
+
+de Jong                                                         [Page 5]
+
+Internet-Draft              remoteStorage                  December 2019
+
+
     path become non-empty; deleting the last document from a subtree
     will make that whole subtree become empty. Folders will therefore
     show up in their parent folder descriptions if and only if their
@@ -262,6 +297,13 @@ Table of Contents
     request, the server MAY refuse to process the request, and instead
     respond with a descriptive error message in the body, as well as a
     http response code from the 4xx range.
+
+
+
+de Jong                                                         [Page 6]
+
+Internet-Draft              remoteStorage                  December 2019
+
 
     RemoteStorage does not place any restrictions on the value of
     Content-Type other than what is defined in [HTTP, section 3.1.1.5].
@@ -306,6 +348,13 @@ Table of Contents
              level, or where the document name coincides with an
              existing folder's name at the same level.
        * 412 for a conditional PUT or DELETE request whose precondition
+
+
+de Jong                                                         [Page 7]
+
+Internet-Draft              remoteStorage                  December 2019
+
+
              fails (see "Versioning" below),
        * 413 if the payload is too large, e.g. when the server has a
              maximum upload size for documents
@@ -351,6 +400,13 @@ Table of Contents
 
 
 
+de Jong                                                         [Page 8]
+
+Internet-Draft              remoteStorage                  December 2019
+
+
+
+
 8. Session description
 
     The information that a client needs to receive in order to be able
@@ -369,7 +425,7 @@ Table of Contents
          can however be reused in subsequent interactions with the same
          client, as long as that client is still trusted. Example:
          'ofb24f1ac3973e70j6vts19qr9v2eei'
-       * <storage_api>, always 'draft-dejong-remotestorage-${VERSION}' for this
+       * <storage_api>, always 'draft-dejong-remotestorage-14' for this
          alternative version of the specification.
 
     The client can make its requests using HTTPS with CORS and bearer
@@ -392,6 +448,13 @@ Table of Contents
     where the <module> string SHOULD be lower-case alphanumerical, other
     than the reserved word 'public', and <level> can be ':r' or ':rw'.
     The access the bearer token gives is the sum of its access scopes,
+
+
+de Jong                                                         [Page 9]
+
+Internet-Draft              remoteStorage                  December 2019
+
+
     with each access scope representing the following permissions:
 
     '*:rw') any request,
@@ -435,6 +498,13 @@ Table of Contents
       "properties": {
         "http://remotestorage.io/spec/version": <storage_api>,
         "http://tools.ietf.org/html/rfc6749#section-4.2": <auth-dialog>,
+
+
+de Jong                                                        [Page 10]
+
+Internet-Draft              remoteStorage                  December 2019
+
+
         "...": "...",
       }
     }
@@ -479,6 +549,13 @@ Table of Contents
     (e.g. retrieve the protected resource asynchronously in the first
     case, or request the entire resource in the second case).
 
+
+de Jong                                                        [Page 11]
+
+Internet-Draft              remoteStorage                  December 2019
+
+
+
     A "http://remotestorage.io/spec/web-authoring" property has been
     proposed with a string value of the fully qualified domain name to
     which web authoring content is published if the server supports web
@@ -521,6 +598,13 @@ Table of Contents
 12.1. WebFinger
 
     In application-first, an in-browser application might issue the
+
+
+de Jong                                                        [Page 12]
+
+Internet-Draft              remoteStorage                  December 2019
+
+
     following request, using XMLHttpRequest and CORS:
 
          GET /.well-known/webfinger?resource=acct:michiel@michielbdejon\
@@ -546,7 +630,7 @@ g.com HTTP/1.1
 e",
              "properties": {
                "http://remotestorage.io/spec/version": "draft-dejong-re\
-motestorage-${VERSION}",
+motestorage-14",
                "http://tools.ietf.org/html/rfc6749#section-4.2": "https\
 ://3pp.io:4439/oauth/michiel",
                "http://tools.ietf.org/html/rfc6750#section-2.3": null,
@@ -563,6 +647,13 @@ motestorage-${VERSION}",
     order to obtain a bearer token. Say the application is hosted on
     https://drinks-unhosted.5apps.com/ and wants read-write access to
     the account's "myfavoritedrinks" scope:
+
+
+
+de Jong                                                        [Page 13]
+
+Internet-Draft              remoteStorage                  December 2019
+
 
         GET /oauth/michiel?redirect_uri=https%3A%2F%2Fdrinks-unhosted.5\
 apps.com%2F&scope=myfavoritedrinks%3Arw&client_id=https%3A%2F%2Fdrinks-\
@@ -607,6 +698,13 @@ low
 12.4. OPTIONS preflight
 
     When an in-browser application makes a cross-origin request which
+
+
+de Jong                                                        [Page 14]
+
+Internet-Draft              remoteStorage                  December 2019
+
+
     may affect the server-state, the browser will make a preflight
     request first, with the OPTIONS verb, for instance:
 
@@ -651,6 +749,13 @@ ntent-Type, Origin, X-Requested-With, If-Match, If-None-Match
     In case the document already exists on the server, it would respond
     with something like:
 
+
+de Jong                                                        [Page 15]
+
+Internet-Draft              remoteStorage                  December 2019
+
+
+
         HTTP/1.1 412 Precondition Failed
         Access-Control-Allow-Origin: https://drinks-unhosted.5apps.com
         ETag: "2182694048000"
@@ -692,6 +797,13 @@ e.io/spec/modules/myfavoritedrinks/drink"}
         If-None-Match: "1382694045000", "1382694048000"
 
     And the server may respond with a 304 Not Modified status:
+
+
+
+de Jong                                                        [Page 16]
+
+Internet-Draft              remoteStorage                  December 2019
+
 
         HTTP/1.1 304 Not Modified
         Access-Control-Allow-Origin: https://drinks-unhosted.5apps.com
@@ -736,6 +848,13 @@ charset=UTF-8","Content-Length":106,"Last-Modified":"Sat, 2 Jun 2018 1\
 
     A DELETE request may look like this:
 
+
+
+de Jong                                                        [Page 17]
+
+Internet-Draft              remoteStorage                  December 2019
+
+
         DELETE /storage/michiel/myfavoritedrinks/test HTTP/1.1
         Host: 3pp.io:4439
         Origin: https://drinks-unhosted.5apps.com
@@ -779,6 +898,13 @@ charset=UTF-8","Content-Length":106,"Last-Modified":"Sat, 2 Jun 2018 1\
     user wishes; this time setting an 'If-Match: "2"' header instead.
 
     Both client A and client B would periodically poll the root
+
+
+de Jong                                                        [Page 18]
+
+Internet-Draft              remoteStorage                  December 2019
+
+
     folder of each scope they have access to, to see if the version
     of the root folder changed. If it did, then one of the versions
     listed in there will necessarily have changed, and the client can
@@ -821,6 +947,13 @@ charset=UTF-8","Content-Length":106,"Last-Modified":"Sat, 2 Jun 2018 1\
     wrong remoteStorage server. To mitigate this, applications SHOULD
     clearly display to which remoteStorage server they are sending the
     user's data.
+
+
+
+de Jong                                                        [Page 19]
+
+Internet-Draft              remoteStorage                  December 2019
+
 
     Applications could request scopes that the user did not intend to
     give access to. The user SHOULD always be prompted to carefully
@@ -865,6 +998,13 @@ charset=UTF-8","Content-Length":106,"Last-Modified":"Sat, 2 Jun 2018 1\
     Carvalho, Martin Stadler, Geoffroy Couprie, Niklas Cathor, Marco
     Stahl, James Coglan, Ken Eucker, Daniel Brolund, elf Pavlik, Nick
     Jennings, Markus Sabadello, Steven te Brinke, Matthias Treydte,
+
+
+de Jong                                                        [Page 20]
+
+Internet-Draft              remoteStorage                  December 2019
+
+
     Rick van Rein, Mark Nottingham, Julian Reschke, Markus Lanthaler,
     and Markus Unterwaditzer, among many others.
 
@@ -909,6 +1049,13 @@ charset=UTF-8","Content-Length":106,"Last-Modified":"Sat, 2 Jun 2018 1\
         Fielding et al., "Hypertext Transfer Protocol (HTTP/1.1):
         Conditional Requests", RFC7232, June 2014.
 
+
+de Jong                                                        [Page 21]
+
+Internet-Draft              remoteStorage                  December 2019
+
+
+
     [RANGE]
         Fielding et al., "Hypertext Transfer Protocol (HTTP/1.1):
         Conditional Requests", RFC7233, June 2014.
@@ -952,8 +1099,55 @@ charset=UTF-8","Content-Length":106,"Last-Modified":"Sat, 2 Jun 2018 1\
     Email: michiel@unhosted.org
 
 
+
+de Jong                                                        [Page 22]
+
+Internet-Draft              remoteStorage                  December 2019
+
+
+
     F. Kooman
     (independent)
 
     Email: fkooman@tuxed.net
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+de Jong                                                        [Page 23]
