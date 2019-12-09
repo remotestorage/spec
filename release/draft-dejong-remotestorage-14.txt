@@ -2,7 +2,7 @@ INTERNET DRAFT                                      Michiel B. de Jong
 Document: draft-dejong-remotestorage-14                  (independent)
                                                              F. Kooman
 Intended Status: Proposed Standard                       (independent)
-Expires: 1 June 2020                                   1 December 2019
+Expires: 1 June 2020                                   9 December 2019
 
 
                             remoteStorage
