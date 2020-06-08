@@ -3,7 +3,7 @@ Document: draft-dejong-remotestorage-15                  (independent)
                                                              F. Kooman
                                                          (independent)
                                                               S. Kippe
-Intended Status: Proposed Standard                           5apps.com
+Intended Status: Proposed Standard                       (independent)
 Expires: 1 December 2020                                   8 June 2020
 
 
