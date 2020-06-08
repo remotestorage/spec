@@ -1,7 +1,9 @@
 INTERNET DRAFT                                      Michiel B. de Jong
 Document: draft-dejong-remotestorage-${VERSION}                  (independent)
                                                              F. Kooman
-Intended Status: Proposed Standard                       (independent)
+                                                         (independent)
+                                                              S. Kippe
+Intended Status: Proposed Standard                           5apps.com
 Expires: ${EXPIRES}                                   ${DATE}
 
 
