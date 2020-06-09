@@ -959,3 +959,9 @@ charset=UTF-8","Content-Length":106,"Last-Modified":"Sat, 2 Jun 2018 1\
 
     Email: fkooman@tuxed.net
 
+
+    S. Kippe
+    (independent)
+
+    Email: sebastian@kip.pe
+
