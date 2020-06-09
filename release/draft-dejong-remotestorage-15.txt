@@ -4,7 +4,7 @@ Document: draft-dejong-remotestorage-15                  (independent)
                                                          (independent)
                                                               S. Kippe
 Intended Status: Proposed Standard                       (independent)
-Expires: 1 December 2020                                   8 June 2020
+Expires: 1 December 2020                                   9 June 2020
 
 
                             remoteStorage
