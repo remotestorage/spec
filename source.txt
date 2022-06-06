@@ -131,16 +131,16 @@ Table of Contents
 
        * item name
        * item type (folder or document)
-       * current version
-       * content type
+       * current version (ETag)
+
+    The list also contains, for each document in the list:
+
+       * content type (media type, a.k.a. MIME type)
        * content length
        * last-modified date
 
-    For a document, the server stores, and should be able to produce:
+    For each document, the server also stores, and should be able to produce:
 
-       * current version
-       * content type
-       * content length
        * content
 
 4. Requests
