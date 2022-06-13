@@ -139,9 +139,8 @@ Table of Contents
        * content length
        * last-modified date
 
-    For each document, the server also stores, and should be able to produce:
-
-       * content
+    Apart from this folder and document metadata, the server should also
+    be able to produce the current content of each document.
 
 4. Requests
 
