@@ -37,9 +37,11 @@ More info about remoteStorage in general can be found on http://remotestorage.io
 
 # Build
 
-To build for instance version 04, run:
+To build a new version, run:
 
 ````
-    node build.js > release/draft-dejong-remotestorage-04.txt
+    vim build.js # edit lines 1 and 2
+    node build.js
+    git status
 ````
 
