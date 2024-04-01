@@ -330,7 +330,9 @@ Table of Contents
     'ETag' header [HTTP] with, in the case of GET and HEAD the current
     version, in the case of PUT, the new version, and in case of DELETE,
     the version that was deleted. All successful GET requests MUST
-    return a 'Cache-Control: no-cache' header. PUT and DELETE requests
+    return a 'Cache-Control: no-cache' header, except for requests in
+    the 'public' subtree which MUST return a 'Cache-Control: no-cache, public'
+    header. PUT and DELETE requests
     MAY have an 'If-Match' request header [COND], and MUST fail with a
     412 response code if that does not match the document's current
     version.
