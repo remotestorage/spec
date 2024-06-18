@@ -1,5 +1,5 @@
-const version = 22;
-const day = 19;
+const version = 23;
+const day = 18;
 const expiresDay = 1;
 const fileName =  `./release/draft-dejong-remotestorage-${version}.txt`;
 
