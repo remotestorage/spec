@@ -214,6 +214,8 @@ Table of Contents
          }
        }
 
+    ETags in folder descriptions MUST omit the double quotes surrounding
+    the value in HTTP headers.
 
     GET requests to empty folders SHOULD be responded to with a folder
     description with no items (the items field set to '{}'). However, an
