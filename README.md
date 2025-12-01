@@ -1,14 +1,24 @@
-# Contributing
+# remoteStorage Spec
 
-This repository is where we keep track of the versioning of the remoteStorage spec:
+This repository is where we manage and keep track of updates to the
+remoteStorage protocol specification, currently published as Internet-Draft
+(I-D):
 
-    https://tools.ietf.org/id/draft-dejong-remotestorage-**.txt
+    https://datatracker.ietf.org/doc/draft-dejong-remotestorage/
 
-If you would like to suggest a change in the remoteStorage spec, you can open an issue
-on https://github.com/remotestorage/spec/issues and discuss your proposal with the spec
-authors.
+A simple introduction and summary of how the protocol works can be found on
+[remotestorage.io](https://remotestorage.io/protocol).
 
-# Versioning
+## Contributing
+
+If you would like to suggest a change in the remoteStorage spec, you can open
+an issue or pull request on https://github.com/remotestorage/spec and discuss
+your proposal with the spec authors.
+
+General questions, inquiries, feedback, and discussions are also welcome
+[on the community forums](https://community.remotestorage.io/c/spec/7).
+
+## Versioning
 
 Each six months (max 185 days), the output is checked using idnits, submitted to the IETF
 as an Internet Draft, and published on the apps-discuss mailing list.
@@ -34,14 +44,8 @@ as possible after version `k` is released.
 
 More info about remoteStorage in general can be found on http://remotestorage.io/
 
+## Build
 
-# Build
+To build a new version, first edit `build.js` (lines 1 and 2), then run:
 
-To build a new version, run:
-
-````
-    vim build.js # edit lines 1 and 2
     node build.js
-    git status
-````
-
