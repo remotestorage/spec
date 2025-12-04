@@ -7,7 +7,7 @@ Intended Status: Proposed Standard                       (independent)
 Expires: ${EXPIRES}                                  ${DATE}
 
 
-                            remoteStorage
+                          remoteStorage 1.0
 
 Abstract
 
