@@ -58,28 +58,29 @@ Table of Contents
    4. Requests.......................................................4
    5. Response codes.................................................7
    6. Versioning.....................................................8
-   7. CORS headers...................................................8
+   7. CORS headers...................................................9
    8. Session description............................................9
    9. Bearer tokens and access control...............................9
   10. Application-first bearer token issuance.......................10
-  11. Storage-first bearer token issuance...........................12
-  12. Example wire transcripts......................................12
-     12.1. WebFinger................................................12
-     12.2. OAuth dialog form........................................13
-     12.3. OAuth dialog form submission.............................14
-     12.4. OPTIONS preflight........................................14
-     12.5. Initial PUT..............................................15
-     12.6. Subsequent PUT...........................................15
-     12.7. GET......................................................16
-     12.8. DELETE...................................................17
-  13. Distributed versioning........................................18
-  14. Security Considerations.......................................19
-  15. IANA Considerations...........................................20
-  16. Acknowledgments...............................................20
-  17. References....................................................20
-     17.1. Normative References.....................................20
-     17.2. Informative References...................................21
-  18. Authors' addresses............................................22
+     10.1. Optional PKCE support....................................12
+  11. Storage-first bearer token issuance...........................13
+  12. Example wire transcripts......................................13
+     12.1. WebFinger................................................13
+     12.2. OAuth dialog form........................................14
+     12.3. OAuth dialog form submission.............................15
+     12.4. OPTIONS preflight........................................15
+     12.5. Initial PUT..............................................16
+     12.6. Subsequent PUT...........................................16
+     12.7. GET......................................................17
+     12.8. DELETE...................................................18
+  13. Distributed versioning........................................19
+  14. Security Considerations.......................................20
+  15. IANA Considerations...........................................21
+  16. Acknowledgments...............................................21
+  17. References....................................................21
+     17.1. Normative References.....................................21
+     17.2. Informative References...................................22
+  18. Authors' addresses............................................23
 
 
 1.  Introduction
@@ -438,7 +439,7 @@ Table of Contents
       "rel": "http://tools.ietf.org/id/draft-dejong-remotestorage",
       "properties": {
         "http://remotestorage.io/spec/version": <storage_api>,
-        "http://tools.ietf.org/html/rfc6749#section-4.2": <auth-dialog>,
+        "http://tools.ietf.org/html/rfc6749#section-3.1": <auth-dialog>,
         "...": "...",
       }
     }
@@ -498,6 +499,29 @@ Table of Contents
     the client_id parameter in favor of relying on the origin of the
     redirect_uri parameter for unique client identification. See section
     4 of [ORIGIN] for computing the origin.
+
+10.1 Optional PKCE support
+
+    As an optional extension, servers MAY support the OAuth 2.0
+    Authorization Code grant with Proof Key for Code Exchange (PKCE)
+    [PKCE]. If supported, the server MUST advertise the following
+    WebFinger properties on the remoteStorage link:
+
+       * "http://tools.ietf.org/html/rfc6749#section-3.1" with the
+         authorization endpoint URL,
+       * "http://tools.ietf.org/html/rfc6749#section-3.2" with the
+         token endpoint URL,
+       * "http://tools.ietf.org/html/rfc7636" with a string value
+         indicating supported code_challenge method(s). Servers MUST
+         support "S256". Servers SHOULD NOT advertise "plain" unless
+         "S256" is also supported. Clients SHOULD use "S256".
+
+    Clients SHOULD use PKCE when these properties are present;
+    otherwise they SHOULD use the implicit grant as described above.
+    Scope handling, redirect URI origin checks [ORIGIN], and bearer
+    token usage [BEARER] remain unchanged.
+
+    Note: PKCE will be required in protocol versions >= 2.0.
 
 11. Storage-first bearer token issuance
 
@@ -854,9 +878,11 @@ charset=UTF-8","Content-Length":106,"Last-Modified":"Sat, 2 Jun 2018 1\
 
     This document registers the following WebFinger properties:
       * "http://remotestorage.io/spec/version"
-      * "http://tools.ietf.org/html/rfc6749#section-4.2"
+      * "http://tools.ietf.org/html/rfc6749#section-3.1"
+      * "http://tools.ietf.org/html/rfc6749#section-3.2"
       * "http://tools.ietf.org/html/rfc6750#section-2.3"
       * "http://tools.ietf.org/html/rfc7233"
+      * "http://tools.ietf.org/html/rfc7636"
       * "http://remotestorage.io/spec/web-authoring"
 
 16. Acknowledgements
@@ -865,12 +891,11 @@ charset=UTF-8","Content-Length":106,"Last-Modified":"Sat, 2 Jun 2018 1\
     development of this protocol, including Kenny Bentley, Javier Diaz,
     Daniel Groeber, Bjarni Runar, Jan Wildeboer, Charles Schultz, Peter
     Svensson, Valer Mischenko, Michiel Leenaars, Jan-Christoph
-    Borchardt, Garret Alfert, Sebastian Kippe, Max Wiehle, Melvin
-    Carvalho, Martin Stadler, Geoffroy Couprie, Niklas Cathor, Marco
-    Stahl, James Coglan, Ken Eucker, Daniel Brolund, elf Pavlik, Nick
-    Jennings, Markus Sabadello, Steven te Brinke, Matthias Treydte,
-    Rick van Rein, Mark Nottingham, Julian Reschke, Markus Lanthaler,
-    and Markus Unterwaditzer, among many others.
+    Borchardt, Garret Alfert, Max Wiehle, Melvin Carvalho, Martin Stadler,
+    Geoffroy Couprie, Niklas Cathor, Marco Stahl, James Coglan, Ken Eucker,
+    Daniel Brolund, elf Pavlik, Nick Jennings, Markus Sabadello, Steven te
+    Brinke, Matthias Treydte, Rick van Rein, Mark Nottingham, Julian Reschke,
+    Markus Lanthaler, and Markus Unterwaditzer, among many others.
 
 17. References
 
@@ -895,6 +920,11 @@ charset=UTF-8","Content-Length":106,"Last-Modified":"Sat, 2 Jun 2018 1\
     [OAUTH]
         "Section 4.2: Implicit Grant", in: Hardt, D. (ed), "The OAuth
         2.0 Authorization Framework", RFC6749, October 2012.
+
+    [PKCE]
+        Sakimura, N. (ed), Bradley, J., and Agarwal, N., "Proof Key
+        for Code Exchange by OAuth Public Clients", RFC 7636,
+        September 2015.
 
     [ORIGIN]
         "Section 4: Origin of a URI", in: Barth, A., "The Web Origin
