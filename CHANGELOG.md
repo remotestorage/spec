@@ -1,3 +1,10 @@
+# draft-dejong-remotestorage-26.txt
+
+## Non-breaking:
+
+* Add optional support for Authorization Code flow and PKCE
+* Register related WebFinger properties for OAuth endpoints and PKCE
+
 # draft-dejong-remotestorage-14.txt
 
 No changes, just extended the expiry date by 6 months.
