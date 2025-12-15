@@ -439,7 +439,7 @@ Table of Contents
       "rel": "http://tools.ietf.org/id/draft-dejong-remotestorage",
       "properties": {
         "http://remotestorage.io/spec/version": <storage_api>,
-        "http://tools.ietf.org/html/rfc6749#section-3.1": <auth-dialog>,
+        "http://tools.ietf.org/html/rfc6749#section-4.2": <auth-dialog>,
         "...": "...",
       }
     }
@@ -880,6 +880,7 @@ charset=UTF-8","Content-Length":106,"Last-Modified":"Sat, 2 Jun 2018 1\
       * "http://remotestorage.io/spec/version"
       * "http://tools.ietf.org/html/rfc6749#section-3.1"
       * "http://tools.ietf.org/html/rfc6749#section-3.2"
+      * "http://tools.ietf.org/html/rfc6749#section-4.2"
       * "http://tools.ietf.org/html/rfc6750#section-2.3"
       * "http://tools.ietf.org/html/rfc7233"
       * "http://tools.ietf.org/html/rfc7636"
