@@ -4,7 +4,7 @@ Document: draft-dejong-remotestorage-${VERSION}                  (independent)
                                                          (independent)
                                                               S. Kippe
 Intended Status: Proposed Standard                       (independent)
-Expires: ${EXPIRES}                                  ${DATE}
+Expires: ${EXPIRES}                                 ${DATE}
 
 
                           remoteStorage 1.0
