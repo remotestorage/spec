@@ -892,11 +892,12 @@ charset=UTF-8","Content-Length":106,"Last-Modified":"Sat, 2 Jun 2018 1\
     development of this protocol, including Kenny Bentley, Javier Diaz,
     Daniel Groeber, Bjarni Runar, Jan Wildeboer, Charles Schultz, Peter
     Svensson, Valer Mischenko, Michiel Leenaars, Jan-Christoph
-    Borchardt, Garret Alfert, Max Wiehle, Melvin Carvalho, Martin Stadler,
-    Geoffroy Couprie, Niklas Cathor, Marco Stahl, James Coglan, Ken Eucker,
-    Daniel Brolund, elf Pavlik, Nick Jennings, Markus Sabadello, Steven te
-    Brinke, Matthias Treydte, Rick van Rein, Mark Nottingham, Julian Reschke,
-    Markus Lanthaler, and Markus Unterwaditzer, among many others.
+    Borchardt, Garret Alfert, Max Wiehle, Melvin Carvalho, Martin
+    Stadler, Geoffroy Couprie, Niklas Cathor, Marco Stahl, James Coglan,
+    Ken Eucker, Daniel Brolund, elf Pavlik, Nick Jennings, Markus
+    Sabadello, Steven te Brinke, Matthias Treydte, Rick van Rein, Mark
+    Nottingham, Julian Reschke, Markus Lanthaler, and Markus
+    Unterwaditzer, among many others.
 
 17. References
 
