@@ -10,14 +10,14 @@ No changes, just extended the expiry date by 6 months.
 
 ## Breaking for clients and servers:
 
-* a document and a subfolder within the same folder cannot have the same
+* A document and a subfolder within the same folder cannot have the same
   name
 
 # draft-dejong-remotestorage-11.txt
 
 ## Breaking for servers:
 
-* last-modified date should now be included for document items in a folder
+* `last-modified` date should now be included for document items in a folder
   description.
 
 ## Non-breaking:
@@ -88,11 +88,13 @@ No changes, just extended the expiry date by 6 months.
 # draft-dejong-remotestorage-05.txt
 
 ## Breaking for servers as well as clients:
+
 * The link relation in the WebFinger announcement was updated from 'remotestorage'
   to 'http://tools.ietf.org/id/draft-dejong-remotestorage' (issue #78).
 * The version string in the WebFinger announcement was updated from -04 to -05.
 
 ## Breaking for clients:
+
 * Servers MAY respond with a 4xx response code if the Content-Type is not an
   ASCII string, is too long, is missing altogether, etc. (issues #84
   and #86).
@@ -100,11 +102,13 @@ No changes, just extended the expiry date by 6 months.
 # draft-dejong-remotestorage-04.txt
 
 ## Breaking for servers as well as clients:
+
 * The version string in the WebFinger announcement was updated from -03 to -04
 * Implicit auth is now indicated with a `null` <auth-dialog> property instead of `false`.
 * The way to announce support for query parameter bearer tokens and range requests has changed, both for servers that do support it, and servers that don't.
 
 ## Non-breaking:
+
 * Servers may now offer any extension features they want.
 * Several mistakes in the text and wire examples were fixed.
 * Several confusing formulations in the text were improved.
