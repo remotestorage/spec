@@ -530,7 +530,7 @@ Table of Contents
     'remotestorage' field in the URL fragment, with the user account as
     value.
 
-    The appplication MUST make sure this request is intended by the
+    The application MUST make sure this request is intended by the
     user. It SHOULD ask for confirmation from the user whether they want
     to connect to the given provider account. After confirmation, it
     SHOULD connect to the given provider account, as defined in Section
