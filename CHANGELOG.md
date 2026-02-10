@@ -1,28 +1,28 @@
 # Changelog
 
-## draft-dejong-remotestorage-26.txt
+## [draft-dejong-remotestorage-26.txt](https://author-tools.ietf.org/iddiff?url1=draft-dejong-remotestorage-14&url2=draft-dejong-remotestorage-26&difftype=--html)
 
 ### Non-breaking:
 
 * Add optional support for Authorization Code flow and PKCE
 * Register related WebFinger properties for OAuth endpoints and PKCE
 
-## draft-dejong-remotestorage-14.txt
+## [draft-dejong-remotestorage-14.txt](https://author-tools.ietf.org/iddiff?url1=draft-dejong-remotestorage-13&url2=draft-dejong-remotestorage-14&difftype=--html)
 
 No changes, just extended the expiry date by 6 months.
 
-## draft-dejong-remotestorage-13.txt
+## [draft-dejong-remotestorage-13.txt](https://author-tools.ietf.org/iddiff?url1=draft-dejong-remotestorage-12&url2=draft-dejong-remotestorage-13&difftype=--html)
 
 No changes, just extended the expiry date by 6 months.
 
-## draft-dejong-remotestorage-12.txt
+## [draft-dejong-remotestorage-12.txt](https://author-tools.ietf.org/iddiff?url1=draft-dejong-remotestorage-11&url2=draft-dejong-remotestorage-12&difftype=--html)
 
 ### Breaking for clients and servers:
 
 * A document and a subfolder within the same folder cannot have the same
   name
 
-## draft-dejong-remotestorage-11.txt
+## [draft-dejong-remotestorage-11.txt](https://author-tools.ietf.org/iddiff?url1=draft-dejong-remotestorage-10&url2=draft-dejong-remotestorage-11&difftype=--html)
 
 ### Breaking for servers:
 
@@ -35,11 +35,11 @@ No changes, just extended the expiry date by 6 months.
 * A duplicate paragraph was removed.
 * The use of the 412 Precondition Failed response code was  clarified.
 
-## draft-dejong-remotestorage-10.txt
+## [draft-dejong-remotestorage-10.txt](https://author-tools.ietf.org/iddiff?url1=draft-dejong-remotestorage-09&url2=draft-dejong-remotestorage-10&difftype=--html)
 
 No changes, just extended the expiry date by 6 months.
 
-## draft-dejong-remotestorage-09.txt
+## [draft-dejong-remotestorage-09.txt](https://author-tools.ietf.org/iddiff?url1=draft-dejong-remotestorage-07&url2=draft-dejong-remotestorage-09&difftype=--html)
 
 ### Breaking for clients:
 
@@ -48,11 +48,11 @@ No changes, just extended the expiry date by 6 months.
   server implementations are encouraged to still just treat it as an opaque
   ASCII string, rather than comparing it to some whitelist of valid values.
 
-## draft-dejong-remotestorage-08.txt
+## [draft-dejong-remotestorage-08.txt](https://author-tools.ietf.org/iddiff?url1=draft-dejong-remotestorage-07&url2=draft-dejong-remotestorage-08&difftype=--html)
 
 No changes, just extended the expiry date by 6 months.
 
-## draft-dejong-remotestorage-07.txt
+## [draft-dejong-remotestorage-07.txt](https://author-tools.ietf.org/iddiff?url1=draft-dejong-remotestorage-06&url2=draft-dejong-remotestorage-07&difftype=--html)
 
 ### Breaking for servers:
 
@@ -67,7 +67,7 @@ No changes, just extended the expiry date by 6 months.
   `remotestorage=` parameter is present, the `access_token=` and `scope=`
   parameters should be ignored.
 
-## draft-dejong-remotestorage-06.txt
+## [draft-dejong-remotestorage-06.txt](https://author-tools.ietf.org/iddiff?url1=draft-dejong-remotestorage-05&url2=draft-dejong-remotestorage-06&difftype=--html)
 
 ### Breaking for servers as well as clients:
 
@@ -94,7 +94,7 @@ No changes, just extended the expiry date by 6 months.
   browsers.
 * Item names '.' and '..' are no longer allowed.
 
-## draft-dejong-remotestorage-05.txt
+## [draft-dejong-remotestorage-05.txt](https://author-tools.ietf.org/iddiff?url1=draft-dejong-remotestorage-04&url2=draft-dejong-remotestorage-05&difftype=--html)
 
 ### Breaking for servers as well as clients:
 
@@ -108,7 +108,7 @@ No changes, just extended the expiry date by 6 months.
   ASCII string, is too long, is missing altogether, etc. (issues #84
   and #86).
 
-## draft-dejong-remotestorage-04.txt
+## [draft-dejong-remotestorage-04.txt](https://author-tools.ietf.org/iddiff?url1=draft-dejong-remotestorage-03&url2=draft-dejong-remotestorage-04&difftype=--html)
 
 ### Breaking for servers as well as clients:
 
@@ -123,7 +123,7 @@ No changes, just extended the expiry date by 6 months.
 * Several confusing formulations in the text were improved.
 * Mention "group accounts", to which multiple human users have access.
 
-## draft-dejong-remotestorage-03.txt
+## [draft-dejong-remotestorage-03.txt](https://author-tools.ietf.org/iddiff?url1=draft-dejong-remotestorage-02&url2=draft-dejong-remotestorage-03&difftype=--html)
 
 ### Breaking for servers as well as clients:
 
@@ -148,7 +148,7 @@ No changes, just extended the expiry date by 6 months.
 * Several small changes to clarify and correct the spec text
 * A build script and this changelog were added to the git repo on github.
 
-## draft-dejong-remotestorage-02.txt
+## [draft-dejong-remotestorage-02.txt](https://author-tools.ietf.org/iddiff?url1=draft-dejong-remotestorage-01&url2=draft-dejong-remotestorage-02&difftype=--html)
 
 ### Breaking for servers as well as clients:
 
