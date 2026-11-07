@@ -65,10 +65,10 @@ Table of Contents
      10.1. Optional PKCE support....................................12
   11. Storage-first bearer token issuance...........................13
   12. Example wire transcripts......................................13
-     12.1. WebFinger................................................14
+     12.1. WebFinger................................................13
      12.2. OAuth dialog form........................................14
      12.3. OAuth dialog form submission.............................15
-     12.4. OPTIONS preflight........................................16
+     12.4. OPTIONS preflight........................................15
      12.5. Initial PUT..............................................16
      12.6. Subsequent PUT...........................................17
      12.7. GET......................................................17
@@ -530,14 +530,13 @@ Table of Contents
     a refresh to be rejected, in which case they need a new
     authorization as described above. When a refresh response contains
     a new refresh token, the client MUST use it in place of the old one.
+    When several requests need a new access token at the same time,
+    clients SHOULD perform a single refresh and share its result,
+    rather than submitting the same refresh token more than once.
 
     Servers that issue refresh tokens to these public clients MUST
     either sender-constrain them or rotate them on every use, as per
     sections 2.2.2 and 4.14 of [OAUTH-SECURITY].
-
-    Refresh tokens are only ever issued by the token endpoint, never
-    through the implicit grant, so clients that do not support them are
-    not affected.
 
     Note: PKCE will be required in protocol versions >= 2.0.
 

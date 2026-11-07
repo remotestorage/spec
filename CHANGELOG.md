@@ -1,5 +1,14 @@
 # Changelog
 
+## Unreleased
+
+### Non-breaking:
+
+* Allow the token endpoint of the optional Authorization Code flow to issue
+  refresh tokens. Refresh tokens are only ever issued by the token endpoint,
+  never through the implicit grant, so clients that do not support them are
+  not affected.
+
 ## [draft-dejong-remotestorage-26.txt](https://author-tools.ietf.org/iddiff?url1=draft-dejong-remotestorage-14&url2=draft-dejong-remotestorage-26&difftype=--html)
 
 ### Non-breaking:
